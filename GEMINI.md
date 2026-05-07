@@ -13,6 +13,7 @@ This project is a static proxy architecture used to host documentation and propo
         -   HTML file names MUST NOT contain spaces or uppercase letters.
         -   The file is located in the correct project-specific subdirectory (e.g., `/fleway/`, `/clop/`).
         -   All assets are properly organized (see Asset Management).
+    -   **Post-deployment:** After a successful deployment, agents MUST commit and push the changes to the remote repository (`origin`) to ensure the source code is up to date.
 
 2.  **Asset Management:**
     -   **No Base64:** Embedding images or assets as base64 strings is STRICTLY FORBIDDEN.
