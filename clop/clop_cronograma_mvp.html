@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLOP — Cronograma de Desenvolvimento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafaf9;
+  --paper: #ffffff;
+  --ink: #111111;
+  --ink-soft: #333333;
+  --muted: #666666;
+  --faint: #999999;
+  --rule: #e4e4e1;
+  --rule-soft: #efefec;
+
+  --c1: #4b5563;
+  --c2: #5a7a4a;
+  --c3: #7a5a3a;
+  --c4: #8a6a1a;
+  --c5: #6a4a6a;
+  --c6: #3a6a67;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  padding: 40px 24px 64px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 780px; margin: 0 auto; }
+
+/* ——— Document header ——— */
+.doc-header {
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.doc-type {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.doc-meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+.doc-meta span + span::before { content: ' · '; margin: 0 4px; }
+
+/* ——— Gantt ——— */
+.gantt-wrap {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 24px 22px;
+  margin-bottom: 40px;
+}
+
+.gantt-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.gantt {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+}
+
+.gantt-weeks {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  margin-bottom: 12px;
+  padding-left: 2px;
+}
+
+.week-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: .04em;
+}
+
+.phase-label {
+  padding: 9px 14px 9px 0;
+  border-bottom: 1px dashed var(--rule-soft);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.phase-label .num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: .08em;
+  margin-bottom: 3px;
+}
+
+.phase-label .name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.phase-track {
+  position: relative;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--rule-soft);
+}
+
+.phase-track::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(12.5% - 1px),
+    var(--rule-soft) calc(12.5% - 1px),
+    var(--rule-soft) 12.5%
+  );
+  pointer-events: none;
+}
+
+.bar {
+  position: relative;
+  height: 26px;
+  border-radius: 4px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+.bar::after {
+  content: attr(data-dur);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: .04em;
+  margin-left: auto;
+}
+
+.bar.b1 { background: var(--c1); }
+.bar.b2 { background: var(--c2); }
+.bar.b3 { background: var(--c3); }
+.bar.b4 { background: var(--c4); }
+.bar.b5 { background: var(--c5); }
+.bar.b6 { background: var(--c6); }
+
+/* ——— Phase sections ——— */
+.phases { }
+
+.phase {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.phase:last-child { border-bottom: none; }
+
+.phase-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.phase-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  padding: 3px 8px;
+  border-radius: 3px;
+  color: var(--paper);
+  flex-shrink: 0;
+}
+.phase-tag.t1 { background: var(--c1); }
+.phase-tag.t2 { background: var(--c2); }
+.phase-tag.t3 { background: var(--c3); }
+.phase-tag.t4 { background: var(--c4); }
+.phase-tag.t5 { background: var(--c5); }
+.phase-tag.t6 { background: var(--c6); }
+
+.phase-name {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  flex: 1;
+}
+
+.phase-duration {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: .04em;
+  flex-shrink: 0;
+}
+
+.phase-intro {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.task-list-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.task-list {
+  list-style: none;
+}
+.task-list li {
+  position: relative;
+  padding: 6px 0 6px 20px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.55;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.task-list li:last-child { border-bottom: none; }
+.task-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--faint);
+  font-weight: 400;
+}
+
+.note {
+  background: #fbf8ef;
+  border-left: 2px solid var(--c4);
+  padding: 12px 14px;
+  margin-top: 14px;
+  border-radius: 0 4px 4px 0;
+}
+.note-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c4);
+  margin-bottom: 4px;
+}
+.note-body {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* ——— Responsive ——— */
+@media (max-width: 640px) {
+  body { padding: 28px 16px 48px; }
+  h1 { font-size: 20px; }
+  .gantt-wrap { padding: 18px 14px; }
+  .gantt { grid-template-columns: 110px 1fr; }
+  .phase-label .name { font-size: 12px; }
+  .week-label { font-size: 9px; }
+  .bar { height: 22px; padding: 0 8px; }
+  .bar::after { font-size: 9px; }
+  .phase-name { font-size: 15px; }
+  .phase-head { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="doc-header">
+    <div class="doc-type">Documento · Cronograma de Desenvolvimento</div>
+    <h1>CLOP — Plano de Implementação</h1>
+    <div class="doc-meta">
+      <span>Duração: 8 semanas</span>
+      <span>6 fases</span>
+      <span>MaxisPlus × Thiago Olaia x APD Advocacia</span>
+    </div>
+  </div>
+
+  <!-- Gantt -->
+  <div class="gantt-wrap">
+    <div class="gantt-label">Linha do tempo</div>
+
+    <div class="gantt">
+      <div class="gantt-weeks">
+        <div class="week-label">S1</div>
+        <div class="week-label">S2</div>
+        <div class="week-label">S3</div>
+        <div class="week-label">S4</div>
+        <div class="week-label">S5</div>
+        <div class="week-label">S6</div>
+        <div class="week-label">S7</div>
+        <div class="week-label">S8</div>
+      </div>
+
+      <div class="phase-label"><span class="num">FASE 01</span><span class="name">Fundação</span></div>
+      <div class="phase-track">
+        <div class="bar b1" data-dur="1 sem" style="width: 12.5%; margin-left: 0%;"></div>
+      </div>
+
+      <div class="phase-label"><span class="num">FASE 02</span><span class="name">Interface do corretor</span></div>
+      <div class="phase-track">
+        <div class="bar b2" data-dur="2 sem" style="width: 25%; margin-left: 12.5%;"></div>
+      </div>
+
+      <div class="phase-label"><span class="num">FASE 03</span><span class="name">Painel do jurídico</span></div>
+      <div class="phase-track">
+        <div class="bar b3" data-dur="2 sem" style="width: 25%; margin-left: 25%;"></div>
+      </div>
+
+      <div class="phase-label"><span class="num">FASE 04</span><span class="name">Embasamento e score</span></div>
+      <div class="phase-track">
+        <div class="bar b4" data-dur="3 sem" style="width: 37.5%; margin-left: 37.5%;"></div>
+      </div>
+
+      <div class="phase-label"><span class="num">FASE 05</span><span class="name">Revisão e aprovação</span></div>
+      <div class="phase-track">
+        <div class="bar b5" data-dur="2 sem" style="width: 25%; margin-left: 50%;"></div>
+      </div>
+
+      <div class="phase-label"><span class="num">FASE 06</span><span class="name">Validação e piloto</span></div>
+      <div class="phase-track" style="border-bottom: none;">
+        <div class="bar b6" data-dur="2 sem" style="width: 25%; margin-left: 75%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase details -->
+  <div class="phases">
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-tag t1">FASE 01</div>
+        <div class="phase-name">Fundação</div>
+        <div class="phase-duration">Semana 1</div>
+      </div>
+      <div class="phase-intro">Estrutura base da aplicação e do ambiente de dados. Não visível ao usuário final.</div>
+      <div class="task-list-label">Atividades</div>
+      <ul class="task-list">
+        <li>Definição do modelo de dados para operações, partes e documentos</li>
+        <li>Configuração de ambiente de armazenamento seguro de documentos</li>
+        <li>Controle de acesso para o time jurídico parceiro</li>
+        <li>Estrutura base da aplicação servidora</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-tag t2">FASE 02</div>
+        <div class="phase-name">Interface do corretor</div>
+        <div class="phase-duration">Semanas 2 e 3</div>
+      </div>
+      <div class="phase-intro">Fluxo de coleta de dados pelo WhatsApp, desenhado como conversa guiada.</div>
+      <div class="task-list-label">Atividades</div>
+      <ul class="task-list">
+        <li>Recebimento e processamento de mensagens do corretor</li>
+        <li>Identificação da operação em andamento a partir do número de WhatsApp</li>
+        <li>Coleta guiada de dados do vendedor (e do cônjuge, quando aplicável)</li>
+        <li>Coleta guiada de dados do comprador (e do cônjuge, quando aplicável)</li>
+        <li>Coleta guiada de dados do imóvel, incluindo número de matrícula</li>
+        <li>Transição automática da operação para a etapa jurídica ao final da coleta</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-tag t3">FASE 03</div>
+        <div class="phase-name">Painel do jurídico</div>
+        <div class="phase-duration">Semanas 3 e 4</div>
+      </div>
+      <div class="phase-intro">Interface de trabalho do advogado parceiro.</div>
+      <div class="task-list-label">Atividades</div>
+      <ul class="task-list">
+        <li>Acesso restrito por autenticação</li>
+        <li>Lista de operações em andamento, agrupadas por status</li>
+        <li>Tela de detalhe com todos os dados submetidos pelo corretor</li>
+        <li>Upload da minuta do contrato</li>
+        <li>Envio automático da minuta ao corretor via WhatsApp</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-tag t4">FASE 04</div>
+        <div class="phase-name">Embasamento jurídico e score de conformidade</div>
+        <div class="phase-duration">Semanas 4 a 6</div>
+      </div>
+      <div class="phase-intro">Acompanhamento da coleta de certidões exigidas em cada operação e geração do score de conformidade jurídica.</div>
+      <div class="task-list-label">Atividades</div>
+      <ul class="task-list">
+        <li>Checklist de certidões sobre o imóvel</li>
+        <li>Checklist de certidões sobre parte pessoa física</li>
+        <li>Checklist de certidões sobre parte pessoa jurídica</li>
+        <li>Registro do status de cada certidão (pendente, obtida, com apontamento)</li>
+        <li>Regra automática: parte pessoa física empresária dispara verificação secundária sobre os CNPJs vinculados</li>
+        <li>Cálculo do score de conformidade com base na completude e nos achados das certidões</li>
+        <li>Exibição do score no painel do jurídico e no histórico da operação</li>
+        <li>Registro de apontamentos que exigem análise jurídica manual</li>
+      </ul>
+      <div class="note">
+        <div class="note-label">Observação</div>
+        <div class="note-body">A regra da pessoa física empresária é exigência das diretrizes de due diligence e não pode ser tratada como caso de exceção. Ela deve estar integrada ao fluxo principal desde o início desta fase.</div>
+      </div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-tag t5">FASE 05</div>
+        <div class="phase-name">Fluxo de revisão e aprovação</div>
+        <div class="phase-duration">Semanas 5 e 6</div>
+      </div>
+      <div class="phase-intro">Circuito de ajustes entre as partes, o corretor e o jurídico.</div>
+      <div class="task-list-label">Atividades</div>
+      <ul class="task-list">
+        <li>Coleta das observações das partes via WhatsApp</li>
+        <li>Exibição das observações no painel do jurídico</li>
+        <li>Upload de nova versão da minuta pelo jurídico</li>
+        <li>Envio da nova versão ao corretor</li>
+        <li>Registro de aprovação final pelas partes</li>
+        <li>Encaminhamento da operação para assinatura</li>
+        <li>Tratamento de casos fora do fluxo padrão</li>
+      </ul>
+    </div>
+
+    <div class="phase">
+      <div class="phase-head">
+        <div class="phase-tag t6">FASE 06</div>
+        <div class="phase-name">Validação e piloto</div>
+        <div class="phase-duration">Semanas 7 e 8</div>
+      </div>
+      <div class="phase-intro">Testes internos e operação com corretores parceiros em negócios reais.</div>
+      <div class="task-list-label">Atividades</div>
+      <ul class="task-list">
+        <li>Teste do fluxo completo de ponta a ponta com dados reais</li>
+        <li>Revisão dos controles de acesso e de expiração de links</li>
+        <li>Configuração de registros de atividade e alertas de falha</li>
+        <li>Operação com 2 a 3 corretores parceiros do ecossistema APD</li>
+        <li>Levantamento de pontos de atrito observados em campo</li>
+        <li>Triagem de ajustes entre correção imediata e itens de backlog</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

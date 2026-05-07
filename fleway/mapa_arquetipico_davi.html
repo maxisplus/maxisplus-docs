@@ -1,0 +1,1261 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Relatório PMAI | Davi Menegon | BK Solutions</title>
+        <style>
+            :root {
+                --navy-950: #081526;
+                --navy-900: #0c1c30;
+                --blue-700: #1f4785;
+                --blue-500: #62a6fb;
+                --blue-300: #94c5fd;
+                --ice-50: #f2f7fc;
+                --paper: #ffffff;
+                --ink: #102033;
+                --muted: #66758a;
+                --line: #dce7f3;
+                --shadow: 0 24px 70px rgba(8, 21, 38, 0.18);
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                margin: 0;
+                background: linear-gradient(
+                    to bottom,
+                    var(--navy-950) 0 620px,
+                    #edf4fb 620px 100%
+                );
+                color: var(--ink);
+                font-family:
+                    Inter,
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+            }
+
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0 0 auto;
+                height: 620px;
+                z-index: -1;
+                background:
+                    linear-gradient(
+                        125deg,
+                        transparent 0 73%,
+                        rgba(98, 166, 251, 0.12) 73% 73.2%,
+                        transparent 73.2%
+                    ),
+                    linear-gradient(
+                        150deg,
+                        transparent 0 84%,
+                        rgba(148, 197, 253, 0.08) 84% 84.2%,
+                        transparent 84.2%
+                    );
+                pointer-events: none;
+            }
+
+            img {
+                max-width: 100%;
+            }
+
+            .page {
+                width: min(1180px, calc(100% - 36px));
+                margin: 0 auto;
+                padding: 26px 0 44px;
+            }
+
+            .brand-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+            }
+
+            .brand-logo {
+                width: 154px;
+                height: auto;
+                display: block;
+            }
+
+            .report-meta {
+                color: rgba(242, 247, 252, 0.86);
+                font-size: 0.92rem;
+                text-align: right;
+            }
+
+            .hero {
+                display: grid;
+                grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.78fr);
+                gap: 34px;
+                align-items: end;
+                margin-top: 68px;
+            }
+
+            .hero-copy {
+                color: var(--ice-50);
+            }
+
+            .eyebrow {
+                margin: 0 0 12px;
+                color: var(--blue-300);
+                font-size: 0.78rem;
+                font-weight: 800;
+                letter-spacing: 0;
+                text-transform: uppercase;
+            }
+
+            h1,
+            h2,
+            h3 {
+                margin: 0;
+                color: inherit;
+            }
+
+            h1 {
+                max-width: 12ch;
+                color: var(--paper);
+                font-size: 5rem;
+                line-height: 0.95;
+            }
+
+            .hero-copy p {
+                max-width: 650px;
+                margin: 26px 0 0;
+                color: rgba(242, 247, 252, 0.78);
+                font-size: 1.05rem;
+                line-height: 1.66;
+            }
+
+            .hero-rule {
+                width: 112px;
+                height: 4px;
+                margin-top: 28px;
+                border-radius: 999px;
+                background: var(--blue-500);
+            }
+
+            .summary-panel {
+                border: 1px solid rgba(148, 197, 253, 0.24);
+                border-radius: 8px;
+                background: rgba(7, 18, 32, 0.78);
+                padding: 20px;
+                color: var(--ice-50);
+                box-shadow: 0 22px 55px rgba(2, 8, 15, 0.24);
+            }
+
+            .summary-panel h2 {
+                font-size: 1.08rem;
+            }
+
+            .summary-grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 10px;
+                margin-top: 16px;
+            }
+
+            .summary-item {
+                border: 1px solid rgba(242, 247, 252, 0.18);
+                border-radius: 8px;
+                background: rgba(242, 247, 252, 0.08);
+                padding: 12px;
+            }
+
+            .summary-item img {
+                width: 46px;
+                height: 46px;
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .summary-item strong {
+                display: block;
+                color: var(--paper);
+                font-size: 0.95rem;
+            }
+
+            .summary-item span {
+                display: block;
+                margin-top: 3px;
+                color: rgba(242, 247, 252, 0.78);
+                font-size: 0.78rem;
+            }
+
+            .content {
+                display: grid;
+                gap: 24px;
+                margin-top: 58px;
+            }
+
+            .section {
+                background: var(--paper);
+                border: 1px solid rgba(220, 231, 243, 0.9);
+                border-radius: 8px;
+                box-shadow: var(--shadow);
+                overflow: hidden;
+            }
+
+            .section-header {
+                display: flex;
+                align-items: start;
+                justify-content: space-between;
+                gap: 18px;
+                padding: 28px 30px 0;
+            }
+
+            .section-kicker {
+                margin: 0 0 9px;
+                color: var(--blue-700);
+                font-size: 0.78rem;
+                font-weight: 800;
+                text-transform: uppercase;
+            }
+
+            .section h2 {
+                color: var(--navy-950);
+                font-size: 2.08rem;
+                line-height: 1.12;
+            }
+
+            .section-body {
+                padding: 24px 30px 30px;
+            }
+
+            .section-body p {
+                margin: 0 0 14px;
+                color: #314155;
+                line-height: 1.64;
+            }
+
+            .quote {
+                border-left: 4px solid var(--blue-500);
+                padding: 12px 16px;
+                color: var(--navy-950);
+                background: #f5f9ff;
+                font-size: 1.02rem;
+                line-height: 1.5;
+            }
+
+            .quote cite {
+                display: block;
+                margin-top: 10px;
+                color: var(--muted);
+                font-size: 0.82rem;
+                font-style: normal;
+                font-weight: 800;
+                text-transform: uppercase;
+            }
+
+            .two-column {
+                display: grid;
+                grid-template-columns: minmax(220px, 0.36fr) minmax(0, 0.64fr);
+                gap: 24px;
+                align-items: start;
+            }
+
+            .toc {
+                display: grid;
+                gap: 8px;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            .toc a {
+                display: block;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                padding: 11px 12px;
+                color: var(--blue-700);
+                background: #f8fbff;
+                font-weight: 750;
+                text-decoration: none;
+            }
+
+            .ranking-intro {
+                max-width: 760px;
+            }
+
+            .ranking {
+                display: grid;
+                gap: 12px;
+                margin-top: 24px;
+            }
+
+            .rank-row {
+                display: grid;
+                grid-template-columns: 42px 64px minmax(160px, 0.35fr) minmax(
+                        220px,
+                        0.65fr
+                    );
+                gap: 14px;
+                align-items: center;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                padding: 14px;
+                background: #fbfdff;
+            }
+
+            .rank-row.is-top {
+                border-color: color-mix(
+                    in srgb,
+                    var(--accent) 50%,
+                    var(--line)
+                );
+                background: color-mix(in srgb, var(--accent) 8%, #ffffff);
+            }
+
+            .rank-number {
+                width: 34px;
+                height: 34px;
+                border-radius: 999px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--paper);
+                background: var(--navy-950);
+                font-weight: 850;
+            }
+
+            .rank-icon {
+                width: 58px;
+                height: 58px;
+                display: block;
+            }
+
+            .rank-name strong {
+                display: block;
+                color: var(--navy-950);
+                font-size: 1.04rem;
+            }
+
+            .rank-name span {
+                display: inline-flex;
+                margin-top: 6px;
+                border-radius: 999px;
+                padding: 5px 9px;
+                background: color-mix(in srgb, var(--accent) 16%, #f3f7fb);
+                color: var(--blue-700);
+                font-size: 0.76rem;
+                font-weight: 800;
+            }
+
+            .bar-wrap {
+                display: grid;
+                gap: 8px;
+            }
+
+            .bar {
+                height: 12px;
+                border-radius: 999px;
+                background: #e7eff8;
+                overflow: hidden;
+            }
+
+            .bar span {
+                display: block;
+                width: var(--score);
+                height: 100%;
+                border-radius: inherit;
+                background: linear-gradient(
+                    90deg,
+                    var(--accent),
+                    color-mix(in srgb, var(--accent) 50%, var(--blue-300))
+                );
+            }
+
+            .rank-description {
+                margin: 0;
+                color: #3d4b5d;
+                font-size: 0.92rem;
+                line-height: 1.48;
+            }
+
+            .spotlight-grid {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 16px;
+            }
+
+            .spotlight {
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: #fbfdff;
+                padding: 18px;
+            }
+
+            .spotlight img {
+                width: 92px;
+                height: auto;
+                display: block;
+                margin-bottom: 14px;
+            }
+
+            .spotlight h3 {
+                color: var(--navy-950);
+                font-size: 1.22rem;
+            }
+
+            .spotlight .role {
+                margin: 5px 0 14px;
+                color: var(--muted);
+                font-size: 0.9rem;
+                font-weight: 760;
+            }
+
+            .spotlight p {
+                font-size: 0.94rem;
+            }
+
+            .lowest-layout {
+                display: grid;
+                grid-template-columns: minmax(170px, 0.28fr) minmax(0, 0.72fr);
+                gap: 24px;
+                align-items: start;
+            }
+
+            .lowest-layout img {
+                width: 160px;
+                max-width: 100%;
+            }
+
+            .next-list {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 12px;
+                margin-top: 18px;
+            }
+
+            .next-list div {
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: #f8fbff;
+                padding: 14px;
+            }
+
+            .next-list strong {
+                display: block;
+                margin-bottom: 6px;
+                color: var(--navy-950);
+            }
+
+            .legal {
+                margin-top: 22px;
+                color: #6b7890;
+                font-size: 0.78rem;
+                line-height: 1.5;
+            }
+
+            @media (max-width: 980px) {
+                .hero,
+                .two-column,
+                .lowest-layout {
+                    grid-template-columns: 1fr;
+                }
+
+                h1 {
+                    max-width: 14ch;
+                    font-size: 3.9rem;
+                }
+
+                .ranking .rank-row {
+                    grid-template-columns: 42px 58px 1fr;
+                }
+
+                .bar-wrap {
+                    grid-column: 1 / -1;
+                }
+
+                .spotlight-grid,
+                .next-list {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .page {
+                    width: min(100% - 22px, 1180px);
+                    padding-top: 18px;
+                }
+
+                .brand-logo {
+                    width: 138px;
+                }
+
+                .report-meta {
+                    font-size: 0.8rem;
+                }
+
+                .hero {
+                    margin-top: 44px;
+                }
+
+                h1 {
+                    font-size: 2.78rem;
+                }
+
+                .section h2 {
+                    font-size: 1.58rem;
+                }
+
+                .summary-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .section-header,
+                .section-body {
+                    padding-left: 18px;
+                    padding-right: 18px;
+                }
+
+                .rank-row {
+                    grid-template-columns: 38px 54px 1fr;
+                    padding: 12px;
+                }
+
+                .rank-icon {
+                    width: 52px;
+                    height: 52px;
+                }
+            }
+
+            @media print {
+                body {
+                    background: #ffffff;
+                }
+
+                body::before,
+                .toc {
+                    display: none;
+                }
+
+                .page {
+                    width: 100%;
+                    padding: 0;
+                }
+
+                .hero {
+                    margin-top: 28px;
+                }
+
+                .section {
+                    break-inside: avoid;
+                    box-shadow: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main class="page">
+            <header class="brand-bar">
+                <img
+                    class="brand-logo"
+                    src="report-assets/logo.png"
+                    alt="Fleway"
+                />
+                <div class="report-meta">
+                    PMAI Core Report · 27 de abril de 2026
+                </div>
+            </header>
+
+            <section class="hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Relatório arquetípico</p>
+                    <h1>Davi Menegon</h1>
+                    <div class="hero-rule" aria-hidden="true"></div>
+                    <p>
+                        Uma leitura visual do perfil PMAI em português,
+                        organizada para apresentar os arquétipos mais ativos, os
+                        recursos disponíveis no meio do ranking e o principal
+                        ponto cego indicado pelo relatório.
+                    </p>
+                </div>
+
+                <aside class="summary-panel">
+                    <h2>Top 3 arquétipos</h2>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <img
+                                src="report-assets/icon-warrior.png"
+                                alt="Ícone do arquétipo Guerreiro"
+                            />
+                            <strong>Guerreiro</strong>
+                            <span>1º · Aliado</span>
+                        </div>
+                        <div class="summary-item">
+                            <img
+                                src="report-assets/icon-idealist.png"
+                                alt="Ícone do arquétipo Idealista"
+                            />
+                            <strong>Idealista</strong>
+                            <span>2º · Aliado</span>
+                        </div>
+                        <div class="summary-item">
+                            <img
+                                src="report-assets/icon-jester.png"
+                                alt="Ícone do arquétipo Bobo da Corte"
+                            />
+                            <strong>Bobo da Corte</strong>
+                            <span>3º · Aliado</span>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="content">
+                <section class="section" id="visao-geral">
+                    <div class="section-header">
+                        <div>
+                            <p class="section-kicker">I. StoryWell</p>
+                            <h2>Histórias antigas e poderosas</h2>
+                        </div>
+                    </div>
+                    <div class="section-body two-column">
+                        <blockquote class="quote">
+                            "Todos pertencemos a uma identidade antiga. As
+                            histórias são os rios que nos levam até lá."
+                            <cite>Frank Delaney</cite>
+                        </blockquote>
+                        <div>
+                            <p>
+                                As histórias evoluíram como uma forma humana de
+                                gerar conexão, aprendizado e crescimento. Por
+                                meio delas, transmitimos conhecimento e
+                                revelamos algo de nós para que outras pessoas
+                                possam nos compreender e cuidar melhor de nós.
+                            </p>
+                            <p>
+                                Contar histórias é um processo primordial,
+                                universal e arquetípico. O cérebro humano tende
+                                naturalmente a organizar experiências em forma
+                                narrativa. Algumas histórias revelam verdades
+                                universais que nos ajudam a nos tornar versões
+                                mais inteiras de nós mesmos: essas são as
+                                histórias arquetípicas.
+                            </p>
+                            <p>
+                                O símbolo do StoryWell é o poço antigo e sagrado
+                                dos arquétipos: personagens, enredos, padrões,
+                                metáforas, processos e imagens que nos ensinam,
+                                expressam quem somos e nos chamam a crescer em
+                                direção ao nosso potencial.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="arquetipos">
+                    <div class="section-header">
+                        <div>
+                            <p class="section-kicker">II. PMAI</p>
+                            <h2>Histórias e personagens arquetípicos</h2>
+                        </div>
+                    </div>
+                    <div class="section-body two-column">
+                        <blockquote class="quote">
+                            "Como um indivíduo, uma história mítica tem seus
+                            aspectos particulares; mas tem ecos enraizados na
+                            experiência universal sob todas as culturas e
+                            tempos."
+                            <cite>Hugh Marr</cite>
+                        </blockquote>
+                        <div>
+                            <p>
+                                Arquétipos são padrões refletidos em símbolos,
+                                imagens e temas comuns a culturas e épocas
+                                diferentes. Eles aparecem em imagens recorrentes
+                                na arte, na literatura, nos mitos e nos sonhos.
+                            </p>
+                            <p>
+                                Quando entendemos como esses padrões aparecem
+                                nas histórias da nossa vida, podemos trabalhar
+                                com eles de forma consciente para crescimento,
+                                realização e maior integração pessoal.
+                            </p>
+                            <p>
+                                C. G. Jung popularizou o termo arquétipo ao
+                                perceber paralelos entre histórias e imagens de
+                                seus pacientes e símbolos antigos. Para Jung, ao
+                                trabalhar conscientemente com esses padrões
+                                universais, as pessoas avançavam em direção à
+                                cura e à realização, em um processo chamado
+                                individuação.
+                            </p>
+                            <p>
+                                Os personagens arquetípicos são universais, mas
+                                suas expressões são influenciadas por cultura,
+                                época e individualidade. O Guerreiro, por
+                                exemplo, pode aparecer em diferentes batalhas:
+                                do samurai ao defensor de justiça social, do
+                                pesquisador que combate uma doença à pessoa que
+                                estabelece um limite com firmeza.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="perfil">
+                    <div class="section-header">
+                        <div>
+                            <p class="section-kicker">III. Perfil</p>
+                            <h2>Ranking dos arquétipos</h2>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <p class="ranking-intro">
+                            A tabela abaixo apresenta os 12 arquétipos do
+                            resultado, do maior para o menor. As barras são uma
+                            reconstrução visual proporcional a partir do gráfico
+                            do PDF original; arquétipos com barras próximas
+                            podem ter energias muito semelhantes no perfil.
+                        </p>
+
+                        <div
+                            class="ranking"
+                            aria-label="Ranking dos arquétipos do maior para o menor"
+                        >
+                            <article
+                                class="rank-row is-top"
+                                style="--score: 100%; --accent: #d5212e"
+                            >
+                                <span class="rank-number">1</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-warrior.png"
+                                    alt="Ícone do Guerreiro"
+                                />
+                                <div class="rank-name">
+                                    <strong>Guerreiro</strong>
+                                    <span>Aliado · maior pontuação</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Movido por missão, metas e desafios.
+                                        Quando surgem obstáculos, tende a tentar
+                                        com mais força e a proteger a si mesmo,
+                                        outras pessoas ou uma causa.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row is-top"
+                                style="--score: 82%; --accent: #8dc944"
+                            >
+                                <span class="rank-number">2</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-idealist.png"
+                                    alt="Ícone do Idealista"
+                                />
+                                <div class="rank-name">
+                                    <strong>Idealista</strong>
+                                    <span>Aliado</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Confiança básica na vida, olhar positivo
+                                        e compromisso com valores. Busca manter
+                                        esperança, integridade e abertura para
+                                        receber ajuda quando necessário.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row is-top"
+                                style="--score: 80%; --accent: #f5e647"
+                            >
+                                <span class="rank-number">3</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-jester.png"
+                                    alt="Ícone do Bobo da Corte"
+                                />
+                                <div class="rank-name">
+                                    <strong>Bobo da Corte</strong>
+                                    <span>Aliado</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Valoriza humor, leveza e prazer de
+                                        viver. Enxerga inconsistências e
+                                        absurdos da vida, usando riso e
+                                        brincadeira para ampliar o prazer
+                                        próprio e dos outros.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row"
+                                style="--score: 75%; --accent: #4e3f70"
+                            >
+                                <span class="rank-number">4</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-ruler.png"
+                                    alt="Ícone do Governante"
+                                />
+                                <div class="rank-name">
+                                    <strong>Governante</strong>
+                                    <span>Baú de Tesouros</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Gravita em direção ao poder e à
+                                        responsabilidade, usando influência para
+                                        cumprir metas, manter ordem e sustentar
+                                        bons empreendimentos.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row"
+                                style="--score: 73%; --accent: #a7447f"
+                            >
+                                <span class="rank-number">5</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-lover.png"
+                                    alt="Ícone do Amante"
+                                />
+                                <div class="rank-name">
+                                    <strong>Amante</strong>
+                                    <span>Baú de Tesouros</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Busca conexão e relacionamento. É movido
+                                        por paixão, vitalidade e beleza,
+                                        deixando o coração orientar escolhas e
+                                        vínculos.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row"
+                                style="--score: 67%; --accent: #604f73"
+                            >
+                                <span class="rank-number">6</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-sage.png"
+                                    alt="Ícone do Sábio"
+                                />
+                                <div class="rank-name">
+                                    <strong>Sábio</strong>
+                                    <span>Baú de Tesouros</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Traz curiosidade, busca de entendimento
+                                        e calma para observar situações,
+                                        aprender, educar e aconselhar outras
+                                        pessoas.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row"
+                                style="--score: 66%; --accent: #e33a3a"
+                            >
+                                <span class="rank-number">7</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-seeker.png"
+                                    alt="Ícone do Explorador"
+                                />
+                                <div class="rank-name">
+                                    <strong>Explorador</strong>
+                                    <span>Baú de Tesouros</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Impulsiona a busca por si mesmo, pelo
+                                        futuro e por novas experiências. Vê a
+                                        vida como jornada de exploração e
+                                        crescimento pessoal.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row"
+                                style="--score: 66%; --accent: #167c78"
+                            >
+                                <span class="rank-number">8</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-realist.png"
+                                    alt="Ícone do Realista"
+                                />
+                                <div class="rank-name">
+                                    <strong>Realista</strong>
+                                    <span>Baú de Tesouros</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Valoriza praticidade, o que funciona e
+                                        pessoas confiáveis. Evita ilusões e
+                                        projetos onde não há controle suficiente
+                                        sobre o resultado.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row"
+                                style="--score: 35%; --accent: #354d89"
+                            >
+                                <span class="rank-number">9</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-revolutionary.png"
+                                    alt="Ícone do Revolucionário"
+                                />
+                                <div class="rank-name">
+                                    <strong>Revolucionário</strong>
+                                    <span>Baú de Tesouros</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Questiona regras e status quo. Frases
+                                        como "sempre foi assim" despertam
+                                        suspeita e vontade de romper crenças ou
+                                        hábitos limitantes.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row"
+                                style="--score: 31%; --accent: #f47b2a"
+                            >
+                                <span class="rank-number">10</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-magician.png"
+                                    alt="Ícone do Mago"
+                                />
+                                <div class="rank-name">
+                                    <strong>Mago</strong>
+                                    <span>Baú de Tesouros</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Percebe interconexões, sincronicidades e
+                                        efeitos em cadeia. Ajuda a criar mudança
+                                        transformando percepções em si e nos
+                                        outros.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row"
+                                style="--score: 19%; --accent: #4f9b68"
+                            >
+                                <span class="rank-number">11</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-caregiver.png"
+                                    alt="Ícone do Cuidador"
+                                />
+                                <div class="rank-name">
+                                    <strong>Cuidador</strong>
+                                    <span>Baú de Tesouros</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Encontra valor e realização em ajudar,
+                                        nutrir e responder às necessidades dos
+                                        outros com generosidade e
+                                        responsabilidade.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article
+                                class="rank-row"
+                                style="--score: 14%; --accent: #f7bf3e"
+                            >
+                                <span class="rank-number">12</span>
+                                <img
+                                    class="rank-icon"
+                                    src="report-assets/icon-creator.png"
+                                    alt="Ícone do Criador"
+                                />
+                                <div class="rank-name">
+                                    <strong>Criador</strong>
+                                    <span>Ponto Cego · menor pontuação</span>
+                                </div>
+                                <div class="bar-wrap">
+                                    <div class="bar"><span></span></div>
+                                    <p class="rank-description">
+                                        Traz imaginação e capacidade de dar
+                                        forma concreta a novas possibilidades,
+                                        como arte, escrita, design ou invenções.
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="altos">
+                    <div class="section-header">
+                        <div>
+                            <p class="section-kicker">
+                                IV. A história de ser você
+                            </p>
+                            <h2>Arquétipos com maior pontuação</h2>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <p>
+                            Compreender como os arquétipos de maior pontuação
+                            motivam sua história de vida pode ajudar em decisões
+                            mais alinhadas e realizadoras. Eles indicam o que
+                            impulsiona você e quais enredos você tende a viver
+                            com mais facilidade e autenticidade.
+                        </p>
+                        <p>
+                            Cada arquétipo representa um personagem e uma
+                            história reconhecíveis nas atitudes e comportamentos
+                            de uma pessoa. As descrições são gerais; nem todas
+                            as frases precisam ser totalmente verdadeiras para
+                            você.
+                        </p>
+
+                        <div class="spotlight-grid">
+                            <article class="spotlight">
+                                <img
+                                    src="report-assets/card-warrior.png"
+                                    alt="Guerreiro"
+                                />
+                                <h3>Guerreiro</h3>
+                                <p class="role">
+                                    Soldado · Defensor · Competidor
+                                </p>
+                                <p>
+                                    A parte Guerreiro em você é focada,
+                                    orientada a metas, firme, assertiva e movida
+                                    por missão. Você tende a notar ameaças,
+                                    desafios, adversários e oportunidades de
+                                    vencer uma disputa ou debate.
+                                </p>
+                                <p>
+                                    Quando há problemas, sua história
+                                    arquetípica incentiva identificar a causa,
+                                    quem está sendo prejudicado e o que precisa
+                                    ser enfrentado. Na liderança, esse arquétipo
+                                    favorece competição saudável, trabalho duro
+                                    e metas claras.
+                                </p>
+                                <p>
+                                    Ponto de atenção: evitar agressividade
+                                    inadequada, dureza excessiva consigo ou com
+                                    os outros, e a tendência de ver quem não
+                                    acompanha seu padrão como inferior ou
+                                    precisando ser corrigido.
+                                </p>
+                            </article>
+
+                            <article class="spotlight">
+                                <img
+                                    src="report-assets/card-idealist.png"
+                                    alt="Idealista"
+                                />
+                                <h3>Idealista</h3>
+                                <p class="role">
+                                    Inocente · Otimista · Sonhador
+                                </p>
+                                <p>
+                                    A parte Idealista em você confia na vida e
+                                    enxerga o lado bom de pessoas e situações.
+                                    Você busca viver de acordo com seus ideais e
+                                    com uma visão de vida melhor.
+                                </p>
+                                <p>
+                                    Diante de problemas, esse enredo incentiva
+                                    acreditar que as coisas vão dar certo:
+                                    alguém ajudará, a situação pode não ser tão
+                                    ruim quanto parece, ou será possível vencer
+                                    mantendo fé, valores e perseverança.
+                                </p>
+                                <p>
+                                    Ponto de atenção: evitar ingenuidade,
+                                    confiança excessiva ou otimismo que possa
+                                    abrir espaço para manipulação, frustração ou
+                                    desilusão.
+                                </p>
+                            </article>
+
+                            <article class="spotlight">
+                                <img
+                                    src="report-assets/card-jester.png"
+                                    alt="Bobo da Corte"
+                                />
+                                <h3>Bobo da Corte</h3>
+                                <p class="role">
+                                    Animador · Trickster · Bobo da corte
+                                </p>
+                                <p>
+                                    A parte Bobo da Corte em você valoriza
+                                    diversão, leveza e prazer. Você tende a
+                                    perceber oportunidades de alegria em quase
+                                    qualquer situação, encontrando caminhos
+                                    criativos ao redor de obstáculos.
+                                </p>
+                                <p>
+                                    Quando há problemas, esse arquétipo estimula
+                                    pensar fora da caixa, encontrar soluções
+                                    engenhosas ou transformar a situação em
+                                    jogo, história engraçada ou alívio de
+                                    tensão.
+                                </p>
+                                <p>
+                                    Ponto de atenção: não desperdiçar energia,
+                                    deixar responsabilidades importantes
+                                    escaparem ou usar humor para diminuir outras
+                                    pessoas.
+                                </p>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="baixo">
+                    <div class="section-header">
+                        <div>
+                            <p class="section-kicker">
+                                V. O que você talvez não veja
+                            </p>
+                            <h2>Arquétipo com menor pontuação: Criador</h2>
+                        </div>
+                    </div>
+                    <div class="section-body lowest-layout">
+                        <div>
+                            <img
+                                src="report-assets/card-creator.png"
+                                alt="Criador"
+                            />
+                        </div>
+                        <div>
+                            <blockquote class="quote">
+                                "A vida não é sobre encontrar a si mesmo. A vida
+                                é sobre criar a si mesmo."
+                                <cite>George Bernard Shaw</cite>
+                            </blockquote>
+                            <p>
+                                Todos têm um arquétipo de menor pontuação. Isso
+                                não significa que ele seja ruim; pode indicar
+                                atitudes, comportamentos e histórias que estão
+                                menos disponíveis, menos valorizados ou em um
+                                ponto cego neste momento.
+                            </p>
+                            <p>
+                                A parte Criador é naturalmente artística e usa
+                                imaginação para realizar visões em formas
+                                concretas. Ela se orienta por aquilo que
+                                desperta imaginação, cria planos e busca
+                                recursos ou habilidades para materializar uma
+                                visão.
+                            </p>
+                            <p>
+                                Quando problemas surgem, o Criador incentiva
+                                reinvenção, uma nova visão ou o desenvolvimento
+                                de habilidades necessárias para produzir novas
+                                estruturas, projetos, arte, design ou invenções.
+                            </p>
+                            <p>
+                                Ponto de atenção: evitar rejeitar processos
+                                rotineiros que funcionam apenas porque não
+                                correspondem à visão ideal. Também pode haver
+                                dificuldade em soltar soluções ou criações
+                                quando elas deixam de ajudar ou inspirar.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="proximos">
+                    <div class="section-header">
+                        <div>
+                            <p class="section-kicker">VI. Próximos passos</p>
+                            <h2>Como usar este relatório</h2>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <p>
+                            O relatório oficial recomenda aprofundar o trabalho
+                            com arquétipos por meio de recursos adicionais do
+                            StoryWell, do relatório expandido e do livro
+                            <em>What Story Are You Living?</em>. A proposta é
+                            usar os resultados como ponto de partida para
+                            autoconhecimento, relacionamentos, carreira e
+                            desenvolvimento.
+                        </p>
+                        <div class="next-list">
+                            <div>
+                                <strong>1. Explore seus aliados</strong>
+                                Observe onde Guerreiro, Idealista e Bobo da
+                                Corte já geram força, energia e autenticidade no
+                                dia a dia.
+                            </div>
+                            <div>
+                                <strong>2. Releia o ponto cego</strong>
+                                O Criador pode indicar habilidades de
+                                imaginação, materialização e reinvenção que
+                                merecem atenção consciente.
+                            </div>
+                            <div>
+                                <strong>3. Conecte com decisões</strong>
+                                Use o ranking para refletir sobre liderança,
+                                escolhas profissionais, relacionamentos e
+                                momentos de transição.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <p class="legal">
+                    PMAI e Pearson-Marr Archetype Indicator são marcas
+                    comerciais ou registradas de Carol S. Pearson e Hugh K. Marr
+                    nos Estados Unidos e em outros países. Conteúdo traduzido e
+                    redesenhado a partir do relatório PMAI fornecido pelo
+                    usuário. Ícones dos arquétipos extraídos do PDF original
+                    para manter fidelidade visual ao material oficial.
+                </p>
+            </section>
+        </main>
+    </body>
+</html>
