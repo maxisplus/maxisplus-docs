@@ -9,6 +9,8 @@ This project is a static proxy architecture used to host documentation and propo
     -   If `surge` is not available in the environment, use: `npx surge . docs.maxis.plus`
     -   **Pre-deployment Checklist:** Agents MUST NOT deploy until they have verified the following with the user:
         -   The file name is descriptive and appropriate.
+        -   HTML file names MUST use kebab-case only (lowercase letters, numbers, and hyphens) and end in `.html` (e.g., `quarterly-report.html`).
+        -   HTML file names MUST NOT contain spaces or uppercase letters.
         -   The file is located in the correct project-specific subdirectory (e.g., `/fleway/`, `/clop/`).
         -   All assets are properly organized (see Asset Management).
 
