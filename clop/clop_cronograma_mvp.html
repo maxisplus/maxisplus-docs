@@ -295,6 +295,124 @@ h1 {
   line-height: 1.6;
 }
 
+/* ——— Kanban ——— */
+.kanban-section {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+.kanban-section .gantt-label { margin-bottom: 18px; }
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(190px, 1fr));
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.kanban-col {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.kanban-col-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.kcol-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.kcol-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: var(--rule);
+  color: var(--muted);
+}
+
+.kcol-todo  { background: var(--bg); }
+.kcol-wip   { background: #fffcf2; }
+.kcol-done  { background: #f6faf5; }
+.kcol-rtt   { background: #f2f8fa; }
+.kcol-dep   { background: #f7f5fb; }
+
+.kcol-todo  .kcol-title { color: var(--muted); }
+.kcol-wip   .kcol-title { color: #8a6a1a; }
+.kcol-done  .kcol-title { color: #5a7a4a; }
+.kcol-rtt   .kcol-title { color: #3a6a67; }
+.kcol-dep   .kcol-title { color: #6a4a6a; }
+
+.kanban-cards {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+.kanban-cards::-webkit-scrollbar { width: 4px; }
+.kanban-cards::-webkit-scrollbar-track { background: transparent; }
+.kanban-cards::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 4px; }
+
+.kcard {
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  border-radius: 5px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.kcat {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 2px 5px;
+  border-radius: 2px;
+  color: #fff;
+  align-self: flex-start;
+  opacity: .9;
+}
+.kcat-cad  { background: var(--c1); }
+.kcat-op   { background: var(--c2); }
+.kcat-jur  { background: var(--c3); }
+.kcat-ai   { background: var(--c4); }
+.kcat-wpp  { background: var(--c5); }
+.kcat-seg  { background: var(--c6); }
+.kcat-dash { background: #4a6b8a; }
+.kcat-api  { background: #666; }
+.kcat-test { background: #7a5a7a; }
+
+.kcard-title {
+  font-size: 12px;
+  color: var(--ink);
+  line-height: 1.45;
+}
+.kanban-empty {
+  padding: 24px 12px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--faint);
+  font-style: italic;
+  line-height: 1.6;
+}
+
 /* ——— Responsive ——— */
 @media (max-width: 640px) {
   body { padding: 28px 16px 48px; }
@@ -486,6 +604,173 @@ h1 {
       </ul>
     </div>
 
+  </div>
+
+  <!-- Kanban Board -->
+  <div class="kanban-section">
+    <div class="gantt-label">Quadro de tarefas</div>
+    <div class="kanban-board">
+
+      <!-- ── A FAZER ── -->
+      <div class="kanban-col">
+        <div class="kanban-col-head kcol-todo">
+          <span class="kcol-title">A fazer</span>
+          <span class="kcol-count">40</span>
+        </div>
+        <div class="kanban-cards">
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Upload real de arquivos no Supabase Storage</span></div>
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Organização persistente de documentos no Supabase Postgres</span></div>
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Telas de cadastro de processo, parte, imóvel e documento</span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">Filtros por status, etapa, responsável ou prioridade</span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">Painel operacional no frontend</span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">Linha do tempo visual no frontend</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Serviço dedicado de geração de documentos por templates</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Versionamento de contrato separado da base jurídica</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Fluxo padrão de parecer com estados de revisão e aprovação</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Interface jurídica para gestão de regras, templates e checklists</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Prompts de produção e validação JSON para OpenRouter</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Recuperação sobre texto de documentos ou embeddings</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Busca semântica com pgvector</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Recuperação do histórico de conversas</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Fluxo de revisão humana de rascunhos gerados</span></div>
+          <div class="kcard"><span class="kcat kcat-wpp">WhatsApp</span><span class="kcard-title">Decisão de provedor (Twilio, Meta Cloud API, Z-API ou outro)</span></div>
+          <div class="kcard"><span class="kcat kcat-wpp">WhatsApp</span><span class="kcard-title">Endpoint de webhook de entrada</span></div>
+          <div class="kcard"><span class="kcat kcat-wpp">WhatsApp</span><span class="kcard-title">Enviador de mensagens de saída</span></div>
+          <div class="kcard"><span class="kcat kcat-wpp">WhatsApp</span><span class="kcard-title">Resolução de número para usuário, processo ou sessão interna</span></div>
+          <div class="kcard"><span class="kcat kcat-wpp">WhatsApp</span><span class="kcard-title">Gestão de status de entrega de mensagens</span></div>
+          <div class="kcard"><span class="kcat kcat-wpp">WhatsApp</span><span class="kcard-title">Credenciais e configuração de deployment do provedor</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Verificação de JWT do Supabase</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Persistência no Supabase Postgres</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Migrações de banco de dados</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Design de políticas de row-level security</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Entidade de log de auditoria</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Política de retenção e acesso orientada à LGPD</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Middleware de segurança, rate limiting e logs estruturados</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Detalhamento de pendências por status</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Documentos ausentes por processo e etapa</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Produtividade por operador</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Dashboard gerencial no frontend</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">Geração de OpenAPI a partir de schemas Zod</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">Convenções de paginação, filtro e ordenação</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">Catálogo de erros estável</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">Testes unitários por branch de serviço e casos de validação</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">Testes de integração contra Supabase local ou projeto de teste</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">Teste simulado do adaptador OpenRouter</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">Testes de tratamento de JSON malformado do LLM</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">Testes para URL de upload com Supabase simulado</span></div>
+        </div>
+      </div>
+
+      <!-- ── EM ANDAMENTO ── -->
+      <div class="kanban-col">
+        <div class="kanban-col-head kcol-wip">
+          <span class="kcol-title">Em andamento</span>
+          <span class="kcol-count">12</span>
+        </div>
+        <div class="kanban-cards">
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Limite do fluxo de upload via <code style="font-size:11px">/documents/upload-url</code></span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">API de dados do painel operacional via <code style="font-size:11px">/dashboard/summary</code></span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">Visão consolidada de pendências (via bundle e contagem do painel)</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Armazenamento básico de regras de pré-contrato na base jurídica</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Rascunho de pareceres via resposta estruturada do agente</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Adaptador OpenRouter implementado</span></div>
+          <div class="kcard"><span class="kcat kcat-wpp">WhatsApp</span><span class="kcard-title">Marcador de canal WhatsApp na sessão do agente</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Simulação de autenticação local via header <code style="font-size:11px">x-user-id</code></span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Supabase Auth planejado, ainda não aplicado</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Adaptador Supabase Storage existente</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Placeholder básico de SLA: processos ativos sem pendências abertas</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">Supabase adapter-ready para Storage (Postgres/Auth ainda não conectados)</span></div>
+        </div>
+      </div>
+
+      <!-- ── CONCLUÍDO ── -->
+      <div class="kanban-col">
+        <div class="kanban-col-head kcol-done">
+          <span class="kcol-title">Concluído</span>
+          <span class="kcol-count">55</span>
+        </div>
+        <div class="kanban-cards">
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Criar, listar e atualizar processos via API</span></div>
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Cadastrar partes envolvidas via API</span></div>
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Cadastrar imóvel via API</span></div>
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Armazenar matrícula no registro do imóvel</span></div>
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Armazenar CPF/CNPJ como metadado da parte</span></div>
+          <div class="kcard"><span class="kcat kcat-cad">Cadastro</span><span class="kcard-title">Armazenar metadados de documentos vinculados ao processo, parte e imóvel</span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">Campos de etapa e status do processo</span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">Listagem de processos via API</span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">API de eventos de linha do tempo</span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">Notas operacionais via eventos e descrição do processo</span></div>
+          <div class="kcard"><span class="kcat kcat-op">Operacional</span><span class="kcard-title">API de criação e resolução de pendências</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Modelo de base jurídica com regras, templates, checklists e fontes</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Status de rascunho/publicado nas entradas da base</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Versionamento de entradas da base jurídica</span></div>
+          <div class="kcard"><span class="kcat kcat-jur">Jurídico</span><span class="kcard-title">Somente entradas publicadas usadas pelo agente por padrão</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">API de sessão do agente</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">API de mensagens do agente</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Agente vinculado a um processo</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Agente monta contexto a partir do processo, partes, imóvel e pendências</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Agente cita fatos do processo e referências da base jurídica</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Agente identifica documentos ausentes como alertas de risco</span></div>
+          <div class="kcard"><span class="kcat kcat-ai">Copilot</span><span class="kcard-title">Agente restrito à função assistiva, sem alterar status jurídico</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Papéis internos modelados: operador, advogado-admin, gestor</span></div>
+          <div class="kcard"><span class="kcat kcat-seg">Segurança</span><span class="kcard-title">Verificações básicas de RBAC para escrita, leitura e uso do agente</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Métrica de total de processos</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Processos por etapa</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Processos por status</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Contagem de documentos ausentes</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Contagem de pendências abertas</span></div>
+          <div class="kcard"><span class="kcat kcat-dash">Dashboard</span><span class="kcard-title">Contadores básicos de produtividade</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">GET /cases</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /cases</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">GET /cases/:id</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">PATCH /cases/:id</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /cases/:id/parties</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /cases/:id/properties</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /cases/:id/pending-items</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">PATCH /pending-items/:id/resolve</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /cases/:id/timeline</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /cases/:id/documents</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /documents/upload-url</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">GET /legal-kb</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /legal-kb</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">PATCH /legal-kb/:id</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">GET /dashboard/summary</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /agent/sessions</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">POST /agent/sessions/:id/messages</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">OpenAPI 3.1 disponível em /openapi.json</span></div>
+          <div class="kcard"><span class="kcat kcat-api">API</span><span class="kcard-title">Swagger UI disponível em /docs</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">API: operador pode criar processos</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">API: gestor não pode escrever processos</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">API: base jurídica retorna apenas publicados por padrão</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">API: gestor pode ler o resumo do painel</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">Agente: cita fatos do processo e base jurídica publicada</span></div>
+          <div class="kcard"><span class="kcat kcat-test">Testes</span><span class="kcard-title">Agente: alerta de documento ausente</span></div>
+        </div>
+      </div>
+
+      <!-- ── PRONTO PARA TESTE ── -->
+      <div class="kanban-col">
+        <div class="kanban-col-head kcol-rtt">
+          <span class="kcol-title">Pronto p/ teste</span>
+          <span class="kcol-count">0</span>
+        </div>
+        <div class="kanban-cards">
+          <div class="kanban-empty">Nenhum item aqui ainda.</div>
+        </div>
+      </div>
+
+      <!-- ── PUBLICADO ── -->
+      <div class="kanban-col">
+        <div class="kanban-col-head kcol-dep">
+          <span class="kcol-title">Publicado</span>
+          <span class="kcol-count">0</span>
+        </div>
+        <div class="kanban-cards">
+          <div class="kanban-empty">Nenhum item publicado ainda.</div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
 </div>
