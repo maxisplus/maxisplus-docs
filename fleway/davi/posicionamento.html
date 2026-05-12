@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Valen Capital · Estratégia de Posicionamento · Doc. 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5F3EE;
+    --cream-deep:#EDEAE2;
+    --paper:#FAF8F3;
+    --navy:#061323;
+    --navy-soft:#0D1F35;
+    --navy-line:#1A2B45;
+    --blue:#3B73FF;
+    --gold:#C58B2B;
+    --graphite:#72767D;
+    --ink:#0A0F1A;
+    --line:rgba(6,19,35,0.14);
+    --line-soft:rgba(6,19,35,0.07);
+    --line-dark:rgba(245,243,238,0.18);
+    --line-dark-soft:rgba(245,243,238,0.08);
+  }
+  @page{size:A4 landscape;margin:0;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:#26262a;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{font-family:'Fraunces',Georgia,serif;color:var(--ink);}
+  .deck{display:flex;flex-direction:column;align-items:center;gap:28px;padding:32px 0;}
+  .slide{
+    width:297mm;height:210mm;
+    background:var(--cream);
+    position:relative;overflow:hidden;
+    page-break-after:always;
+    box-shadow:0 12px 48px rgba(0,0,0,0.35);
+    color:var(--ink);
+  }
+  .slide.dark{background:var(--navy);color:var(--cream);}
+  .slide:last-child{page-break-after:auto;}
+  @media print{
+    html,body{background:white;}
+    .deck{gap:0;padding:0;}
+    .slide{box-shadow:none;}
+  }
+
+  /* ——— TYPOGRAPHY PRIMITIVES ——— */
+  .mono{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;text-transform:uppercase;color:var(--graphite);font-weight:500;}
+  .mono-md{font-family:'JetBrains Mono',monospace;font-size:9pt;letter-spacing:0.2em;text-transform:uppercase;font-weight:500;}
+  .dark .mono,.dark .mono-md{color:rgba(245,243,238,0.55);}
+  .dark .mono.bright{color:var(--cream);}
+
+  .hero{font-family:'Fraunces',serif;font-weight:300;line-height:0.95;letter-spacing:-0.022em;font-variation-settings:"opsz" 144;}
+  .display{font-family:'Fraunces',serif;font-weight:300;line-height:1.02;letter-spacing:-0.018em;font-variation-settings:"opsz" 96;}
+  .title{font-family:'Fraunces',serif;font-weight:400;line-height:1.08;letter-spacing:-0.012em;font-variation-settings:"opsz" 48;}
+  .body{font-family:'Fraunces',serif;font-weight:400;font-size:10.5pt;line-height:1.55;color:#1d2737;font-variation-settings:"opsz" 14;}
+  .dark .body{color:rgba(245,243,238,0.78);}
+  .lede{font-family:'Fraunces',serif;font-weight:400;font-size:12pt;line-height:1.5;color:#1d2737;font-variation-settings:"opsz" 14;}
+  .dark .lede{color:rgba(245,243,238,0.85);}
+
+  .em-blue{color:var(--blue);font-style:italic;font-weight:400;}
+  .em-gold{color:var(--gold);font-style:italic;font-weight:400;}
+  .em-cream-it{color:var(--cream);font-style:italic;font-weight:400;}
+
+  /* ——— SECTION LABEL ——— */
+  .section-label{display:flex;align-items:center;gap:10px;}
+  .section-label .dot{width:5px;height:5px;background:var(--blue);border-radius:50%;display:inline-block;}
+  .dark .section-label .dot{background:var(--blue);}
+
+  /* ——— FOOTER (folio) ——— */
+  .folio{
+    position:absolute;bottom:9mm;left:16mm;right:16mm;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:'JetBrains Mono',monospace;font-size:7.2pt;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--graphite);
+  }
+  .dark .folio{color:rgba(245,243,238,0.45);}
+  .folio .brand-mark{display:flex;align-items:center;gap:8px;}
+  .folio .brand-mark .glyph{
+    width:9px;height:9px;border:1px solid currentColor;display:inline-block;transform:rotate(45deg);
+  }
+  .folio .crumbs{display:flex;gap:18px;}
+
+  /* ——— TOP RULE under section label ——— */
+  .top-rule{position:absolute;left:16mm;right:16mm;top:18mm;height:1px;background:var(--line);}
+  .dark .top-rule{background:var(--line-dark);}
+
+  /* ——— STATUS PILL ——— */
+  .pill{
+    display:inline-flex;align-items:center;gap:7px;
+    padding:5px 11px 5px 9px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--ink);
+  }
+  .dark .pill{border-color:var(--line-dark);color:var(--cream);}
+  .pill .pdot{width:5px;height:5px;border-radius:50%;}
+  .pill .pdot.alert{background:var(--gold);}
+  .pill .pdot.crit{background:#D94D38;}
+  .pill .pdot.act{background:var(--blue);}
+
+  /* ——— EVIDENCE BOX ——— */
+  .evidence{
+    background:var(--cream-deep);
+    border-left:2px solid var(--blue);
+    padding:18px 20px 18px 22px;
+  }
+
+  /* ——— DARK ACTION PANEL ——— */
+  .action-panel{
+    background:var(--navy);color:var(--cream);
+    padding:30px 30px 36px;
+  }
+
+  /* ——— UTILS ——— */
+  .h-rule{height:1px;background:var(--line);}
+  .dark .h-rule{background:var(--line-dark);}
+  .v-rule{width:1px;background:var(--line);}
+  .dark .v-rule{background:var(--line-dark);}
+
+  /* ====================================================
+     SLIDE-SPECIFIC STYLES
+     ==================================================== */
+
+  /* — 01 COVER — */
+  .s-cover .corner-mark{position:absolute;top:16mm;left:16mm;display:flex;align-items:center;gap:11px;}
+  .s-cover .corner-mark .glyph{width:14px;height:14px;border:1.2px solid var(--ink);transform:rotate(45deg);}
+  .s-cover .corner-mark .wm{font-family:'JetBrains Mono',monospace;font-size:9pt;letter-spacing:0.28em;text-transform:uppercase;}
+  .s-cover .meta-tr{position:absolute;top:16mm;right:16mm;text-align:right;}
+  .s-cover .meta-tr .mono{display:block;color:var(--graphite);margin-bottom:4px;}
+  .s-cover .hero-block{position:absolute;left:16mm;bottom:30mm;right:16mm;}
+  .s-cover .hero-block .pre{margin-bottom:14mm;}
+  .s-cover .hero-block h1{font-size:96pt;}
+  .s-cover .hero-block .sub{margin-top:14mm;display:flex;justify-content:space-between;align-items:flex-end;}
+  .s-cover .hero-block .sub .right{text-align:right;}
+  .s-cover .hero-block .sub p{max-width:120mm;font-size:11pt;line-height:1.5;}
+
+  /* — 02 INDEX — */
+  .s-index .grid{position:absolute;left:16mm;right:16mm;top:36mm;bottom:18mm;display:grid;grid-template-columns:1fr 2.3fr;gap:22mm;}
+  .s-index h2{font-size:27pt;line-height:1.06;}
+  .s-index .toc{display:flex;flex-direction:column;gap:0;}
+  .s-index .toc-row{display:grid;grid-template-columns:42px 1fr auto;gap:18px;align-items:baseline;padding:4.5px 0;border-bottom:1px solid var(--line-soft);}
+  .s-index .toc-row:last-child{border-bottom:none;}
+  .s-index .toc-row .num{font-family:'JetBrains Mono',monospace;font-size:8pt;color:var(--graphite);letter-spacing:0.1em;}
+  .s-index .toc-row .name{font-family:'Fraunces',serif;font-size:11.5pt;line-height:1.2;font-weight:400;}
+  .s-index .toc-row .pg{font-family:'JetBrains Mono',monospace;font-size:7.5pt;color:var(--graphite);letter-spacing:0.1em;}
+  .s-index .toc-row.act-divider{border-bottom:1px solid var(--line);padding-top:7px;padding-bottom:6px;margin-top:3px;}
+  .s-index .toc-row.act-divider:first-child{margin-top:0;}
+  .s-index .toc-row.act-divider .name{font-style:italic;color:var(--blue);}
+
+  /* — 03 CONTEXTO — */
+  .s-context .lead{position:absolute;left:16mm;top:46mm;right:16mm;}
+  .s-context .lead h2{font-size:54pt;max-width:230mm;}
+  .s-context .body-grid{position:absolute;left:16mm;right:16mm;bottom:30mm;display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:18mm;}
+  .s-context .body-grid h4{font-family:'Fraunces',serif;font-weight:500;font-size:13pt;line-height:1.25;margin-bottom:10px;}
+  .s-context .body-grid .body{font-size:9.8pt;line-height:1.55;}
+  .s-context .body-grid .mono{margin-bottom:14px;display:block;}
+
+  /* — 04 METRICS DARK — */
+  .s-metrics .head{position:absolute;left:16mm;top:18mm;right:16mm;}
+  .s-metrics .head h2{font-size:34pt;margin-top:18px;max-width:230mm;color:var(--cream);line-height:1.08;}
+  .s-metrics .head .rule{height:1px;background:var(--line-dark);margin-top:14px;}
+  .s-metrics .grid{position:absolute;left:16mm;right:16mm;bottom:26mm;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;}
+  .s-metrics .cell{padding:0 18px 0 0;border-left:1px solid var(--line-dark);padding-left:18px;}
+  .s-metrics .cell:first-child{border-left:none;padding-left:0;}
+  .s-metrics .cell .label{margin-bottom:14px;}
+  .s-metrics .cell .num{font-family:'Fraunces',serif;font-weight:300;font-size:74pt;line-height:0.92;letter-spacing:-0.03em;color:var(--cream);font-variation-settings:"opsz" 144;}
+  .s-metrics .cell .num .unit{font-size:32pt;color:var(--blue);font-style:italic;margin-left:2px;}
+  .s-metrics .cell .num .small{font-size:36pt;color:rgba(245,243,238,0.5);}
+  .s-metrics .cell .desc{margin-top:14px;font-size:9pt;line-height:1.55;color:rgba(245,243,238,0.72);}
+
+  /* — 05 LIMBO — */
+  .s-limbo .lead{position:absolute;left:16mm;top:42mm;right:50%;}
+  .s-limbo .lead h2{font-size:62pt;}
+  .s-limbo .lede{margin-top:14mm;max-width:118mm;}
+  .s-limbo .right-col{position:absolute;right:16mm;top:42mm;bottom:26mm;width:128mm;}
+  .s-limbo .strata{display:flex;flex-direction:column;}
+  .s-limbo .strata-row{
+    display:grid;grid-template-columns:20mm 1fr auto;gap:14px;align-items:center;
+    padding:13px 0;border-bottom:1px solid var(--line-soft);
+  }
+  .s-limbo .strata-row .range{font-family:'JetBrains Mono',monospace;font-size:8.5pt;letter-spacing:0.1em;color:var(--graphite);}
+  .s-limbo .strata-row .seg-name{font-family:'Fraunces',serif;font-size:13pt;}
+  .s-limbo .strata-row.limbo{background:var(--cream-deep);margin:0 -10px;padding:18px 10px;border-bottom:none;border-top:1px solid var(--line);position:relative;}
+  .s-limbo .strata-row.limbo::after{content:"";position:absolute;left:-4px;top:0;bottom:0;width:2px;background:var(--blue);}
+  .s-limbo .strata-row.limbo .seg-name{font-style:italic;color:var(--blue);font-size:15pt;}
+  .s-limbo .strata-row.limbo .range{color:var(--ink);font-weight:600;}
+  .s-limbo .strata-row .badge{font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:0.18em;color:var(--graphite);}
+
+  /* — 06 TRÊS CAMADAS — */
+  .s-pain .head{position:absolute;left:16mm;top:30mm;right:16mm;}
+  .s-pain .head h2{font-size:38pt;line-height:1.05;max-width:240mm;}
+  .s-pain .grid{position:absolute;left:16mm;right:16mm;top:80mm;bottom:24mm;display:grid;grid-template-columns:1fr 1fr 1fr;gap:18mm;}
+  .s-pain .col{display:flex;flex-direction:column;}
+  .s-pain .col .lvl{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+  .s-pain .col h4{font-family:'Fraunces',serif;font-weight:400;font-size:22pt;line-height:1.05;margin-bottom:14px;letter-spacing:-0.01em;}
+  .s-pain .col .body{font-size:10pt;line-height:1.55;}
+  .s-pain .col .depth{font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.18em;color:var(--graphite);margin-top:14px;text-transform:uppercase;}
+
+  /* — 07 INIMIGO DARK — */
+  .s-enemy .corner-pill{position:absolute;top:16mm;left:16mm;}
+  .s-enemy .top-mono{position:absolute;top:16mm;right:16mm;}
+  .s-enemy .hero-block{position:absolute;left:16mm;top:60mm;right:16mm;}
+  .s-enemy .hero-block h2{font-size:78pt;color:var(--cream);}
+  .s-enemy .grid{position:absolute;left:16mm;right:16mm;bottom:26mm;display:grid;grid-template-columns:1fr 1fr;gap:18mm;}
+  .s-enemy .grid .col h5{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+  .s-enemy .grid .col .body{font-size:10pt;line-height:1.55;color:rgba(245,243,238,0.8);}
+
+  /* — 08 MANIFESTO — */
+  .s-manifesto .head{position:absolute;left:16mm;top:20mm;right:16mm;}
+  .s-manifesto .hero-stage{position:absolute;left:16mm;top:58mm;right:16mm;}
+  .s-manifesto .hero-stage h2{font-size:84pt;letter-spacing:-0.025em;}
+  .s-manifesto .attrib{position:absolute;left:16mm;right:16mm;bottom:24mm;display:flex;justify-content:space-between;align-items:flex-end;}
+  .s-manifesto .attrib .credo{max-width:120mm;font-size:11pt;line-height:1.5;font-style:italic;color:#1d2737;}
+  .s-manifesto .attrib .sig{text-align:right;}
+
+  /* — 09 MOTORES — */
+  .s-motors .head{position:absolute;left:16mm;top:18mm;right:16mm;}
+  .s-motors .head h2{font-size:42pt;margin-top:14px;max-width:200mm;}
+  .s-motors .grid{position:absolute;left:16mm;right:16mm;bottom:26mm;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;}
+  .s-motors .motor{padding:0 22px;border-left:1px solid var(--line);position:relative;min-height:108mm;display:flex;flex-direction:column;}
+  .s-motors .motor:first-child{border-left:none;padding-left:0;}
+  .s-motors .motor .num{font-family:'Fraunces',serif;font-weight:300;font-size:80pt;line-height:0.85;letter-spacing:-0.03em;color:var(--blue);font-style:italic;font-variation-settings:"opsz" 144;}
+  .s-motors .motor .name{font-family:'Fraunces',serif;font-weight:400;font-size:24pt;line-height:1.05;margin-top:8px;margin-bottom:6px;letter-spacing:-0.01em;}
+  .s-motors .motor .role{font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.2em;text-transform:uppercase;color:var(--graphite);margin-bottom:18px;}
+  .s-motors .motor .desc{font-size:9.8pt;line-height:1.55;color:#1d2737;}
+  .s-motors .motor .foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--line-soft);font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.18em;color:var(--graphite);text-transform:uppercase;}
+
+  /* — 10 MATRIZ — */
+  .s-matrix .head{position:absolute;left:16mm;top:18mm;right:16mm;}
+  .s-matrix .head h2{font-size:36pt;margin-top:14px;max-width:200mm;}
+  .s-matrix .canvas{position:absolute;left:16mm;top:60mm;width:155mm;height:118mm;border:1px solid var(--line);}
+  .s-matrix .canvas .axis-x-lbl-l,.s-matrix .canvas .axis-x-lbl-r{position:absolute;bottom:-16px;font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.18em;color:var(--graphite);text-transform:uppercase;}
+  .s-matrix .canvas .axis-x-lbl-l{left:0;}
+  .s-matrix .canvas .axis-x-lbl-r{right:0;}
+  .s-matrix .canvas .axis-y-lbl-t,.s-matrix .canvas .axis-y-lbl-b{position:absolute;left:-16px;font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.18em;color:var(--graphite);text-transform:uppercase;writing-mode:vertical-rl;transform:rotate(180deg);}
+  .s-matrix .canvas .axis-y-lbl-t{top:0;}
+  .s-matrix .canvas .axis-y-lbl-b{bottom:0;}
+  .s-matrix .canvas .crosshair-h{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line);}
+  .s-matrix .canvas .crosshair-v{position:absolute;top:0;bottom:0;left:50%;width:1px;background:var(--line);}
+  .s-matrix .canvas .quadrant{position:absolute;font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:0.18em;color:var(--graphite);opacity:0.5;text-transform:uppercase;}
+  .s-matrix .canvas .quadrant.q-tl{top:8px;left:8px;}
+  .s-matrix .canvas .quadrant.q-tr{top:8px;right:8px;text-align:right;}
+  .s-matrix .canvas .quadrant.q-bl{bottom:8px;left:8px;}
+  .s-matrix .canvas .quadrant.q-br{bottom:8px;right:8px;text-align:right;}
+  .s-matrix .point{position:absolute;}
+  .s-matrix .point .dot{width:10px;height:10px;border-radius:50%;background:var(--ink);}
+  .s-matrix .point.valen .dot{background:var(--blue);width:14px;height:14px;box-shadow:0 0 0 6px rgba(59,115,255,0.15);}
+  .s-matrix .point .lbl{position:absolute;left:18px;top:-4px;white-space:nowrap;font-family:'Fraunces',serif;font-size:11.5pt;}
+  .s-matrix .point.valen .lbl{color:var(--blue);font-style:italic;font-weight:500;font-size:13pt;}
+  .s-matrix .point .sub{position:absolute;left:18px;top:14px;white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:0.16em;color:var(--graphite);text-transform:uppercase;}
+
+  .s-matrix .legend{position:absolute;right:16mm;top:60mm;width:90mm;}
+  .s-matrix .legend .item{padding:14px 0;border-bottom:1px solid var(--line-soft);}
+  .s-matrix .legend .item:last-child{border-bottom:none;}
+  .s-matrix .legend .item .name{font-family:'Fraunces',serif;font-size:13pt;font-weight:500;margin-bottom:4px;}
+  .s-matrix .legend .item.us .name{color:var(--blue);font-style:italic;}
+  .s-matrix .legend .item .desc{font-size:9.5pt;line-height:1.5;color:#1d2737;}
+  .s-matrix .legend .item .tag{font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:0.18em;color:var(--graphite);text-transform:uppercase;margin-bottom:6px;display:block;}
+
+  /* — 11 ARQUÉTIPOS DARK — */
+  .s-archetype .head{position:absolute;left:16mm;top:18mm;right:16mm;}
+  .s-archetype .head h2{font-size:46pt;margin-top:16px;max-width:200mm;color:var(--cream);}
+  .s-archetype .duo{position:absolute;left:16mm;right:16mm;bottom:28mm;top:80mm;display:grid;grid-template-columns:1.4fr 0.6fr;gap:0;}
+  .s-archetype .pair{display:grid;grid-template-columns:1fr 1fr;gap:0;border-right:1px solid var(--line-dark-soft);}
+  .s-archetype .ach{padding:0 22px;border-left:1px solid var(--line-dark-soft);display:flex;flex-direction:column;justify-content:flex-end;height:100%;}
+  .s-archetype .ach:first-child{border-left:none;padding-left:0;}
+  .s-archetype .ach .pct{font-family:'Fraunces',serif;font-weight:300;font-size:120pt;line-height:0.85;letter-spacing:-0.04em;color:var(--cream);font-variation-settings:"opsz" 144;}
+  .s-archetype .ach .pct .sym{font-size:50pt;color:var(--blue);font-style:italic;margin-left:4px;}
+  .s-archetype .ach.mago .pct{color:rgba(245,243,238,0.75);}
+  .s-archetype .ach.mago .pct .sym{color:var(--gold);}
+  .s-archetype .ach .name{font-family:'Fraunces',serif;font-weight:400;font-size:26pt;font-style:italic;margin-top:14px;letter-spacing:-0.01em;}
+  .s-archetype .ach .role{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,243,238,0.55);margin-top:8px;}
+  .s-archetype .ach .desc{margin-top:18px;font-size:10pt;line-height:1.55;color:rgba(245,243,238,0.75);max-width:78mm;}
+  .s-archetype .side{padding-left:30px;border-left:1px solid var(--line-dark-soft);display:flex;flex-direction:column;justify-content:flex-end;}
+  .s-archetype .side .label{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+  .s-archetype .side .quote{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:16pt;line-height:1.25;color:var(--cream);letter-spacing:-0.005em;}
+
+  /* — 12 TOM DE VOZ — */
+  .s-voice .head{position:absolute;left:16mm;top:18mm;right:16mm;}
+  .s-voice .head h2{font-size:42pt;margin-top:14px;max-width:200mm;}
+  .s-voice .dial-grid{position:absolute;left:16mm;right:16mm;top:74mm;bottom:28mm;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:0;}
+  .s-voice .mode{padding:18px 22px;border-top:1px solid var(--line);border-left:1px solid var(--line);position:relative;}
+  .s-voice .mode:nth-child(1),.s-voice .mode:nth-child(2){border-top:1px solid var(--line);}
+  .s-voice .mode:nth-child(1),.s-voice .mode:nth-child(3){border-left:none;padding-left:0;}
+  .s-voice .mode:nth-child(2),.s-voice .mode:nth-child(4){padding-left:22px;}
+  .s-voice .mode .idx{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;color:var(--graphite);text-transform:uppercase;}
+  .s-voice .mode .nm{font-family:'Fraunces',serif;font-weight:400;font-size:24pt;letter-spacing:-0.01em;margin-top:8px;line-height:1.05;}
+  .s-voice .mode .nm em{color:var(--blue);font-weight:400;}
+  .s-voice .mode .tone{font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.2em;color:var(--graphite);text-transform:uppercase;margin-top:6px;}
+  .s-voice .mode .sample{margin-top:14px;font-family:'Fraunces',serif;font-style:italic;font-size:11pt;line-height:1.5;color:#1d2737;border-left:2px solid var(--blue);padding-left:12px;}
+  .s-voice .mode .use{font-size:9.5pt;line-height:1.5;margin-top:12px;color:#1d2737;}
+
+  /* — 13 VOCABULÁRIO — */
+  .s-vocab .head{position:absolute;left:16mm;top:18mm;right:16mm;}
+  .s-vocab .head h2{font-size:42pt;margin-top:14px;max-width:200mm;}
+  .s-vocab .cols{position:absolute;left:16mm;right:16mm;top:74mm;bottom:28mm;display:grid;grid-template-columns:1fr 1fr;gap:0;}
+  .s-vocab .col{padding:0 22px;border-left:1px solid var(--line);}
+  .s-vocab .col:first-child{border-left:none;padding-left:0;}
+  .s-vocab .col .label{font-family:'JetBrains Mono',monospace;font-size:8.5pt;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+  .s-vocab .col.sacred .label{color:var(--blue);}
+  .s-vocab .col.anti .label{color:#9C3838;}
+  .s-vocab .col .label .ldot{width:6px;height:6px;border-radius:50%;}
+  .s-vocab .col.sacred .label .ldot{background:var(--blue);}
+  .s-vocab .col.anti .label .ldot{background:#9C3838;}
+  .s-vocab .col .helper{font-size:10pt;line-height:1.5;color:#1d2737;margin-bottom:18px;max-width:115mm;}
+  .s-vocab .col ul{list-style:none;}
+  .s-vocab .col li{padding:11px 0;border-bottom:1px solid var(--line-soft);display:flex;align-items:baseline;gap:14px;}
+  .s-vocab .col li .w{font-family:'Fraunces',serif;font-size:17pt;font-weight:400;line-height:1.15;letter-spacing:-0.01em;}
+  .s-vocab .col.sacred li .w{font-style:italic;color:var(--blue);font-weight:500;}
+  .s-vocab .col.anti li .w{color:#1d2737;text-decoration:line-through;text-decoration-color:rgba(156,56,56,0.5);text-decoration-thickness:1px;}
+  .s-vocab .col li .ann{font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.16em;color:var(--graphite);text-transform:uppercase;}
+  .s-vocab .col .footer-note{margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.18em;color:var(--graphite);text-transform:uppercase;}
+
+  /* — 14 BRAND STORY — */
+  .s-story{display:grid;grid-template-columns:1fr 1fr;height:100%;}
+  .s-story .portrait{position:relative;background:var(--navy);overflow:hidden;}
+  .s-story .portrait img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:contrast(1.02) saturate(0.92);}
+  .s-story .portrait::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,19,35,0) 35%,rgba(6,19,35,0.5) 100%);pointer-events:none;}
+  .s-story .portrait .nameplate{position:absolute;left:14mm;bottom:24mm;color:var(--cream);z-index:2;}
+  .s-story .portrait .nameplate .who{font-family:'Fraunces',serif;font-weight:400;font-size:19pt;line-height:1.1;letter-spacing:-0.01em;}
+  .s-story .portrait .nameplate .role{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,243,238,0.6);margin-top:7px;}
+  .s-story .portrait .corner{position:absolute;top:14mm;left:14mm;font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;color:rgba(245,243,238,0.55);text-transform:uppercase;display:flex;align-items:center;gap:10px;}
+  .s-story .portrait .corner .gdot{width:5px;height:5px;background:var(--blue);border-radius:50%;}
+
+  .s-story .content{padding:18mm 16mm 14mm 16mm;position:relative;display:flex;flex-direction:column;}
+  .s-story .content .label{margin-bottom:18px;}
+  .s-story .content h2{font-family:'Fraunces',serif;font-weight:300;font-size:38pt;line-height:1.0;letter-spacing:-0.02em;max-width:130mm;}
+  .s-story .content h2 em{color:var(--blue);font-weight:400;}
+  .s-story .acts{margin-top:18px;display:flex;flex-direction:column;gap:0;}
+  .s-story .act{padding:13px 0;border-bottom:1px solid var(--line-soft);display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:baseline;}
+  .s-story .act:last-child{border-bottom:none;}
+  .s-story .act .anum{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.18em;color:var(--graphite);text-transform:uppercase;padding-top:2px;}
+  .s-story .act .atxt h5{font-family:'Fraunces',serif;font-weight:500;font-size:13.5pt;line-height:1.2;letter-spacing:-0.005em;margin-bottom:4px;}
+  .s-story .act .atxt p{font-size:9.5pt;line-height:1.5;color:#1d2737;}
+  .s-story .pull-quote{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);font-family:'Fraunces',serif;font-style:italic;font-size:12pt;line-height:1.45;color:#1d2737;max-width:130mm;}
+  .s-story .pull-quote .att{display:block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-style:normal;font-size:7.5pt;letter-spacing:0.22em;color:var(--graphite);text-transform:uppercase;}
+
+  /* — 15 ROTEIRO 90 DIAS — */
+  .s-roadmap .head{position:absolute;left:16mm;top:18mm;right:16mm;}
+  .s-roadmap .head h2{font-size:42pt;margin-top:14px;max-width:200mm;}
+  .s-roadmap .timeline-bar{position:absolute;left:16mm;right:16mm;top:78mm;height:1px;background:var(--line);}
+  .s-roadmap .timeline-bar::before,.s-roadmap .timeline-bar::after{content:"";position:absolute;top:-2.5px;width:5px;height:5px;background:var(--ink);border-radius:50%;}
+  .s-roadmap .timeline-bar::before{left:0;}
+  .s-roadmap .timeline-bar::after{right:0;background:var(--blue);}
+  .s-roadmap .timeline-bar .mid{position:absolute;top:-2.5px;left:33%;width:5px;height:5px;border:1px solid var(--ink);border-radius:50%;background:var(--cream);}
+  .s-roadmap .timeline-bar .mid2{position:absolute;top:-2.5px;left:66%;width:5px;height:5px;border:1px solid var(--ink);border-radius:50%;background:var(--cream);}
+  .s-roadmap .acts{position:absolute;left:16mm;right:16mm;top:86mm;bottom:28mm;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;}
+  .s-roadmap .act{padding:0 22px;border-left:1px solid var(--line);}
+  .s-roadmap .act:first-child{border-left:none;padding-left:0;}
+  .s-roadmap .act .when{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;color:var(--graphite);text-transform:uppercase;margin-bottom:6px;}
+  .s-roadmap .act .title{font-family:'Fraunces',serif;font-weight:400;font-size:24pt;letter-spacing:-0.01em;line-height:1.0;margin-bottom:4px;}
+  .s-roadmap .act .title em{color:var(--blue);}
+  .s-roadmap .act .ass{font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.2em;color:var(--graphite);text-transform:uppercase;margin-bottom:16px;}
+  .s-roadmap .act ol{list-style:none;counter-reset:tac;}
+  .s-roadmap .act li{counter-increment:tac;padding:11px 0;border-top:1px solid var(--line-soft);display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:baseline;}
+  .s-roadmap .act li:first-child{border-top:1px solid var(--line);}
+  .s-roadmap .act li::before{content:counter(tac,decimal-leading-zero);font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.16em;color:var(--graphite);}
+  .s-roadmap .act li .ltxt{font-size:10pt;line-height:1.45;color:#1d2737;}
+  .s-roadmap .act li .ltxt strong{font-weight:500;}
+  .s-roadmap .act .kpi{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:7.5pt;letter-spacing:0.18em;color:var(--blue);text-transform:uppercase;}
+
+  /* — 16 CODA DARK — */
+  .s-coda .corner{position:absolute;top:16mm;left:16mm;}
+  .s-coda .corner .glyph{width:14px;height:14px;border:1.2px solid var(--cream);transform:rotate(45deg);display:inline-block;vertical-align:middle;margin-right:12px;}
+  .s-coda .corner span{font-family:'JetBrains Mono',monospace;font-size:8.5pt;letter-spacing:0.28em;color:var(--cream);text-transform:uppercase;vertical-align:middle;}
+  .s-coda .meta-tr{position:absolute;top:16mm;right:16mm;text-align:right;color:rgba(245,243,238,0.55);}
+  .s-coda .hero-stage{position:absolute;left:16mm;right:16mm;top:50%;transform:translateY(-58%);}
+  .s-coda .hero-stage .pre{margin-bottom:24px;color:var(--blue);font-style:italic;font-family:'Fraunces',serif;font-size:13pt;letter-spacing:0;}
+  .s-coda .hero-stage h2{font-size:78pt;letter-spacing:-0.025em;color:var(--cream);line-height:0.98;}
+  .s-coda .sigline{position:absolute;left:16mm;right:16mm;bottom:32mm;display:flex;justify-content:space-between;align-items:flex-end;}
+  .s-coda .sigline .blk{max-width:115mm;}
+  .s-coda .sigline .blk .l{font-family:'JetBrains Mono',monospace;font-size:8pt;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,243,238,0.55);margin-bottom:6px;}
+  .s-coda .sigline .blk .v{font-family:'Fraunces',serif;font-size:13pt;color:var(--cream);line-height:1.3;}
+  .s-coda .sigline .blk .v em{color:var(--gold);font-style:italic;}
+
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- =====================================================
+     SLIDE 01 — COVER
+     ===================================================== -->
+<section class="slide s-cover">
+  <div class="corner-mark">
+    <span class="glyph"></span>
+    <span class="wm">Valen Capital</span>
+  </div>
+  <div class="meta-tr">
+    <span class="mono">Estratégia Patrimonial</span>
+    <span class="mono" style="display:block;color:var(--ink);">§ 2026 · Edição I</span>
+    <span class="mono" style="display:block;margin-top:6px;">Documento Técnico · Confidencial</span>
+  </div>
+
+  <div class="hero-block">
+    <div class="pre section-label">
+      <span class="dot"></span>
+      <span class="mono" style="color:var(--ink);">Posicionamento Estratégico · Consultoria Integrada</span>
+    </div>
+    <h1 class="hero">Autonomia e<br>Gestão de <span class="em-blue">Capital Próprio</span>.</h1>
+    <div class="sub">
+      <p class="body" style="max-width:118mm;">Uma abordagem estruturada para a gestão de fortunas no segmento intermediário. Integramos arquitetura financeira, inteligência de crédito e ativos reais para assegurar a perenidade do seu legado.</p>
+      <div class="right">
+        <span class="mono" style="display:block;color:var(--graphite);">Documentação técnica para</span>
+        <span class="mono" style="display:block;font-size:11pt;color:var(--ink);letter-spacing:0.12em;margin-top:6px;">Davi Menegon</span>
+        <span class="mono" style="display:block;margin-top:14px;color:var(--graphite);">Maio · 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Planejamento</span></div>
+    <div class="crumbs"><span>Doc. 2026/01</span></div>
+    <div>§ 01 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 02 — ÍNDICE
+     ===================================================== -->
+<section class="slide s-index">
+  <div class="top-rule"></div>
+  <div class="folio" style="top:11mm;bottom:auto;">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen Capital</span></div>
+    <div></div>
+    <div>Sumário Executivo · 2026</div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="section-label" style="margin-bottom:18px;">
+        <span class="dot"></span><span class="mono" style="color:var(--ink);">Estrutura</span>
+      </div>
+      <h2 class="title">Etapas fundamentais para a estruturação e proteção do capital.</h2>
+      <p class="body" style="margin-top:18px;max-width:90mm;">Este documento detalha o <em class="em-blue">cenário macro, diagnóstico setorial, metodologia e roteiro de implementação</em>.</p>
+    </div>
+
+    <div class="toc">
+      <div class="toc-row act-divider">
+        <span class="num">PARTE I</span>
+        <span class="name">Diagnóstico e Cenário</span>
+        <span class="pg">03 — 07</span>
+      </div>
+      <div class="toc-row"><span class="num">§ 03</span><span class="name">Contexto Macroeconômico · Pressão fiscal e institucional</span><span class="pg">p. 03</span></div>
+      <div class="toc-row"><span class="num">§ 04</span><span class="name">Indicadores Globais de Riqueza</span><span class="pg">p. 04</span></div>
+      <div class="toc-row"><span class="num">§ 05</span><span class="name">Análise de Segmento · A Lacuna do Alta Renda</span><span class="pg">p. 05</span></div>
+      <div class="toc-row"><span class="num">§ 06</span><span class="name">Dimensões de Risco Patrimonial</span><span class="pg">p. 06</span></div>
+      <div class="toc-row"><span class="num">§ 07</span><span class="name">Limitações do Modelo de Varejo</span><span class="pg">p. 07</span></div>
+
+      <div class="toc-row act-divider">
+        <span class="num">PARTE II</span>
+        <span class="name">Metodologia e Arquitetura</span>
+        <span class="pg">08 — 11</span>
+      </div>
+      <div class="toc-row"><span class="num">§ 08</span><span class="name">Princípios Norteadores</span><span class="pg">p. 08</span></div>
+      <div class="toc-row"><span class="num">§ 09</span><span class="name">Os Vetores de Gestão</span><span class="pg">p. 09</span></div>
+      <div class="toc-row"><span class="num">§ 10</span><span class="name">Mapeamento Competitivo</span><span class="pg">p. 10</span></div>
+      <div class="toc-row"><span class="num">§ 11</span><span class="name">Diretrizes de Autoridade e Tom de Marca</span><span class="pg">p. 11</span></div>
+
+      <div class="toc-row act-divider">
+        <span class="num">PARTE III</span>
+        <span class="name">Implementação e Governança</span>
+        <span class="pg">12 — 16</span>
+      </div>
+      <div class="toc-row"><span class="num">§ 12</span><span class="name">Matriz de Comunicação Consultiva</span><span class="pg">p. 12</span></div>
+      <div class="toc-row"><span class="num">§ 13</span><span class="name">Diretrizes de Terminologia Técnica</span><span class="pg">p. 13</span></div>
+      <div class="toc-row"><span class="num">§ 14</span><span class="name">Fundamentos e Trajetória Institucional</span><span class="pg">p. 14</span></div>
+      <div class="toc-row"><span class="num">§ 15</span><span class="name">Roteiro de Operacionalização · 90 dias</span><span class="pg">p. 15</span></div>
+      <div class="toc-row"><span class="num">§ 16</span><span class="name">Conclusão</span><span class="pg">p. 16</span></div>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Sumário</span></div>
+    <div>§ 02 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 03 — CONTEXTO / ZEITGEIST
+     ===================================================== -->
+<section class="slide s-context">
+  <div class="top-rule"></div>
+  <div class="section-label" style="position:absolute;top:24mm;left:16mm;">
+    <span class="dot"></span><span class="mono" style="color:var(--ink);">§ 03 · Cenário Atual</span>
+  </div>
+  <span class="mono" style="position:absolute;top:24mm;right:16mm;">Análise de Mercado · 2026</span>
+
+  <div class="lead">
+    <h2 class="display">Desafios estruturais na<br><span class="em-blue">preservação do capital</span>.</h2>
+  </div>
+
+  <div class="body-grid">
+    <div>
+      <span class="mono" style="color:var(--blue);">01 · Insegurança Fiscal</span>
+      <h4>Impactos da Reforma do ITCMD no planejamento sucessório.</h4>
+      <p class="body">A alteração na base de cálculo tributária exige uma revisão imediata das estruturas de sucessão. Patrimônios familiares enfrentam uma carga tributária crescente, tornando a eficiência fiscal um pilar indispensável da gestão.</p>
+    </div>
+    <div>
+      <span class="mono" style="color:var(--blue);">02 · Instabilidade Institucional</span>
+      <h4>Reordenamento do setor bancário e confiança do investidor.</h4>
+      <p class="body">Episódios recentes de liquidez em instituições de médio porte elevaram a percepção de risco sistêmico. O investidor busca agora alternativas de custódia e gestão que privilegiem a segurança e a transparência.</p>
+    </div>
+    <div>
+      <span class="mono" style="color:var(--blue);">03 · Fragmentação Técnica</span>
+      <h4>A ausência de uma visão consolidada do patrimônio.</h4>
+      <p class="body">A gestão isolada por diferentes profissionais (contadores, advogados e gerentes) gera ineficiências operacionais. A falta de integração impede o aproveitamento de sinergias entre ativos financeiros e reais.</p>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Cenário</span><span>§ 03</span></div>
+    <div>p. 03 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 04 — MÉTRICAS (DARK)
+     ===================================================== -->
+<section class="slide dark s-metrics">
+  <div class="head">
+    <div class="section-label">
+      <span class="dot"></span><span class="mono bright">§ 04 · Indicadores de Mercado</span>
+    </div>
+    <h2 class="display">Dados fundamentais para a<br><span class="em-blue">estratégia patrimonial</span> da próxima década.</h2>
+    <div class="rule"></div>
+  </div>
+
+  <div class="grid">
+    <div class="cell">
+      <div class="mono-md label" style="color:rgba(245,243,238,0.55);">Transferência Global</div>
+      <div class="num">83,5<span class="unit">tri</span></div>
+      <div class="desc">Volume em dólares previstos para migração intergeracional até 2048. Trata-se do maior reordenamento de ativos da história, exigindo estruturas sucessórias robustas.</div>
+    </div>
+    <div class="cell">
+      <div class="mono-md label" style="color:rgba(245,243,238,0.55);">Indivíduos Affluent</div>
+      <div class="num">52<span class="unit">mi</span></div>
+      <div class="desc">Segmento de investidores com patrimônio entre USD 1M e 5M. Esta faixa é frequentemente negligenciada pelos serviços de Private Banking tradicionais.</div>
+    </div>
+    <div class="cell">
+      <div class="mono-md label" style="color:rgba(245,243,238,0.55);">Concentração de Capital</div>
+      <div class="num">48,1<span class="unit">%</span></div>
+      <div class="desc">Percentual da riqueza global concentrada em 1,6% da população adulta. O investidor qualificado exige um nível de sofisticação técnica superior ao oferecido no varejo.</div>
+    </div>
+    <div class="cell">
+      <div class="mono-md label" style="color:rgba(245,243,238,0.55);">Taxa de Retenção</div>
+      <div class="num">51<span class="unit">%</span></div>
+      <div class="desc">Percentual de herdeiros que optam por trocar de consultoria após a sucessão, evidenciando a fragilidade dos vínculos institucionais puramente transacionais.</div>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Cenário</span><span>§ 04</span></div>
+    <div>p. 04 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 05 — DIAGNÓSTICO · LACUNA DE ATENDIMENTO
+     ===================================================== -->
+<section class="slide s-limbo">
+  <div class="top-rule"></div>
+  <div class="section-label" style="position:absolute;top:24mm;left:16mm;">
+    <span class="dot"></span><span class="mono" style="color:var(--ink);">§ 05 · Análise de Segmento</span>
+  </div>
+  <div class="pill" style="position:absolute;top:22mm;right:16mm;"><span class="pdot act"></span>Foco Estratégico</div>
+
+  <div class="lead">
+    <h2 class="hero">A lacuna no<br><span class="em-blue">atendimento especializado</span>.</h2>
+    <p class="lede">Investidores com patrimônio entre R$ 500 mil e R$ 10 milhões encontram-se em uma zona intermediária, onde as soluções de varejo são genéricas e os serviços de Private são inacessíveis ou subdimensionados.</p>
+    <p class="body" style="margin-top:14px;max-width:118mm;">Este perfil de cliente — empresários, fundadores e profissionais liberais — demanda uma arquitetura patrimonial personalizada, com foco em controle, integração de ativos e preservação de longo prazo.</p>
+  </div>
+
+  <div class="right-col">
+    <span class="mono" style="display:block;margin-bottom:14px;">Estratificação Patrimonial</span>
+    <div class="strata">
+      <div class="strata-row">
+        <span class="range">≤ R$ 500k</span>
+        <span class="seg-name">Varejo Convencional</span>
+        <span class="badge">Padronização</span>
+      </div>
+      <div class="strata-row limbo">
+        <span class="range">R$ 500k — R$ 10M</span>
+        <span class="seg-name">Segmento Valen</span>
+        <span class="badge">Estratégico</span>
+      </div>
+      <div class="strata-row">
+        <span class="range">R$ 10M — R$ 30M</span>
+        <span class="seg-name">Private Banking</span>
+        <span class="badge">Transacional</span>
+      </div>
+      <div class="strata-row">
+        <span class="range">&gt; R$ 30M</span>
+        <span class="seg-name">Family Office</span>
+        <span class="badge">Arquitetura</span>
+      </div>
+    </div>
+    <div class="evidence" style="margin-top:22px;">
+      <span class="mono" style="display:block;color:var(--blue);margin-bottom:6px;">Tese de Valor</span>
+      <p class="body" style="font-size:10pt;line-height:1.45;">Aplicar a inteligência e o rigor técnico de um Family Office para investidores do segmento intermediário, eliminando as ineficiências do modelo de distribuição em massa.</p>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Segmento</span><span>§ 05</span></div>
+    <div>p. 05 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 06 — DIMENSÕES DE RISCO
+     ===================================================== -->
+<section class="slide s-pain">
+  <div class="top-rule"></div>
+  <div class="section-label" style="position:absolute;top:24mm;left:16mm;">
+    <span class="dot"></span><span class="mono" style="color:var(--ink);">§ 06 · Dimensões de Análise</span>
+  </div>
+  <span class="mono" style="position:absolute;top:24mm;right:16mm;">Avaliação Multidimensional</span>
+
+  <div class="head">
+    <h2 class="display">A gestão patrimonial exige uma análise em<br><span class="em-blue">três dimensões críticas</span> e integradas.</h2>
+  </div>
+
+  <div class="grid">
+    <div class="col">
+      <span class="lvl">Dimensão 01</span>
+      <h4>Operacional</h4>
+      <p class="body">Foca na alocação de ativos e eficiência de custos. Evita a dispersão em produtos comissionados que não acompanham a inflação real. Integra crédito e investimentos para otimizar o fluxo de caixa e o retorno líquido sobre o patrimônio total.</p>
+      <span class="depth">Foco na Eficiência Econômica</span>
+    </div>
+    <div class="col">
+      <span class="lvl">Dimensão 02</span>
+      <h4>Segurança</h4>
+      <p class="body">Aborda a proteção contra riscos jurídicos, fiscais e sucessórios. Estrutura o patrimônio para suportar volatilidades do mercado e mudanças legislativas, garantindo que o capital construído não sofra erosão por falta de planejamento.</p>
+      <span class="depth">Foco na Preservação de Ativos</span>
+    </div>
+    <div class="col">
+      <span class="lvl">Dimensão 03</span>
+      <h4 style="font-style:italic;color:var(--blue);">Estratégica</h4>
+      <p class="body">Define o nível de autonomia do investidor frente às instituições financeiras. Substitui a dependência de prateleiras bancárias por uma arquitetura proprietária, onde o cliente detém o controle sobre as diretrizes de seu legado.</p>
+      <span class="depth">Foco na Autonomia do Investidor</span>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Dimensões</span><span>§ 06</span></div>
+    <div>p. 06 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 07 — LIMITAÇÕES DO MODELO (DARK)
+     ===================================================== -->
+<section class="slide dark s-enemy">
+  <div class="corner-pill"><div class="section-label"><span class="dot"></span><span class="mono bright">§ 07 · Modelo de Distribuição</span></div></div>
+  <div class="top-mono pill"><span class="pdot alert"></span>Análise de Conflitos</div>
+  <div class="top-rule" style="background:var(--line-dark);top:34mm;"></div>
+
+  <div class="hero-block">
+    <h2 class="hero" style="font-size:78pt;">O modelo de<br><span class="em-blue">distribuição</span>.</h2>
+    <p class="lede" style="margin-top:22px;max-width:170mm;">Quando a oferta de produtos financeiros ignora a arquitetura patrimonial, o investidor torna-se um alvo de metas institucionais. A Valen atua para identificar e mitigar os conflitos inerentes a este modelo.</p>
+  </div>
+
+  <div class="grid">
+    <div class="col">
+      <h5>Características da Distribuição</h5>
+      <p class="body">Prioriza a venda de ativos que atendem a metas de captação ou comissionamento. O portfólio é construído com base na oferta disponível, resultando em uma alocação frequentemente desalinhada com os objetivos de longo prazo do cliente.</p>
+    </div>
+    <div class="col">
+      <h5>Abordagem da Valen</h5>
+      <p class="body">Fundamentada na arquitetura consultiva e na independência técnica. O foco recai sobre o sistema patrimonial completo — financeiro, crédito e imobiliário — operando sob uma governança única e alinhada exclusivamente aos interesses do investidor.</p>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Distribuição</span><span>§ 07</span></div>
+    <div>p. 07 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 08 — PRINCÍPIOS NORTEADORES
+     ===================================================== -->
+<section class="slide s-manifesto">
+  <div class="top-rule"></div>
+  <div class="head">
+    <div class="section-label" style="margin-top:6mm;"><span class="dot"></span><span class="mono" style="color:var(--ink);">§ 08 · Princípios de Gestão</span></div>
+  </div>
+  <span class="mono" style="position:absolute;top:24mm;right:16mm;">Diretriz Estratégica</span>
+
+  <div class="hero-stage">
+    <h2 class="hero">A integração técnica<br>é o fundamento da real<br><span class="em-blue">autonomia</span>.</h2>
+  </div>
+
+  <div class="attrib">
+    <p class="credo">Nossa diretriz central estabelece que o sucesso patrimonial não decorre de escolhas isoladas, mas da harmonia entre estruturas fiscais, estratégias de crédito e alocação de ativos. Cada diagnóstico e plano de ação deve reforçar este princípio de integração.</p>
+    <div class="sig">
+      <span class="mono" style="display:block;">Fundamento Institucional</span>
+      <span class="mono" style="display:block;color:var(--ink);margin-top:6px;letter-spacing:0.12em;">Valen Capital · 2026</span>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Princípios</span><span>§ 08</span></div>
+    <div>p. 08 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 09 — VETORES DE GESTÃO
+     ===================================================== -->
+<section class="slide s-motors">
+  <div class="top-rule"></div>
+  <div class="head">
+    <div class="section-label"><span class="dot"></span><span class="mono" style="color:var(--ink);">§ 09 · Arquitetura Técnica</span></div>
+    <h2 class="display">A gestão opera por meio de<br><span class="em-blue">três vetores estratégicos</span> integrados.</h2>
+  </div>
+
+  <div class="grid">
+    <div class="motor">
+      <div class="num">01</div>
+      <div class="name">Financeiro</div>
+      <div class="role">Alocação · Tributação · Proteção</div>
+      <div class="desc">Estrutura de portfólio orientada a objetivos de preservação e sucessão. Foco em eficiência tributária multi-jurisdicional, proteção de ativos sob o novo marco fiscal e disciplina de rebalanceamento técnico, sem influências de metas de venda de produtos.</div>
+      <div class="foot">Vetorial de Eficiência</div>
+    </div>
+    <div class="motor">
+      <div class="num">02</div>
+      <div class="name" style="font-style:italic;color:var(--blue);">Crédito</div>
+      <div class="role">Inteligência de Alavancagem</div>
+      <div class="desc">Utilização do crédito como acelerador patrimonial e ferramenta de liquidez. Estruturação de operações com colaterais otimizados, arbitragem de taxas e uso estratégico para expansão de capital sem a necessidade de desmobilização de ativos principais.</div>
+      <div class="foot">Vetorial de Aceleração</div>
+    </div>
+    <div class="motor">
+      <div class="num">03</div>
+      <div class="name">Imobiliário</div>
+      <div class="role">Ativos Reais · Renda · Estruturação</div>
+      <div class="desc">Consolidação de ativos imobiliários dentro da holding patrimonial. Integração com a estratégia de crédito e planejamento sucessório de bens reais. Trata o imóvel como uma classe de ativos estratégica para a estabilidade e perpetuidade do legado.</div>
+      <div class="foot">Vetorial de Perenidade</div>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Vetores</span><span>§ 09</span></div>
+    <div>p. 09 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 10 — MAPEAMENTO COMPETITIVO
+     ===================================================== -->
+<section class="slide s-matrix">
+  <div class="top-rule"></div>
+  <div class="head">
+    <div class="section-label"><span class="dot"></span><span class="mono" style="color:var(--ink);">§ 10 · Posicionamento de Mercado</span></div>
+    <h2 class="display">O quadrante de <span class="em-blue">Arquitetura Consultiva</span>.</h2>
+  </div>
+
+  <div class="canvas">
+    <span class="quadrant q-tl">Técnico · Impessoal</span>
+    <span class="quadrant q-tr">Técnico · Consultivo</span>
+    <span class="quadrant q-bl">Operacional · Impessoal</span>
+    <span class="quadrant q-br">Operacional · Consultivo</span>
+    <div class="crosshair-h"></div>
+    <div class="crosshair-v"></div>
+
+    <div class="axis-x-lbl-l">Foco em Engenharia</div>
+    <div class="axis-x-lbl-r">Foco em Acolhimento</div>
+    <div class="axis-y-lbl-t">Arquitetura Estratégica</div>
+    <div class="axis-y-lbl-b">Operação de Produto</div>
+
+    <div class="point" style="left:18%;top:22%;">
+      <div class="dot"></div>
+      <div class="lbl">Adrian Carvalho</div>
+      <div class="sub">Engenharia de Ativos Reais</div>
+    </div>
+
+    <div class="point" style="left:72%;top:70%;">
+      <div class="dot"></div>
+      <div class="lbl">Arthur Lemos</div>
+      <div class="sub">Oportunidades e Leilões</div>
+    </div>
+
+    <div class="point valen" style="left:58%;top:24%;">
+      <div class="dot"></div>
+      <div class="lbl">Valen Capital</div>
+      <div class="sub">Arquitetura + Crédito + Atendimento</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span class="mono" style="display:block;margin-bottom:10px;">Análise Competitiva</span>
+    <div class="item">
+      <span class="tag">Engenharia Patrimonial</span>
+      <div class="name">Referência Técnica</div>
+      <div class="desc">Modelos focados em sofisticação técnica e ativos reais, porém com baixa personalização no atendimento estratégico e acompanhamento próximo.</div>
+    </div>
+    <div class="item">
+      <span class="tag">Narrativa de Agência</span>
+      <div class="name">Foco em Oportunidade</div>
+      <div class="desc">Modelos baseados na agência do investidor e em ativos específicos (leilões), operando predominantemente no nível tático e transacional.</div>
+    </div>
+    <div class="item us">
+      <span class="tag">Diferencial Valen</span>
+      <div class="name">Arquitetura e Governança</div>
+      <div class="desc">A combinação entre alta competência técnica em arquitetura financeira e uma abordagem consultiva humanizada, centrada na autonomia do investidor.</div>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Competição</span><span>§ 10</span></div>
+    <div>p. 10 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 11 — AUTORIDADE (DARK)
+     ===================================================== -->
+<section class="slide dark s-archetype">
+  <div class="head">
+    <div class="section-label"><span class="dot"></span><span class="mono bright">§ 11 · Postura de Marca</span></div>
+    <h2 class="display">Diretrizes de autoridade e<br><span class="em-blue">posicionamento consultivo</span>.</h2>
+  </div>
+  <div class="top-rule" style="background:var(--line-dark);top:34mm;"></div>
+
+  <div class="duo">
+    <div class="pair">
+      <div class="ach">
+        <div class="pct">70<span class="sym">%</span></div>
+        <div class="name">Autoridade</div>
+        <div class="role">Soberania · Controle · Precisão</div>
+        <div class="desc">A postura central da marca. Comunicação baseada em clareza técnica e visão sistêmica. Transmite segurança e domínio sobre as estruturas complexas do mercado financeiro.</div>
+      </div>
+      <div class="ach mago">
+        <div class="pct">30<span class="sym">%</span></div>
+        <div class="name">Visão</div>
+        <div class="role">Clareza · Transformação · Método</div>
+        <div class="desc">A capacidade de simplificar a complexidade. Atua na revelação de oportunidades e na estruturação de novos caminhos para a gestão do patrimônio familiar.</div>
+      </div>
+    </div>
+    <div class="side">
+      <span class="label">Declaração de Valor</span>
+      <p class="quote">"Nossa competência técnica é o instrumento para assegurar a autonomia e a perenidade da sua estratégia patrimonial."</p>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Autoridade</span><span>§ 11</span></div>
+    <div>p. 11 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 12 — MATRIZ DE COMUNICAÇÃO
+     ===================================================== -->
+<section class="slide s-voice">
+  <div class="top-rule"></div>
+  <div class="head">
+    <div class="section-label"><span class="dot"></span><span class="mono" style="color:var(--ink);">§ 12 · Abordagem Consultiva</span></div>
+    <h2 class="display">Protocolos de comunicação e<br><span class="em-blue">abordagem estratégica</span>.</h2>
+  </div>
+
+  <div class="dial-grid">
+    <div class="mode">
+      <span class="idx">Protocolo 01</span>
+      <div class="nm">Diagnóstico</div>
+      <span class="tone">Analítico · Preciso · Imparcial</span>
+      <p class="sample">"A análise técnica indica que a atual estrutura apresenta ineficiências na relação entre liquidez e carga tributária."</p>
+      <p class="use">Utilizado na fundamentação de propostas. Afasta o discurso da venda direta e o ancora em dados e fatos observáveis.</p>
+    </div>
+    <div class="mode">
+      <span class="idx">Protocolo 02</span>
+      <div class="nm">Tese</div>
+      <span class="tone">Firme · Institucional · Educativo</span>
+      <p class="sample">"A distribuição massificada de produtos financeiros frequentemente ignora as necessidades de arquitetura do capital familiar."</p>
+      <p class="use">Define a postura institucional da Valen frente ao mercado, estabelecendo uma distinção clara em relação ao modelo de varejo.</p>
+    </div>
+    <div class="mode">
+      <span class="idx">Protocolo 03</span>
+      <div class="nm">Resultados</div>
+      <span class="tone">Objetivo · Factual · Consultivo</span>
+      <p class="sample">"A implementação das diretrizes de integração resultou em uma otimização significativa da estrutura de crédito do grupo familiar."</p>
+      <p class="use">Demonstração de competência por meio de evidências e estudos de caso, mantendo o rigor técnico e a confidencialidade.</p>
+    </div>
+    <div class="mode">
+      <span class="idx">Protocolo 04</span>
+      <div class="nm">Adesão</div>
+      <span class="tone">Direto · Seletivo · Profissional</span>
+      <p class="sample">"O processo de onboarding é iniciado após o diagnóstico técnico inicial. Atendemos a um número limitado de estruturas anualmente."</p>
+      <p class="use">Conduz o encerramento do ciclo de comunicação com foco na qualidade do atendimento e na integridade do processo de entrada.</p>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Comunicação</span><span>§ 12</span></div>
+    <div>p. 12 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 13 — TERMINOLOGIA
+     ===================================================== -->
+<section class="slide s-vocab">
+  <div class="top-rule"></div>
+  <div class="head">
+    <div class="section-label"><span class="dot"></span><span class="mono" style="color:var(--ink);">§ 13 · Léxico e Terminologia</span></div>
+    <h2 class="display">Diretrizes de precisão técnica e<br><span class="em-blue">terminologia institucional</span>.</h2>
+  </div>
+
+  <div class="cols">
+    <div class="col sacred">
+      <span class="label"><span class="ldot"></span>Léxico Institucional</span>
+      <p class="helper">Termos que definem nossa metodologia e devem ser utilizados para reforçar a autoridade técnica da marca em todos os materiais consultivos e de comunicação.</p>
+      <ul>
+        <li><span class="w">Arquitetura Patrimonial</span><span class="ann">Conceito Central</span></li>
+        <li><span class="w">Vetores de Gestão</span><span class="ann">Metodologia Operacional</span></li>
+        <li><span class="w">Lacuna de Atendimento</span><span class="ann">Diagnóstico Setorial</span></li>
+        <li><span class="w">Crédito Estruturado</span><span class="ann">Terminologia Técnica</span></li>
+        <li><span class="w">Governança Familiar</span><span class="ann">Pilar de Perenidade</span></li>
+        <li><span class="w">Autonomia Patrimonial</span><span class="ann">Objetivo Estratégico</span></li>
+      </ul>
+      <div class="footer-note">Priorizar a clareza e o rigor técnico</div>
+    </div>
+    <div class="col anti">
+      <span class="label"><span class="ldot"></span>Termos Desaconselhados</span>
+      <p class="helper">Terminologias associadas ao varejo massificado, hype de mercado ou promessas de ganho rápido que devem ser evitadas para preservar o posicionamento de alta renda.</p>
+      <ul>
+        <li><span class="w">Apostas / Bets</span><span class="ann">Incompatível com gestão</span></li>
+        <li><span class="w">Dicas de investimento</span><span class="ann">Falta de rigor técnico</span></li>
+        <li><span class="w">Ganhos exponenciais</span><span class="ann">Linguagem especulativa</span></li>
+        <li><span class="w">Produtos do momento</span><span class="ann">Ausência de estratégia</span></li>
+        <li><span class="w">Alavancagem simples</span><span class="ann">Risco não estruturado</span></li>
+        <li><span class="w">Faturamento / Riqueza rápida</span><span class="ann">Viés de curto prazo</span></li>
+      </ul>
+      <div class="footer-note">Manter o foco em preservação e longo prazo</div>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Estratégia</span></div>
+    <div class="crumbs"><span>Léxico</span><span>§ 13</span></div>
+    <div>p. 13 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 14 — BRAND STORY · O FANTASMA E A MESA
+     ===================================================== -->
+<section class="slide s-story">
+  <div class="portrait">
+    <div class="corner"><span class="gdot"></span><span>§ 14 · Brand Story</span></div>
+    <img src="../report-assets/davi-menegon.jpg" alt="Davi Menegon">
+    <div class="nameplate">
+      <div class="who">Davi Menegon</div>
+      <div class="role">Fundador · Valen Capital</div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="label section-label"><span class="dot"></span><span class="mono" style="color:var(--ink);">Jornada do Herói · Ato Único</span></div>
+    <h2>O <em>Fantasma</em><br>e a Mesa.</h2>
+    <p class="body" style="margin-top:16px;max-width:130mm;font-size:10pt;">Catorze anos dentro dos Big Banks. A descoberta de que a prateleira fere o cliente. A virada em 2022 — o luto pessoal pela perda de Valentina, o período de invisibilidade. E o reencontro com a missão: construir a mesa que o Limbo nunca teve.</p>
+
+    <div class="acts">
+      <div class="act">
+        <span class="anum">Ato I</span>
+        <div class="atxt">
+          <h5>Quatorze anos por dentro</h5>
+          <p>A carreira nos grandes bancos. O acesso aos códigos do private. A intimidade técnica com um sistema que já se sabia desalinhado do cliente que dizia servir.</p>
+        </div>
+      </div>
+      <div class="act">
+        <span class="anum">Ato II</span>
+        <div class="atxt">
+          <h5>O fantasma — 2022</h5>
+          <p>A perda de Valentina. O período em que o mercado deixou de fazer sentido. A travessia silenciosa em que a missão foi reescrita de dentro para fora.</p>
+        </div>
+      </div>
+      <div class="act">
+        <span class="anum">Ato III</span>
+        <div class="atxt">
+          <h5>A mesa que faltava</h5>
+          <p>O retorno com um propósito específico: democratizar soberania patrimonial para a faixa que o sistema ignora. Construir a mesa — não o produto.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="pull-quote">"O contrário de varejo não é luxo. É <em class="em-blue">arquitetura</em>. E o contrário de produto não é gestão — é mesa."<span class="att">Davi Menegon · Frase fundadora</span></p>
+  </div>
+
+  <div class="folio" style="z-index:5;left:auto;right:16mm;width:auto;">
+    <div class="crumbs"><span>Ato III · Story</span><span>§ 14</span><span>p. 14 — 16</span></div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 15 — ROTEIRO 90 DIAS
+     ===================================================== -->
+<section class="slide s-roadmap">
+  <div class="top-rule"></div>
+  <div class="head">
+    <div class="section-label"><span class="dot"></span><span class="mono" style="color:var(--ink);">§ 15 · Ato III — Roteiro</span></div>
+    <h2 class="display">Noventa dias, <span class="em-blue">três atos</span>.</h2>
+  </div>
+
+  <div class="timeline-bar">
+    <div class="mid"></div>
+    <div class="mid2"></div>
+  </div>
+
+  <div class="acts">
+    <div class="act">
+      <span class="when">Mês 01 · Dias 0 — 30</span>
+      <h3 class="title">Fundação</h3>
+      <span class="ass">Identidade · Arquitetura · Linguagem</span>
+      <ol>
+        <li><span class="ltxt"><strong>Nova bio e trueline</strong> publicadas em todos os canais. Cream + navy + dourado.</span></li>
+        <li><span class="ltxt"><strong>Identidade visual</strong> implementada — paleta institucional e templates de social.</span></li>
+        <li><span class="ltxt"><strong>Vocabulário sagrado</strong> ativado em toda a comunicação pública.</span></li>
+        <li><span class="ltxt"><strong>Brand book</strong> consolidado para o time de design.</span></li>
+      </ol>
+      <div class="kpi">KPI · Coerência narrativa em 100% dos pontos de contato</div>
+    </div>
+    <div class="act">
+      <span class="when">Mês 02 · Dias 31 — 60</span>
+      <h3 class="title">Ativação</h3>
+      <span class="ass">Brand Story · Sequência de quebra</span>
+      <ol>
+        <li><span class="ltxt"><strong>Manifesto "O Fantasma e a Mesa"</strong> publicado em vídeo e carrossel.</span></li>
+        <li><span class="ltxt"><strong>Sequência dos Três Motores</strong> — 1 carrossel por motor, em série semanal.</span></li>
+        <li><span class="ltxt"><strong>Modo Tese</strong> ativado: três posts confrontando o modelo de prateleira.</span></li>
+        <li><span class="ltxt"><strong>Primeiro case</strong> publicado em Modo Caso (cliente anonimizado).</span></li>
+      </ol>
+      <div class="kpi">KPI · Crescimento qualificado e inbound consultivo</div>
+    </div>
+    <div class="act">
+      <span class="when">Mês 03 · Dias 61 — 90</span>
+      <h3 class="title" style="color:var(--blue);font-style:italic;">Conversão</h3>
+      <span class="ass">Ritual de entrada · Reprecificação</span>
+      <ol>
+        <li><span class="ltxt"><strong>Dossiê de Arquitetura</strong> como ritual de entrada — caixa física + diagnóstico.</span></li>
+        <li><span class="ltxt"><strong>Reprecificação</strong> do setup para R$ 18k+ com sinalização de escassez real.</span></li>
+        <li><span class="ltxt"><strong>Funil consultivo</strong> em duas etapas — diagnóstico pago e arquitetura sob fee.</span></li>
+        <li><span class="ltxt"><strong>Mensuração</strong> de taxa de conversão, ticket médio e retenção de 90 dias.</span></li>
+      </ol>
+      <div class="kpi">KPI · Taxa de fechamento &gt; 35% · Ticket médio &gt; R$ 18k</div>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Posicionamento</span></div>
+    <div class="crumbs"><span>Ato III · Roteiro</span><span>§ 15</span></div>
+    <div>p. 15 — 16</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 16 — CODA (DARK)
+     ===================================================== -->
+<section class="slide dark s-coda">
+  <div class="corner"><span class="glyph"></span><span>Valen Capital</span></div>
+  <div class="meta-tr">
+    <span class="mono bright" style="display:block;">§ 16 · Coda</span>
+    <span class="mono" style="display:block;margin-top:6px;">Maio · 2026</span>
+  </div>
+
+  <div class="hero-stage">
+    <div class="pre">— fim do documento</div>
+    <h2 class="hero">A mesa foi posta.<br>O <span class="em-blue">próximo passo</span><br>é sentar-se a ela.</h2>
+  </div>
+
+  <div class="sigline">
+    <div class="blk">
+      <div class="l">Frase âncora · Trueline</div>
+      <div class="v">Mercado financeiro isolado não constrói <em>liberdade</em>.</div>
+    </div>
+    <div class="blk" style="text-align:right;">
+      <div class="l">Preparado para</div>
+      <div class="v">Davi Menegon<br>Valen Capital</div>
+    </div>
+  </div>
+
+  <div class="folio">
+    <div class="brand-mark"><span class="glyph"></span><span>Valen · Posicionamento</span></div>
+    <div class="crumbs"><span>Coda</span><span>§ 16</span></div>
+    <div>p. 16 — 16</div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
