@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico Completo · Juliana Machado Fundão · Fleway</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-azure:#2563EB;--navy-950:#0A1628;
+    --azure-300:#93B5FD;--azure-400:#608EFA;--azure-500:#3D72F5;--azure-600:#2563EB;
+    --ink-200:#C7D1E0;--ink-300:#9DABC2;--ink-400:#6F82A0;
+    --bg-base:var(--navy-950);--bg-surface:#0E1D33;--bg-elevated:#142844;
+    --bg-hover:rgba(255,255,255,0.04);
+    --border-subtle:rgba(255,255,255,0.06);--border-default:rgba(255,255,255,0.10);--border-strong:rgba(255,255,255,0.16);
+    --text-primary:#FFFFFF;--text-secondary:var(--ink-200);--text-tertiary:var(--ink-300);--text-muted:var(--ink-400);
+    --font-sans:"DM Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    --font-serif:"Source Serif 4","Iowan Old Style",Georgia,serif;
+    --font-mono:"DM Mono","SF Mono","Roboto Mono",monospace;
+    --container:1000px;--narrow:720px;
+    --radius-sm:4px;--radius-md:6px;--radius-lg:10px;--radius-xl:14px;--radius-full:9999px;
+    --shadow-lg:0 12px 24px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.30);
+    --ease-out:cubic-bezier(.16,1,.3,1);
+    --good:#34D9A7;--block:#F2B25A;--crit:#F0857F;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{font-family:var(--font-sans);font-size:1.0625rem;line-height:1.6;color:var(--text-secondary);background:var(--bg-base);
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-optical-sizing:auto;font-feature-settings:"ss01","ss02"}
+  body::before{content:"";position:fixed;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at top,black 16%,transparent 58%);mask-image:radial-gradient(ellipse at top,black 16%,transparent 58%);
+    pointer-events:none;opacity:.5;z-index:0}
+  main,header,section,footer,nav{position:relative;z-index:1}
+  a{color:inherit;text-decoration:none}
+  strong{color:var(--text-primary);font-weight:600}
+  em{font-style:italic}
+
+  .nav{position:sticky;top:0;z-index:20;background:rgba(10,22,40,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border-subtle)}
+  .nav-in{max-width:var(--container);margin:0 auto;padding:13px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .nav-logo svg{height:21px;width:auto;display:block}
+  .nav-links{display:flex;gap:2px;flex-wrap:wrap}
+  .nav-links a{font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);padding:6px 10px;border-radius:var(--radius-sm);transition:.15s var(--ease-out)}
+  .nav-links a:hover{color:var(--text-primary);background:var(--bg-hover)}
+  .nav-meta{font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+
+  .wrap{max-width:var(--container);margin:0 auto;padding:0 32px}
+  section{padding:76px 0;border-top:1px solid var(--border-subtle)}
+  section:first-of-type{border-top:0}
+  .narrow{max-width:var(--narrow)}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--azure-400);display:inline-block;margin-bottom:16px}
+  h1.display{font-family:var(--font-serif);font-weight:400;font-size:clamp(2.3rem,5vw,3.8rem);line-height:1.07;letter-spacing:-.03em;color:var(--text-primary)}
+  h1.display em{font-style:italic;color:var(--azure-300)}
+  h2.h2{font-family:var(--font-sans);font-weight:600;font-size:clamp(1.5rem,3vw,2rem);line-height:1.18;letter-spacing:-.02em;color:var(--text-primary)}
+  p{margin:0 0 1rem}p:last-child{margin-bottom:0}
+  .muted{color:var(--text-muted)}
+
+  .hero{padding:100px 0 76px;text-align:center;overflow:hidden}
+  .hero::after{content:"";position:absolute;top:-120px;left:50%;width:700px;height:700px;transform:translateX(-50%);background:radial-gradient(circle,rgba(37,99,235,.18) 0%,rgba(37,99,235,0) 60%);pointer-events:none;z-index:0}
+  .hero>*{position:relative;z-index:1}
+  .hero .sub{margin-top:20px;font-size:1.05rem;color:var(--text-tertiary)}
+  .hero .frame{margin:30px auto 0;max-width:560px;font-family:var(--font-serif);font-style:italic;font-size:1.25rem;line-height:1.4;color:var(--text-secondary)}
+  .hero .frame em{color:var(--azure-300)}
+
+  .badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-sans);font-size:12px;font-weight:500;padding:4px 12px;border-radius:var(--radius-full);border:1px solid transparent;white-space:nowrap}
+  .badge .dot{width:6px;height:6px;border-radius:var(--radius-full);background:currentColor}
+  .b-crit{background:rgba(239,68,68,.12);color:var(--crit);border-color:rgba(239,68,68,.30)}
+  .b-alert{background:rgba(245,158,11,.12);color:var(--block);border-color:rgba(245,158,11,.30)}
+  .b-ok{background:rgba(16,185,129,.12);color:var(--good);border-color:rgba(16,185,129,.30)}
+
+  .lead{font-size:1.2rem;line-height:1.55;color:var(--text-secondary)}
+  .role{margin-top:26px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .role .r{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-lg);padding:16px 18px}
+  .role .r .rk{font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--azure-400);margin-bottom:8px}
+  .role .r p{font-size:13px;color:var(--text-tertiary);line-height:1.5}
+
+  /* índice */
+  .idx{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+  .idx a{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-lg);padding:18px;transition:border-color .2s var(--ease-out)}
+  .idx a:hover{border-color:var(--border-strong)}
+  .idx .n{font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted)}
+  .idx .t{color:var(--text-primary);font-weight:600;font-size:1.05rem;margin:8px 0 6px}
+  .idx .d{font-size:12.5px;color:var(--text-tertiary);line-height:1.45}
+
+  /* categoria */
+  .catsec{padding:60px 0;border-top:1px solid var(--border-subtle)}
+  .cat-eye{font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--azure-400);margin-bottom:12px}
+  .cat-h{font-family:var(--font-serif);font-size:clamp(1.7rem,3.4vw,2.4rem);line-height:1.15;letter-spacing:-.02em;color:var(--text-primary)}
+  .cat-sub{margin-top:14px;color:var(--text-tertiary);font-size:1.05rem;max-width:640px}
+
+  /* cluster */
+  .clu{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-xl);padding:30px;margin-top:20px}
+  .clu-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .clu-code{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .clu-title{font-size:1.3rem;font-weight:600;color:var(--text-primary);line-height:1.25;margin-bottom:14px}
+  .score{display:inline-block;font-size:13px;color:var(--text-secondary);background:var(--bg-base);border:1px solid var(--border-subtle);border-left:2px solid var(--azure-500);border-radius:var(--radius-sm);padding:8px 14px;margin-bottom:24px}
+  .blk{margin-bottom:22px}.blk:last-child{margin-bottom:0}
+  .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .lbl::before{content:"";width:8px;height:8px;border-radius:2px;display:inline-block}
+  .lbl.voice{color:var(--text-muted)}.lbl.voice::before{background:var(--text-muted)}
+  .lbl.good{color:var(--good)}.lbl.good::before{background:var(--good)}
+  .lbl.block{color:var(--block)}.lbl.block::before{background:var(--block)}
+  .lbl.read{color:var(--azure-400)}.lbl.read::before{background:var(--azure-500)}
+
+  .qg{margin-bottom:16px}.qg:last-child{margin-bottom:0}
+  .qg .qt{font-size:13px;color:var(--text-tertiary);margin-bottom:7px}
+  .quote{font-family:var(--font-serif);font-style:italic;font-size:1.05rem;line-height:1.45;color:var(--text-primary);border-left:2px solid var(--azure-500);padding-left:18px}
+  .quote em{color:var(--azure-300)}
+  .qsrc{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-top:6px;padding-left:18px}
+
+  ul.pl{list-style:none;display:flex;flex-direction:column;gap:10px}
+  ul.pl li{position:relative;padding-left:20px;line-height:1.55;color:var(--text-secondary)}
+  ul.pl li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:var(--radius-full)}
+  ul.pl.good li::before{background:var(--good)}
+  ul.pl.block li::before{background:var(--block)}
+
+  .reading{border:1px solid rgba(37,99,235,.30);background:rgba(61,114,245,.06);border-radius:var(--radius-lg);padding:18px 22px;line-height:1.6;color:var(--text-secondary)}
+  .reading .glossy{color:var(--text-tertiary)}
+
+  .pattern{margin-top:26px;padding:22px 24px;border:1px solid rgba(37,99,235,.30);background:rgba(61,114,245,.07);border-radius:var(--radius-lg)}
+  .pattern .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--azure-400);display:block;margin-bottom:8px}
+
+  footer{padding:60px 0 76px;border-top:1px solid var(--border-subtle);text-align:center}
+  footer svg{height:22px;width:auto;opacity:.85;margin-bottom:18px}
+  footer .fl{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--text-muted);line-height:1.9}
+
+  @media (max-width:860px){
+    .role,.idx{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+    .wrap{padding:0 20px}
+    .clu{padding:22px}
+  }
+  @media print{body{background:#fff;color:#1a1a1a}body::before,.nav,.hero::after{display:none}section,.catsec,.clu{page-break-inside:avoid}.clu{box-shadow:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="nav-logo" href="#topo" aria-label="Fleway">
+      <svg viewBox="0 0 779.88 165.53" role="img" aria-label="Fleway"><g fill="#FFFFFF">
+        <polygon points="240.21 22.06 155.69 31.97 173.07 68.66 240.21 22.06"></polygon>
+        <polygon points="173.07 68.66 155.69 105.87 219.58 116.39 173.07 68.66"></polygon>
+        <polygon points="155.69 31.97 103.91 68.66 155.69 105.87 173.07 68.66 155.69 31.97"></polygon>
+        <path d="M269.26,115.95V22.06h18.26v93.9h-18.26ZM284.96,37.49v-15.43h39.36v15.43h-39.36ZM284.96,76.85v-15.43l37.56-.13v15.43l-37.56.13h0Z"></path>
+        <path d="M335.11,115.95V22.06h17.88v93.9h-17.88Z"></path>
+        <path d="M398.27,118.4c-6,0-11.25-1.03-15.76-3.09-4.5-2.06-8.23-4.83-11.19-8.3-2.96-3.47-5.19-7.35-6.69-11.64-1.5-4.28-2.25-8.66-2.25-13.12v-2.44c0-4.63.75-9.11,2.25-13.44,1.5-4.33,3.73-8.19,6.69-11.57s6.62-6.09,11-8.11c4.37-2.02,9.43-3.02,15.18-3.02,7.55,0,13.87,1.65,18.97,4.95,5.1,3.3,8.94,7.64,11.51,12.99,2.57,5.36,3.86,11.13,3.86,17.3v6.43h-61.86v-10.93h50.68l-5.53,5.4c0-4.46-.65-8.27-1.93-11.45-1.28-3.17-3.23-5.62-5.85-7.33-2.62-1.72-5.9-2.57-9.84-2.57s-7.29.9-10.03,2.7-4.83,4.39-6.23,7.78c-1.42,3.39-2.12,7.44-2.12,12.15,0,4.37.68,8.25,2.06,11.64,1.37,3.39,3.47,6.04,6.3,7.97,2.83,1.93,6.43,2.9,10.8,2.9s7.93-.88,10.67-2.63c2.74-1.75,4.5-3.92,5.27-6.5h16.47c-1.03,4.8-3,9-5.92,12.6-2.92,3.6-6.62,6.39-11.13,8.36s-9.62,2.96-15.37,2.96h0Z"></path>
+        <path d="M451.13,115.95l-19.03-69.84h17.36l18.13,69.84h-16.47,0ZM458.34,115.95l-.13-14.66h14.27v14.66h-14.15,0ZM463.61,115.95l13.25-67.53h20.58l15.31,67.53h-14.15l-15.57-67.14h7.46l-13.76,67.14h-13.12ZM503.09,115.95v-14.66h14.27l-.13,14.66h-14.15,0ZM508.76,115.95l16.08-69.84h16.2l-16.85,69.84h-15.43Z"></path>
+        <path d="M567.53,117.75c-5.06,0-9.5-.9-13.31-2.7-3.81-1.8-6.78-4.37-8.88-7.72-2.11-3.34-3.15-7.37-3.15-12.09,0-5.14,1.26-9.34,3.79-12.6,2.53-3.26,6.09-5.7,10.67-7.33,4.58-1.63,9.97-2.44,16.14-2.44h16.2v10.67h-16.46c-4.11,0-7.27,1.01-9.45,3.02-2.19,2.02-3.28,4.61-3.28,7.78s1.09,5.74,3.28,7.72c2.19,1.97,5.34,2.96,9.45,2.96,2.49,0,4.78-.45,6.88-1.35,2.1-.9,3.86-2.44,5.27-4.63,1.42-2.19,2.21-5.16,2.38-8.94l4.37,5.02c-.43,4.89-1.61,9-3.54,12.34s-4.59,5.9-7.97,7.65c-3.39,1.75-7.53,2.63-12.41,2.63h0ZM590.04,115.95v-20.71h-2.96v-23.02c0-4.03-.99-7.03-2.96-9-1.97-1.97-5.02-2.96-9.13-2.96-2.14,0-4.72.04-7.72.13s-6.02.19-9.07.32c-3.04.13-5.77.28-8.16.45v-15.18c1.97-.17,4.2-.34,6.69-.51s5.04-.28,7.65-.32c2.61-.04,5.08-.07,7.39-.07,7.2,0,13.18.95,17.94,2.83,4.76,1.89,8.36,4.85,10.8,8.88,2.44,4.03,3.67,9.31,3.67,15.82v43.34h-14.16Z"></path>
+        <path d="M629.66,114.4l-22.64-68.3h18.01l21.48,68.3h-16.85ZM613.97,143.47v-15.31h13.12c2.49,0,4.57-.32,6.23-.97,1.67-.65,3.07-1.67,4.18-3.09,1.11-1.42,1.97-3.37,2.57-5.85l18.78-72.16h17.11l-20.71,76.01c-1.37,5.23-3.3,9.41-5.79,12.54-2.49,3.13-5.68,5.38-9.58,6.76-3.9,1.37-8.73,2.06-14.47,2.06h-11.45ZM635.71,114.4v-14.15h14.92v14.15h-14.92Z"></path>
+      </g></svg>
+    </a>
+    <div class="nav-links">
+      <a href="#como-ler">Como ler</a><a href="#indice">Índice</a><a href="#c1">Essência</a><a href="#c5">Oferta</a><a href="#c6">Cliente</a><a href="#c3">Comunidade</a>
+    </div>
+    <div class="nav-meta">Diagnóstico completo · Mai 2026</div>
+  </div>
+</nav>
+
+<main id="topo">
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Fleway · Diagnóstico completo</span>
+      <h1 class="display">A análise <em>detalhada</em><br>Juliana Machado Fundão</h1>
+      <p class="sub">Remoção de tatuagem a laser · 18 de maio de 2026</p>
+      <p class="frame">Tudo o que você disse, lido frente a frente.<br>O <em>respaldo</em> completo do diagnóstico.</p>
+    </div>
+  </header>
+
+  <section id="como-ler">
+    <div class="wrap narrow">
+      <span class="eyebrow">Como ler este documento</span>
+      <h2 class="h2">A versão longa — e por que ela existe.</h2>
+      <p style="margin-top:18px">No encontro você viu o resumo. Este documento é o <strong>respaldo completo</strong>: as 25 análises que sustentam cada conclusão, com as suas próprias falas como prova. Serve para você reler com calma, conferir o que está certo e ver de onde cada ponto veio.</p>
+      <p>Cada análise segue sempre a mesma ordem:</p>
+      <div class="role">
+        <div class="r"><div class="rk">Suas falas</div><p>Trechos exatos da entrevista — a evidência de tudo.</p></div>
+        <div class="r"><div class="rk">Está claro</div><p>O que ficou bem definido na conversa.</p></div>
+        <div class="r"><div class="rk">Falta confirmar</div><p>Lacunas a fechar — material da próxima etapa.</p></div>
+        <div class="r"><div class="rk">Leitura</div><p>O que isso significa, em linguagem direta.</p></div>
+      </div>
+      <p style="margin-top:22px" class="muted">Sem jargão: quando um termo técnico aparece, ele vem explicado entre parênteses. As marcações como <span style="font-family:var(--font-mono);font-size:12px">S1 c24</span> indicam o trecho da entrevista de onde a frase saiu — é a rastreabilidade do método.</p>
+    </div>
+  </section>
+
+  <section id="indice">
+    <div class="wrap">
+      <span class="eyebrow">Índice</span>
+      <h2 class="h2">Oito frentes, 25 análises.</h2>
+      <div class="idx">
+        <a href="#c1"><div class="n">Frente 1</div><div class="t">Essência</div><div class="d">Sua história, valores e causa. 5 análises.</div></a>
+        <a href="#c2"><div class="n">Frente 2</div><div class="t">Identidade</div><div class="d">Quem você é e o espaço a ocupar. 2 análises.</div></a>
+        <a href="#c5"><div class="n">Frente 5</div><div class="t">Oferta</div><div class="d">O que vende, preço, jornada. 3 análises.</div></a>
+        <a href="#c6"><div class="n">Frente 6</div><div class="t">Cliente</div><div class="d">Quem é e o que o move. 4 análises.</div></a>
+        <a href="#c4"><div class="n">Frente 4</div><div class="t">Posicionamento</div><div class="d">Contra o que luta, o que diferencia. 4 análises.</div></a>
+        <a href="#c3"><div class="n">Frente 3</div><div class="t">Comunidade</div><div class="d">O que cria seguidores fiéis. 3 análises.</div></a>
+        <a href="#c7"><div class="n">Frente 7</div><div class="t">Tom de voz</div><div class="d">Como você fala e como soa. 2 análises.</div></a>
+        <a href="#c8"><div class="n">Frente 8</div><div class="t">Visual</div><div class="d">Cores e consistência da imagem. 2 análises.</div></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FRENTE 1 ===================== -->
+  <section class="catsec" id="c1">
+    <div class="wrap">
+      <div class="cat-eye">Frente 1</div>
+      <div class="cat-h">Essência</div>
+      <p class="cat-sub">Sua história, seus valores e sua causa — a matéria-prima da marca. Em todas elas, o mesmo padrão: o ativo existe e quase nada chegou ao público.</p>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">1.1 · Quem você é como marca</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">A matéria-prima está toda aqui — falta lapidar.</div>
+        <div class="score">Personagem de marca: 3 de 4 elementos prontos — falta transformar suas histórias em material reutilizável.</div>
+
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Como você se define</div><div class="quote">"Eu me descreveria como uma pessoa com capacidade de <em>mudar o que era imutável</em>. Porque é isso que a remoção traz hoje. Ela trata muitas dores que antes era impossível de remover."</div><div class="qsrc">Entrevista · S1 c0</div></div>
+          <div class="qg"><div class="qt">Sua trajetória</div><div class="quote">"Minha formação original é medicina veterinária… abandonei essa área e troquei totalmente para tatuagem… E a laser terapia foi uma necessidade. Quando minha filha nasceu, entendi que precisava ter mais tempo para vê-la crescer."</div><div class="qsrc">Entrevista · S1 c0 / c1</div></div>
+          <div class="qg"><div class="qt">Defeitos que você assume</div><div class="quote">"Primeiro de todos é minha ansiedade… tenho um pouco de medo de explorar o meu potencial e acaba me travando, meio que uma <em>síndrome do impostor</em>."</div><div class="qsrc">Entrevista · S1 c3</div></div>
+          <div class="qg"><div class="qt">Contra o que você se posiciona</div><div class="quote">"Tem gente que, para vender remoção, menospreza a tatuagem… A Ferrari não usa adesivo. A tatuagem já foi muito marginalizada. Eu sou a favor da tatuagem."</div><div class="qsrc">Entrevista · S1 c29</div></div>
+        </div>
+
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Você se define com uma frase forte e tem uma trajetória de reinvenção (veterinária → creche → tatuagem → laser) que sustenta a promessa ao cliente.</li>
+            <li>Você admite defeitos abertamente — ansiedade, procrastinação, autocrítica. Isso, bem usado, gera confiança.</li>
+            <li>Você tem um "inimigo" claro: quem trabalha sem técnica e quem menospreza a tatuagem.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>A "manchete de daqui a 30 anos" — sua visão de futuro — não foi formulada. Hoje é só um desejo difuso de "ser referência nacional".</li>
+            <li>Sua causa ("dar nova oportunidade a quem se sente marcado") existe crua, sem virar um movimento com nome.</li>
+            <li>Você não tem histórias-exemplo prontas para conteúdo (só a comparação com a Hermione Granger).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Dos 4 elementos de um "personagem de marca" forte — história de origem, defeitos assumidos, lado que divide opinião, e parábolas para contar —, você tem 3 prontos. Falta transformar casos reais em histórias reutilizáveis, e pintar sua causa como uma visão de futuro comunicável. A matéria-prima é superior à média do setor; o trabalho é de lapidação, não de criação.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">1.2 · As histórias que você tem para contar</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Três histórias potentes — nenhuma com cena fechada.</div>
+        <div class="score">Histórias-âncora completas: 1 de 3. Há pelo menos uma "história de virada" pronta.</div>
+
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">A virada de carreira</div><div class="quote">"Quando a minha filha nasceu, eu entendi que precisava ter mais tempo… foi o momento que eu decidi mudar de área."</div><div class="qsrc">Entrevista · S1 c1</div></div>
+          <div class="qg"><div class="qt">A creche de cães (conquista e preço)</div><div class="quote">"Trabalhava praticamente 24 horas por dia, 7 dias por semana… fiquei à frente da creche por 4 anos… nunca tive um dia sem cães."</div><div class="qsrc">Entrevista · S1 c1 / c5</div></div>
+          <div class="qg"><div class="qt">O curso ruim (a virada de crença)</div><div class="quote">"A entrega foi péssima… os dois primeiros casos que atendi, eu cheguei a <em>machucar o cliente</em>… falei que preciso estudar mais… é por isso que defendo tanto um curso bem feito."</div><div class="qsrc">Entrevista · S1 c11</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Existe uma história-âncora de transição forte (com gatilho real: maternidade + crise).</li>
+            <li>Existe uma "história de virada" completa: acreditava ser impossível remover → estudo e necessidade → "mudar o que era imutável".</li>
+            <li>Há um fundo do poço narrável: esgotamento, processos, o cliente machucado pelo curso ruim.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Nenhuma das 3 histórias tem cena completa: falta lugar, data, valor em jogo, desfecho.</li>
+            <li>O lado emocional (impostor, ansiedade) aparece como "defeito", não como arco da história.</li>
+            <li>A história quase nunca foi contada em público — só um post fixado.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Uma boa história de marca precisa de dois eixos: o que acontece por fora (a virada de carreira) e o que muda por dentro (a superação emocional). Você tem o eixo externo forte e o interno só esboçado. A história do curso ruim é a mais persuasiva e <strong>100% inédita</strong> — é o melhor primeiro conteúdo de origem.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">1.3 · O porquê — sua causa</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Causa potente, dita em fragmentos hesitantes.</div>
+        <div class="score">O motivo existe e é forte — mas nunca virou uma frase definida.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Seu propósito, em estado bruto</div><div class="quote">"Pessoa que está perdida, que acha que não vai conseguir oportunidades melhores por ter algo marcado nela, e eu conseguir tirar 100% isso e a pessoa <em>conseguir evoluir</em>."</div><div class="qsrc">Entrevista · S1 c3</div></div>
+          <div class="qg"><div class="qt">A frase, quando pedida</div><div class="quote">"Não tem uma frase exata, mas… seria justamente essa possibilidade da pessoa mudar de ideia."</div><div class="qsrc">Entrevista · S1 c30</div></div>
+          <div class="qg"><div class="qt">O que ninguém no mercado conta</div><div class="quote">"Muita gente que faz remoção bate o laser e não tá nem aí pro pelo da pessoa… a pessoa sai com os pelos todos brancos."</div><div class="qsrc">Entrevista · S1 c24</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Seu porquê existe: toda pessoa tem o direito de mudar de ideia sobre o que carrega no corpo — sem perder a integridade da pele nem a dignidade de quem se tatuou.</li>
+            <li>Você tem um gancho de conteúdo poderoso: "90% das pessoas não sabem por que a tatuagem dura para sempre".</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>A frase de uma linha que resume seu porquê ainda não existe.</li>
+            <li>O porquê pessoal (filha/tempo) e o porquê do cliente (mudança/dignidade) não estão fundidos numa narrativa única.</li>
+            <li>Você tem receio de comunicar o "lado sujo do mercado" por medo de ofender concorrentes — então isso vira só conversa privada.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">A causa é excelente, mas comunicada de fora para dentro (você fala do "o que" e do "como", o "porquê" fica implícito). E uma lacuna de conhecimento rara — "ninguém sabe por que a tatuagem é permanente" — está sendo desperdiçada em conversas 1 a 1 em vez de virar conteúdo de atração.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">1.4 · Provas de competência</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="clu-title">A prova que vende sozinha — invisível na internet.</div>
+        <div class="score">Provas concretas de competência visíveis online: 1 de 7. Faixa crítica.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">O caso que convence sozinho</div><div class="quote">"Ela já tinha feito dez sessões para a remoção de uma sobrancelha e não obtinha resultado… com duas sessões comigo, já praticamente saiu <em>todo</em> o pigmento."</div><div class="qsrc">Entrevista · S1 c10</div></div>
+          <div class="qg"><div class="qt">Reconhecida pelos pares</div><div class="quote">"Eu sou uma das que ajuda… num caso difícil, eles me procuram, eu já meio que sou referência deles. Já fui chamada para ministrar esse curso junto com a professora."</div><div class="qsrc">Entrevista · S1 c6 / c3</div></div>
+          <div class="qg"><div class="qt">A presença digital hoje</div><div class="quote">"O meu Google é super parado. Não sei como as pessoas me acham por lá… Tem um postzinho fixado que conto um pouquinho da minha história."</div><div class="qsrc">Entrevista · S1 c28</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Existem provas reais e verificáveis: o caso 10→2 sessões, convite para ministrar curso, capacidade técnica rara, processo de biossegurança rigoroso.</li>
+            <li>Você admitiu uma falha de início (machucou clientes, parou e reestudou) — material de credibilidade poderoso.</li>
+            <li>Há figuras de autoridade associáveis (referências, professora, mentor).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Nenhuma dessas provas está publicada — vive só no presencial.</li>
+            <li>Faltam dados verificáveis organizados: nº de clientes, depoimentos em vídeo, autorizações de imagem.</li>
+            <li>Google e marca registrada inativos.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">"Provas de competência" são sinais difíceis de falsificar que o público vê (casos, reconhecimento de pares, processo rigoroso). Você tem sete na vida real e apenas um — o post fixado — chega à internet. É o ponto mais crítico desta frente: a competência existe e ninguém de fora consegue verificá-la.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">1.5 · Onde você está na sua trajetória</span><span class="badge b-ok"><span class="dot"></span>Forte</span></div>
+        <div class="clu-title">Posição clara, e a onda do mercado a favor.</div>
+        <div class="score">Autoridade regional em ascensão; tendência de mercado fortemente a favor.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Onde você se vê</div><div class="quote">"Não sou iniciante… aqui no estado dificilmente vai ter pessoas muito melhores do que eu… mas ainda não sou uma lenda. Tenho uma vontade nível nacional."</div><div class="qsrc">Entrevista · S1 c3</div></div>
+          <div class="qg"><div class="qt">A onda a favor</div><div class="quote">"A tatuagem, há 10 anos, era muito inicial… hoje a arte é muito melhor… as pessoas estão mudando. E a gente está numa moda do clean girl, do minimalismo."</div><div class="qsrc">Entrevista · S1 c13 / c14</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Posição nítida: referência regional, já forma outros profissionais, em ascensão.</li>
+            <li>Três tendências jogam a seu favor: salto técnico da tatuagem, cultura minimalista/clean, e o ciclo de arrependimento de tatuagens.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>O público ideal ainda está genérico — sem perfil definido nem ticket-alvo.</li>
+            <li>A ambição nacional não tem marcos nem plano.</li>
+            <li>A síndrome do impostor é a trava declarada da ascensão.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Este é um ponto forte: sua posição na trajetória é clara e o momento de mercado é excepcionalmente favorável — e alinhado à sua tese "as pessoas podem mudar de ideia". O que segura não é o cenário, é a trava interna.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== FRENTE 2 ===================== -->
+  <section class="catsec" id="c2">
+    <div class="wrap">
+      <div class="cat-eye">Frente 2</div>
+      <div class="cat-h">Identidade</div>
+      <p class="cat-sub">Quem você é como marca e o espaço que pode ocupar na cabeça do cliente.</p>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">2.6 · Sua personalidade de marca</span><span class="badge b-ok"><span class="dot"></span>Forte</span></div>
+        <div class="clu-title">Coesa e consistente — esse é um ativo.</div>
+        <div class="score">Identidade coesa: a parte técnica e a parte "fora da curva" não se contradizem.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Seu lado especialista</div><div class="quote">"Hermione Granger, porque também vim de uma família simples… e ela é uma pessoa muito técnica, muito <em>estudiosa</em>."</div><div class="qsrc">Entrevista · S1 c15</div></div>
+          <div class="qg"><div class="qt">Seu lado fora-da-curva</div><div class="quote">"Sou uma pessoa tatuada, 80% do corpo… não seguir receita de bolo… gosto da luz e sombra, que representa o laser. Tinta, preta, luz."</div><div class="qsrc">Entrevista · S1 c30 / c28</div></div>
+          <div class="qg"><div class="qt">Seu princípio inegociável</div><div class="quote">"Tem gente que, para vender remoção, menospreza a tatuagem… a gente não precisa marginalizar mais ainda ela."</div><div class="qsrc">Entrevista · S1 c29</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Duas faces que se reforçam: a especialista estudiosa e a profissional autoral. Uma sustenta a outra.</li>
+            <li>Governança madura: você recusa um discurso comercial inteiro por princípio.</li>
+            <li>A base é estabilidade + pertencimento, com uma tensão de mudança controlada.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>A palavra-âncora ("possibilidade"/"mudança") e a anti-palavra ("mágica"/"milagre") não estão fechadas.</li>
+            <li>A marca registrada está abandonada na execução — risco de a dispersão corroer a coesão.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Sua identidade é coesa e consistente — a dispersão que existe vem da <strong>execução</strong>, não de quem você é. Esse é um dos melhores ativos do diagnóstico: não há conflito a resolver, há um sistema a aplicar.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">2.7 · O espaço a ocupar na mente do cliente</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">O território está vago. Você não plantou a bandeira.</div>
+        <div class="score">Frase que te resume ainda difusa (3 versões); espaço de mercado vago e livre.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">As três frases concorrentes</div><div class="quote">"Capacidade de mudar o que era imutável" · "a possibilidade da pessoa mudar de ideia" · "Remoção, Arte e Inovação" — <em>nenhuma decidida</em>.</div><div class="qsrc">Entrevista · S1 c0 / c30 / c28</div></div>
+          <div class="qg"><div class="qt">O espaço vazio do mercado</div><div class="quote">"A galera da remoção é tudo como eu: muito técnico, mas na hora de postar não entende de postagem… não tem ninguém aqui hoje que é referência nisso."</div><div class="qsrc">Entrevista · S1 c12 / c8</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Existe a frase mais forte por recorrência: "capacidade de mudar o que era imutável".</li>
+            <li>O espaço está confirmadamente vago: ninguém no estado trabalha só com isso, com marca cuidada.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>O teste de perguntar a 5 pessoas o que você faz nunca foi feito (só sobre cor).</li>
+            <li>Três frases concorrentes + um nome de CNPJ em inglês abandonado: nada decidido.</li>
+            <li>O adjetivo que querem associar a você daqui a 5 anos não foi declarado.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">O espaço de "a especialista exclusiva, com marca cuidada" está livre porque a concorrência é técnica e sem padrão de marca. O bloqueio não é falta de espaço — é falta de decisão sobre qual frase cravar, agravado pela síndrome do impostor.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== FRENTE 5 ===================== -->
+  <section class="catsec" id="c5">
+    <div class="wrap">
+      <div class="cat-eye">Frente 5</div>
+      <div class="cat-h">Oferta</div>
+      <p class="cat-sub">O que você vende, como cobra e o caminho do cliente até fechar. É aqui que o dinheiro vaza de forma mais direta.</p>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">5.15 · O que você vende, do simples ao caro</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Método diferenciado de verdade — sem nome.</div>
+        <div class="score">Oportunidade nova confirmada (especialista exclusiva); método existe na prática, sem nome.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Seus degraus de preço</div><div class="quote">"Meu valor mínimo é R$ 150… sobrancelha R$ 280 a 380… uma tatuagem grande, três, quatro mil reais para remover."</div><div class="qsrc">Entrevista · S1 c16 / c18</div></div>
+          <div class="qg"><div class="qt">Seu método (na prática)</div><div class="quote">"Explico tudo… anamnese… termo… faço um teste… mostro com espelhinho… remoção… faço a fotobiomodulação, que é o final da minha sessão."</div><div class="qsrc">Entrevista · S1 c26</div></div>
+          <div class="qg"><div class="qt">Sua técnica única</div><div class="quote">"Muita gente bate o laser e não tá nem aí pro pelo… eu faço uma técnica que consigo tirar os pelos do caminho e removo deixando <em>tudo pretinho</em>."</div><div class="qsrc">Entrevista · S1 c24</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Existem degraus reais: do mínimo ao alto, mais reparo da pele, mais o aluguel de equipamento (B2B).</li>
+            <li>O diferencial em 30 segundos é claro: especialista exclusiva, foco em não danificar a pele.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>O método não tem nome nem está documentado.</li>
+            <li>Não há uma porta de entrada de baixo atrito (a tentativa de vagas grátis foi abandonada por má experiência).</li>
+            <li>O degrau de topo (curso) é onde você é aluna, não vendedora.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">É uma <strong>oportunidade nova</strong> (algo diferente, não uma versão melhorada do que já existe): especialista exclusiva contra generalistas que alugam o seu próprio equipamento. Falta nomear e empacotar o método para que o cliente perceba o valor.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">5.16 · Como você apresenta o preço</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="clu-title">Honestidade desprotegida, valor invisível.</div>
+        <div class="score">Força da oferta: 1 de 10. Sem garantia, bônus, urgência ou clareza de valor.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Preço como filtro</div><div class="quote">"O meu preço não é o mais barato, pra dar uma filtrada mesmo… conhecimento custa caro."</div><div class="qsrc">Entrevista · S1 c27 / c18</div></div>
+          <div class="qg"><div class="qt">A honestidade que joga contra</div><div class="quote">"Às vezes não é possível ser removido 100%… <em>não consigo garantir</em> essa entrega, porque não sei o que foi utilizado."</div><div class="qsrc">Entrevista · S1 c19</div></div>
+          <div class="qg"><div class="qt">A estética x o preço</div><div class="quote">"Eu só uso preto e branco, é bem cru porque fui eu mesma que fiz… acho que não tem padrão. Às vezes eu até tento, mas não consigo."</div><div class="qsrc">Entrevista · S1 c24 / c28</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>O ticket é definido e escalonado por complexidade, usado de propósito como filtro.</li>
+            <li>Você já decompõe o preço em laser + reparo — base honesta para construir mais.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Nenhuma garantia existe — você faz o oposto, blinda-se via termo.</li>
+            <li>O valor já entregue (reparo, fotobiomodulação, preservação de pelos) não é mostrado: o cliente não vê o que paga.</li>
+            <li>A estética crua não sustenta o preço premium — você mesma reconhece.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">O cliente faz uma conta mental: "vale a pena, e vai funcionar?". O que mais pesa contra você é a demora do resultado somada à sua honestidade sobre não garantir 100% — dita sem nada que reduza o medo. Uma garantia condicional segura inverteria isso a seu favor.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">5.17 · O caminho do cliente até fechar</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Ele entra sabendo pouco; o discurso gira em você.</div>
+        <div class="score">Cliente entra sem conhecer o processo; a comunicação fala de você, não dele.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Como ele chega</div><div class="quote">"A maioria já chega falando que vem de indicação de alguém ou que me achou no Google."</div><div class="qsrc">Entrevista · S1 c24</div></div>
+          <div class="qg"><div class="qt">Onde ele trava</div><div class="quote">"Posso te encaminhar um texto explicativo… mas nem todo mundo lê porque fica extenso. Cheguei a fazer um PDF e <em>ninguém abria</em>."</div><div class="qsrc">Entrevista · S1 c22</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Entrada por indicação e Google; raramente pelo Instagram.</li>
+            <li>O cliente chega sabendo que laser resolve, mas sem entender o processo.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Não há nada entre "sabe que existe" e "fecha" — falta conteúdo que eduque o processo antes do orçamento.</li>
+            <li>O discurso te coloca como heroína técnica; o cliente raramente é o protagonista.</li>
+            <li>A origem do lead não é rastreada — você perde a leitura do que funciona.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">O ponto que mais perde clientes é o orçamento: quem vem só por preço não fecha, e o texto longo não é lido. A correção é educar o processo (frosting, nº de sessões, reparo) em vídeo curto antes do preço, e reescrever a comunicação com o cliente como herói e você como a guia.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== FRENTE 6 ===================== -->
+  <section class="catsec" id="c6">
+    <div class="wrap">
+      <div class="cat-eye">Frente 6</div>
+      <div class="cat-h">Cliente</div>
+      <p class="cat-sub">Quem é seu cliente e o que realmente o move. Seu ponto mais forte — e o que mais morre na conversa 1 a 1.</p>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">6.18 · O que o cliente já sabe quando chega</span><span class="badge b-ok"><span class="dot"></span>Forte</span></div>
+        <div class="clu-title">Você conhece a crença que trava a venda — com precisão.</div>
+        <div class="score">Você sabe exatamente a crença-chave que, derrubada, destrava a venda.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">A crença que trava tudo</div><div class="quote">"A maior crença de 90% dos que chegam: acham que vai sair muito rápido, bater ali e <em>sumir magicamente</em>."</div><div class="qsrc">Entrevista · S1 c24</div></div>
+          <div class="qg"><div class="qt">A causa que você já sabe explicar</div><div class="quote">"Esse branco chama frosting, some em alguns minutos… a pessoa entende que aquilo está saindo, mas é só a reação química na explosão do pigmento."</div><div class="qsrc">Entrevista · S1 c26</div></div>
+          <div class="qg"><div class="qt">Presencial funciona, digital trava</div><div class="quote">"Eu explico da forma que eu explico e as pessoas fecham… [no digital] estou completamente perdida ainda, nunca acho que está bom e nunca posto."</div><div class="qsrc">Entrevista · S1 c24 / c30</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>A crença que trava 90% das vendas está identificada com precisão.</li>
+            <li>As 3 falsas crenças do cliente estão mapeadas.</li>
+            <li>Você quebra essas crenças presencialmente com naturalidade.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>O conteúdo digital não está calibrado para o que o cliente realmente precisa ouvir primeiro.</li>
+            <li>O argumento que converte presencialmente nunca foi roteirizado para vídeo.</li>
+            <li>Não há medição de nenhum conteúdo.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">"Frosting" é a reação branca esperada na pele logo após o laser — o cliente confunde com a tatuagem saindo. Você já vence essa objeção pessoalmente; basta gravar exatamente como você explica, sem reinventar.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">6.19 · O que segura a decisão de compra</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">As 3 objeções mapeadas — só respondidas no privado.</div>
+        <div class="score">As 3 objeções estão claras; as respostas existem só em conversa, nunca públicas.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">As três objeções</div><div class="quote">Demora / "não sai 100%" · medo da dor · preço ancorado no que pagaram pela tatuagem ("não querem gastar mais do que gastaram para fazer").</div><div class="qsrc">Entrevista · S1 c24 / c19 / c22</div></div>
+          <div class="qg"><div class="qt">Seu contra-argumento pronto</div><div class="quote">"Você prefere sair com a pele queimada ou com uma <em>pele saudável</em>?"</div><div class="qsrc">Entrevista · S1 c24</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>As 3 ansiedades estão mapeadas e literais.</li>
+            <li>O "concorrente seguro" é o mais barato sem ANVISA, que parece fácil e indolor.</li>
+            <li>Você já usa autoridade e micro-compromissos (avaliação + sinal).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>As respostas às 3 objeções não estão sistematizadas em conteúdo público.</li>
+            <li>A prova social está presa no direct.</li>
+            <li>Sua história pessoal (ex-vet, 80% tatuada, não julga) é subaproveitada como vetor de afinidade.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Você tem as respostas — elas só não saem da conversa privada. Três conteúdos fixos, um por objeção (expectativa/frosting · dor/duração real · por que custa mais), resolvem a maior parte do gargalo.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">6.20 · O que o cliente realmente quer</span><span class="badge b-ok"><span class="dot"></span>Forte</span></div>
+        <div class="clu-title">Você entende o cliente em três camadas — não só uma.</div>
+        <div class="score">Profundidade incomum: você entende o externo, o emocional e o filosófico.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">A camada emocional</div><div class="quote">"A dor mesmo de se ver no espelho com algo que você não gosta, que às vezes <em>nem te representa mais</em>."</div><div class="qsrc">Entrevista · S1 c24</div></div>
+          <div class="qg"><div class="qt">A camada filosófica</div><div class="quote">"Sobre a tatuagem 'nada é tão ruim que não possa piorar', feita jovem, hoje ele é pai… as pessoas podem mudar de opinião e está tudo bem."</div><div class="qsrc">Entrevista · S1 c24 / c29</div></div>
+          <div class="qg"><div class="qt">O sonho do cliente</div><div class="quote">"Tirar 100% o que te marcou e a pessoa <em>conseguir evoluir</em>."</div><div class="qsrc">Entrevista · S1 c3</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Os três níveis de problema estão completos: remover (externo), vergonha no espelho (interno), direito de mudar (filosófico).</li>
+            <li>O gatilho que antecede a busca está claro (fim de relação, emprego, evento, virada de vida).</li>
+            <li>O sonho do cliente é identitário, não só prático.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Você só articula isso quando provocada; o conteúdo foca quase 100% no externo/técnico.</li>
+            <li>O sonho não virou frase de posicionamento.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">A lacuna aqui é de comunicação, não de conhecimento. A mensagem deve liderar pelo emocional/filosófico (vergonha no espelho → liberdade) e usar o técnico só como prova.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">6.21 · Suas histórias e gatilhos de persuasão</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Histórias de virada prontas — e cruas.</div>
+        <div class="score">Três histórias de virada prontas; gatilhos de compartilhamento não estruturados.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">A história de virada mais forte</div><div class="quote">"A entrega foi péssima… cheguei a machucar o cliente… é por isso que defendo tanto um curso bem feito, o conhecimento."</div><div class="qsrc">Entrevista · S1 c11</div></div>
+          <div class="qg"><div class="qt">O gatilho viral que você reconhece</div><div class="quote">"O que prende é os vídeos batendo laser, porque é muito gostoso de ver… aqueles vídeos satisfatórios."</div><div class="qsrc">Entrevista · S1 c12</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Três histórias de virada prontas (o curso ruim é a mais forte).</li>
+            <li>Você já usa histórias e valor prático na venda — e reconhece o gatilho do conteúdo "satisfatório".</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>As histórias estão cruas e dispersas, nunca roteirizadas.</li>
+            <li>O gatilho viral não é executado (você grava sozinha e trava).</li>
+            <li>Não há urgência/escassez estruturada na oferta; não há micro-compromissos roteirizados.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">"História de virada" = a estrutura crença antiga → evento → nova crença, que faz o cliente mudar de ideia. Você tem três prontas e nenhuma virou conteúdo. O potencial é alto; falta estrutura, não matéria.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== FRENTE 4 ===================== -->
+  <section class="catsec" id="c4">
+    <div class="wrap">
+      <div class="cat-eye">Frente 4</div>
+      <div class="cat-h">Posicionamento</div>
+      <p class="cat-sub">Contra o que você luta, o que te diferencia, o que recusa, e o quanto você é lembrada.</p>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">4.11 · Contra o que você se posiciona</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Um inimigo forte e específico — calado.</div>
+        <div class="score">Inimigo forte e específico; frase de unicidade nunca formulada.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Seu inimigo, com especificidade clínica</div><div class="quote">"Equipamento sem ANVISA e pessoas sem conhecimento básico… clientes que vieram com queloides, cicatrizes hipertróficas, <em>acromias na pele</em>."</div><div class="qsrc">Entrevista · S1 c2 / c25</div></div>
+          <div class="qg"><div class="qt">Seu valor inegociável</div><div class="quote">"Tem um tipo de conteúdo que não gosto: menosprezar a tatuagem… a gente não precisa marginalizar mais ainda ela."</div><div class="qsrc">Entrevista · S1 c29</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Contra quem: profissional barato, sem ANVISA, sem técnica, que machuca — especificidade clínica alta.</li>
+            <li>Anti-inimigo de valor: recusa marketing de polêmica e menosprezo à tatuagem.</li>
+            <li>Três concorrentes nomeados, com a diferença declarada por você.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>A frase de unicidade nunca foi formulada ("nunca parei para pensar nisso").</li>
+            <li>O segmento-âncora está difuso (público muito variado).</li>
+            <li>O inimigo quase não é ativado em público — você evita confronto.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Ter um inimigo específico (não genérico) é uma munição rara de posicionamento. O caminho é transformar "laser sem ANVISA que queima a pele" em conteúdo educativo recorrente — atacando o sistema, nunca pessoas.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">4.12 · O que te torna única</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Espaço vazio confirmado, método sem nome.</div>
+        <div class="score">Oportunidade nova confirmada (mercado regional vazio); método sem nome.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">O espaço vazio</div><div class="quote">"Aqui no estado, a maioria não é focada nisso… não conheço ninguém que trabalha só com isso. Elas são meus concorrentes. São meus clientes também."</div><div class="qsrc">Entrevista · S1 c8 / c25</div></div>
+          <div class="qg"><div class="qt">Seus ganchos de curiosidade</div><div class="quote">"Por que a tatuagem dura para sempre? 90% das pessoas não sabem… a pessoa fica 'nossa, nunca parei pra pensar nisso'."</div><div class="qsrc">Entrevista · S1 c26</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>É oportunidade nova: espaço regional vazio, concorrentes generalistas alugam o seu equipamento.</li>
+            <li>Diferenciais concretos: reparo da pele, fotobiomodulação, preservação de pelos.</li>
+            <li>Três ganchos de curiosidade já testados informalmente.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>O método não tem nome (há uma tensão com sua filosofia anti-"receita de bolo" a resolver).</li>
+            <li>O espaço vazio não é comunicado.</li>
+            <li>Os diferenciais não estão embalados como partes nomeadas da oferta.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">O nome do método pode encapsular justamente o <em>princípio do atendimento individualizado</em> — assim ele resolve o paradoxo: um método nomeável que é, ele mesmo, "não seguir receita de bolo".</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">4.13 · O que você recusa por princípio</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Uma lista de recusas robusta — 100% privada.</div>
+        <div class="score">Lista de recusas robusta (~9 itens), zero pública.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">O que você não faz</div><div class="quote">"Não tatuo o rosto, não tatuo nome… cliente muito baixa renda, reclamam de tudo, esse tipo eu prefiro não atender… não vendo pacotes."</div><div class="qsrc">Entrevista · S1 c27 / c22</div></div>
+          <div class="qg"><div class="qt">Sua postura inegociável</div><div class="quote">"Não atendo de sandalinha, estou sempre com o calçado mais fechado." — biossegurança não negociável.</div><div class="qsrc">Entrevista · S1 c31</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Existe uma lista de ~9 recusas (serviço, cliente, postura) com racional estratégico.</li>
+            <li>O preço-filtro é deliberado ("para dar uma filtrada mesmo").</li>
+            <li>O trade-off de identidade (largar duas carreiras) é declarado.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Tudo isso é privado — a filtragem só acontece no orçamento.</li>
+            <li>Há um conflito de execução: você diz ter pouca dificuldade de dizer não, mas adia e evita.</li>
+            <li>Confirmar se recusa oportunidades não-comerciais (palestra/parceria) por princípio.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">O que você recusa fortalece a identidade — mas só por dentro. Tornar públicos 3 "nãos" centrais ("não sou a opção barata"; "segurança não é negociável"; "não menosprezo a tatuagem") transforma recusa privada em posicionamento.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">4.14 · Ser lembrada — sinais visuais e presença</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="clu-title">Os ativos existem na sua cabeça, não no feed.</div>
+        <div class="score">Presença e consistência visual: crítica. Sem cenário fixo, frequência irregular.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Sua cor-assinatura</div><div class="quote">"Eu só tenho vermelho e preto na minha imagem… até o vermelho é meio que uma registrada… luz e sombra, que representa o laser."</div><div class="qsrc">Entrevista · S1 c28</div></div>
+          <div class="qg"><div class="qt">A falta de padrão</div><div class="quote">"Ou eu gravo na minha sala em Vila Velha ou no estúdio em Vitória… totalmente diferente… acho que não tem padrão."</div><div class="qsrc">Entrevista · S1 c28</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>A cor-assinatura existe conceitualmente forte (vermelho + preto/branco luz-e-sombra ligados ao laser).</li>
+            <li>O primeiro contato é indicação + Google passivo.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Não há cenário-âncora — dois cenários antagônicos, sem regra.</li>
+            <li>Frequência irregular (0–3 posts/semana), travada por autocrítica.</li>
+            <li>Identidade fragmentada: perfil pessoal vs. marca não usada.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Sua "marca visual" existe na sua cabeça e no seu corpo, não no conteúdo. Eleger um cenário único, um sistema de cores fixo e uma cadência mínima resolve a maior parte — é operacional, não conceitual.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== FRENTE 3 ===================== -->
+  <section class="catsec" id="c3">
+    <div class="wrap">
+      <div class="cat-eye">Frente 3</div>
+      <div class="cat-h">Comunidade</div>
+      <p class="cat-sub">O que transforma clientes em seguidores fiéis: história, crença, ritual, símbolo, líder. Você tem tudo isso — só no presencial.</p>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">3.8 · Os elementos que criam comunidade</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="clu-title">Todos os elementos existem offline. No digital, somem.</div>
+        <div class="score">Força de comunidade: 31 de 70. Forte no presencial, quase inexistente no digital.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Sua crença (existe, não verbalizada)</div><div class="quote">"Não tem uma frase exata, mas… seria justamente essa possibilidade da pessoa <em>mudar de ideia</em>."</div><div class="qsrc">Entrevista · S1 c29</div></div>
+          <div class="qg"><div class="qt">Você já é líder (mas se cala)</div><div class="quote">"Eu já meio que sou referência deles, só aqui na parte dos alunos." — projeção travada por síndrome do impostor.</div><div class="qsrc">Entrevista · S1 c6</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>História de origem forte e arquetípica; "contra quem" duplo e nítido; palavras próprias consistentes.</li>
+            <li>Rituais de atendimento robustos (anamnese → teste → fotobiomodulação).</li>
+            <li>Você já é líder de fato de uma rede de alunos.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>A crença/credo nunca foi verbalizado nem ativado; a marca está inativa.</li>
+            <li>Os rituais são de atendimento, não de marca para a audiência.</li>
+            <li>A liderança é suprimida; você usa perfil pessoal, não a marca.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Marcas que criam comunidade têm 7 elementos (origem, credo, símbolo, ritual, "contra quem", vocabulário, líder). Você pontua 31 de 70 porque cada um existe offline e desaparece no digital. Transformar a fotobiomodulação num ritual visível e o "mudar o imutável" num credo de uma frase já move o ponteiro.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">3.9 · Suas palavras e bordões</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Vocabulário próprio existe. O bordão não foi fixado.</div>
+        <div class="score">Vocabulário técnico-tribal consistente; frase-bandeira não cristalizada.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">As palavras que você repete</div><div class="quote">"Reparo tecidual, fotobiomodulação, biossegurança. Eu estou sempre repetindo. Tratamento individualizado."</div><div class="qsrc">Entrevista · S1 c29</div></div>
+          <div class="qg"><div class="qt">O bordão que já vive</div><div class="quote">"Tire o que está te incomodando que não te representa mais — é só o que eu falo com o cliente."</div><div class="qsrc">Entrevista · S1 c24 / c27</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Vocabulário próprio em uso real e consciente.</li>
+            <li>Anti-vocabulário robusto (recusa "mágico/rápido", "receita de bolo", polêmica).</li>
+            <li>Um bordão vivo já existe, dito a todo cliente.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>A frase-bandeira não foi cristalizada (você nega ter uma frase fixa duas vezes).</li>
+            <li>O método não tem nome próprio.</li>
+            <li>A tagline "Remoção, Arte e Inovação" está órfã: reanimar ou aposentar.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">A proposta central é forte; falta fixar o bordão. "Tire o que está te incomodando que não te representa mais" já é, na prática, o seu hino de marca — só precisa ser assumido como tal.</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">3.10 · Seguidor casual x fã — sua pirâmide</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="clu-title">Pirâmide travada na base, e um topo B2B desperdiçado.</div>
+        <div class="score">~95–100% seguidores casuais; 1 fã orgânica; rede B2B latente não cultivada.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">A única fã orgânica</div><div class="quote">"Tem uma cliente que sempre está compartilhando, me indica. Ela é meio do digital, então acho que é <em>meio natural</em>."</div><div class="qsrc">Entrevista · S1 c30</div></div>
+          <div class="qg"><div class="qt">O topo B2B latente</div><div class="quote">"Eu alugo o meu equipamento pra algumas pessoas. Então, elas são meus concorrentes. São meus clientes também."</div><div class="qsrc">Entrevista · S1 c25</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Base casual confirmada por você; uma fã espontânea exata.</li>
+            <li>Existe uma rede de profissionais/alunos onde você já é referência.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Nenhum mecanismo intencional faz alguém "subir de nível".</li>
+            <li>Não há canal exclusivo para fãs nem tratamento da rede de profissionais como comunidade.</li>
+            <li>Desequilíbrio severo: tudo aquisição, zero retenção/ascensão.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">"Pirâmide de fãs" vai do seguidor casual ao fã que defende você sem pedir. A sua está travada na base. O degrau de topo já existe pronto e ignorado: a rede de alunos/profissionais, que pode virar curso/mentoria — o movimento que monetiza a autoridade que você esconde.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== FRENTE 7 ===================== -->
+  <section class="catsec" id="c7">
+    <div class="wrap">
+      <div class="cat-eye">Frente 7</div>
+      <div class="cat-h">Tom de voz</div>
+      <p class="cat-sub">Como você fala — e como soa (ou deixa de soar) no digital.</p>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">7.22 · Seu tom de voz</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="clu-title">Seguro na técnica, inseguro fora dela.</div>
+        <div class="score">Quase nenhuma hesitação na técnica; muita hesitação em marca/digital.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Na técnica — firme</div><div class="quote">"Eu removi tudo em uma sessão só… eu não gasto um minuto… eu acredito que o estudo e a técnica é o principal."</div><div class="qsrc">Entrevista · S1 c22 / c24 / c8</div></div>
+          <div class="qg"><div class="qt">Fora dela — hesitante</div><div class="quote">"Estou completamente perdida ainda… não sei ainda, porque não consegui avaliar o meu conteúdo."</div><div class="qsrc">Entrevista · S1 c30 / c26</div></div>
+          <div class="qg"><div class="qt">Seu hino, dito sem hesitar</div><div class="quote">"Tire o que está te incomodando que não te representa mais."</div><div class="qsrc">Entrevista · S1 c24</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Você palestrou e fala fluido — não é falta de capacidade.</li>
+            <li>Assimetria forte e consistente: firmeza na técnica, hesitação fora dela.</li>
+            <li>O hino já existe, dito a todo cliente sem hesitar.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Falta amostra de conteúdo publicado para medir o tom real.</li>
+            <li>O hino nunca foi assumido conscientemente como bordão.</li>
+            <li>O tom-alvo não foi definido (sugestão: autoridade técnica calorosa).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">O problema não é de voz — é de publicação por perfeccionismo. A voz de autoridade já existe; ela só precisa de um caminho que não dependa de você "achar que está bom".</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">7.23 · Como você sinaliza autoridade</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="clu-title">A autoridade real existe — e é escondida.</div>
+        <div class="score">Autoridade real existente, ativamente suprimida; abertura de conteúdo sem padrão.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">A autoridade que você minimiza</div><div class="quote">"Eu até me apresento, porque já palestrei, mas… <em>não foco nisso</em>, porque tem gente que fica um tempão ali."</div><div class="qsrc">Entrevista · S1 c30</div></div>
+          <div class="qg"><div class="qt">Conteúdo sem roteiro</div><div class="quote">"Todos os que eu gravei até hoje não teve roteiro… a gente embola ali na hora o que vai falar e grava."</div><div class="qsrc">Entrevista · S1 c32</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Você tem uma referência de tom que admira (forma técnica de gravar).</li>
+            <li>A autoridade real existe e é verificável (forma alunos, é procurada nos casos difíceis).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Não há padrão consciente de abertura de conteúdo.</li>
+            <li>A autoridade é minimizada de propósito, por medo e impostor.</li>
+            <li>Não há resposta firme pronta para o cliente-preço (você adia, evita).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Sinalizar a credencial real <em>antes</em> de falar (em vez de escondê-la) é o que muda a percepção de autoridade. "Sou procurada por outros profissionais nos casos difíceis" precisa abrir o conteúdo, não ser apagado dele.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== FRENTE 8 ===================== -->
+  <section class="catsec" id="c8">
+    <div class="wrap">
+      <div class="cat-eye">Frente 8</div>
+      <div class="cat-h">Visual</div>
+      <p class="cat-sub">Cores e consistência da sua imagem. A cor está certa; falta a casa ter padrão.</p>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">8.24 · Suas cores</span><span class="badge b-ok"><span class="dot"></span>Forte</span></div>
+        <div class="clu-title">Paleta forte e coerente com o preço premium.</div>
+        <div class="score">Paleta forte; a baixa saturação combina com um trabalho caro. Falta só codificar.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">Sua paleta</div><div class="quote">"Acabo usando sempre preto, branco, marrom, vermelho. Fico mais nos tons terrosos, não muito do colorido."</div><div class="qsrc">Entrevista · S1 c31</div></div>
+          <div class="qg"><div class="qt">O significado já atribuído</div><div class="quote">"O vermelho é meio que uma registrada… preto e branco, luz e sombra, que representa o laser. <em>Tinta, preta, luz</em>."</div><div class="qsrc">Entrevista · S1 c28</div></div>
+          <div class="qg"><div class="qt">A cor que você evita</div><div class="quote">"Não gosto de rosa." — limite cromático consciente.</div><div class="qsrc">Entrevista · S1 c31</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>Paleta declarada: preto + vermelho primários, branco + terrosos de apoio.</li>
+            <li>Cor-assinatura clara (preto = laser; vermelho = sua marca pessoal).</li>
+            <li>A baixa saturação sustenta a percepção premium — coerente com "conhecimento custa caro".</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>A paleta é sentida, não codificada (sem códigos, sem regra de proporção).</li>
+            <li>Definir se o vermelho é a marca ou assinatura pessoal.</li>
+            <li>Definir o papel do marrom/terrosos.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Ponto forte: o ativo de cor existe e está certo. O único gap é de codificação — transformar a paleta sentida numa regra documentada (cores, proporções, o que é proibido).</div>
+        </div>
+      </article>
+
+      <article class="clu">
+        <div class="clu-head"><span class="clu-code">8.25 · A consistência visual do seu trabalho</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="clu-title">A cor certa, numa casa sem arquitetura.</div>
+        <div class="score">Consistência visual: 5 de 10 — efetivamente crítica, com pontos de contato mortos.</div>
+        <div class="blk"><div class="lbl voice">Suas falas</div>
+          <div class="qg"><div class="qt">A falta de sistema</div><div class="quote">"Tem muito resultado, muitas fotos, mas não tem um padrão… às vezes eu nem sei quem postou."</div><div class="qsrc">Entrevista · S1 c12</div></div>
+          <div class="qg"><div class="qt">Pontos de contato abandonados</div><div class="quote">"Cheguei a fazer um cartão, mas a gráfica fez mal feito e quase nunca entrego porque olho e fico 'meu deus'… o Google é super parado."</div><div class="qsrc">Entrevista · S1 c24 / c28</div></div>
+        </div>
+        <div class="blk"><div class="lbl good">O que já está claro</div>
+          <ul class="pl good">
+            <li>O sistema cromático é forte — mas vive no seu corpo, não no feed.</li>
+            <li>Há um uniforme parcial (paleta de roupa + calçado fechado por biossegurança).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que falta confirmar / aprofundar</div>
+          <ul class="pl block">
+            <li>Não há cenário-âncora; ângulo de câmera acidental.</li>
+            <li>Pontos de contato mortos: cartão não entregue, sem placa, Google parado.</li>
+            <li>A indecisão marca-pessoa vs. marca-negócio fragmenta tudo.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl read">Leitura</div>
+          <div class="reading">Você tem a cor certa numa casa sem arquitetura. As prioridades, em ordem: feed/grid com sistema · cenário-âncora único · Google Business · cartão e placa · uniforme/ângulo. Tudo de baixo custo e alto impacto.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== FECHAMENTO ===================== -->
+  <section id="fechamento">
+    <div class="wrap narrow">
+      <span class="eyebrow">O que vem agora</span>
+      <h2 class="h2">Este documento é o respaldo. A próxima etapa parte dele.</h2>
+      <p style="margin-top:18px">Tudo aqui é o estado atual lido a partir da sua entrevista. As correções e acréscimos que você trouxe na reunião entram como insumo e refinam este material — apontar uma lacuna é parte do método, não falha.</p>
+      <div class="pattern" style="margin-top:24px">
+        <span class="k">O fio que liga tudo</span>
+        Em quase todas as 25 análises aparece o mesmo padrão: <strong>o ativo existe, a publicação não</strong>. Não é um caso de marca fraca — é uma marca pronta que ninguém vê. A próxima etapa (posicionamento) parte deste diagnóstico para definir, em ordem, o que cravar primeiro.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <svg viewBox="0 0 779.88 165.53" role="img" aria-label="Fleway"><g fill="#FFFFFF">
+      <polygon points="240.21 22.06 155.69 31.97 173.07 68.66 240.21 22.06"></polygon>
+      <polygon points="173.07 68.66 155.69 105.87 219.58 116.39 173.07 68.66"></polygon>
+      <polygon points="155.69 31.97 103.91 68.66 155.69 105.87 173.07 68.66 155.69 31.97"></polygon>
+      <path d="M269.26,115.95V22.06h18.26v93.9h-18.26ZM284.96,37.49v-15.43h39.36v15.43h-39.36ZM284.96,76.85v-15.43l37.56-.13v15.43l-37.56.13h0Z"></path>
+      <path d="M335.11,115.95V22.06h17.88v93.9h-17.88Z"></path>
+      <path d="M398.27,118.4c-6,0-11.25-1.03-15.76-3.09-4.5-2.06-8.23-4.83-11.19-8.3-2.96-3.47-5.19-7.35-6.69-11.64-1.5-4.28-2.25-8.66-2.25-13.12v-2.44c0-4.63.75-9.11,2.25-13.44,1.5-4.33,3.73-8.19,6.69-11.57s6.62-6.09,11-8.11c4.37-2.02,9.43-3.02,15.18-3.02,7.55,0,13.87,1.65,18.97,4.95,5.1,3.3,8.94,7.64,11.51,12.99,2.57,5.36,3.86,11.13,3.86,17.3v6.43h-61.86v-10.93h50.68l-5.53,5.4c0-4.46-.65-8.27-1.93-11.45-1.28-3.17-3.23-5.62-5.85-7.33-2.62-1.72-5.9-2.57-9.84-2.57s-7.29.9-10.03,2.7-4.83,4.39-6.23,7.78c-1.42,3.39-2.12,7.44-2.12,12.15,0,4.37.68,8.25,2.06,11.64,1.37,3.39,3.47,6.04,6.3,7.97,2.83,1.93,6.43,2.9,10.8,2.9s7.93-.88,10.67-2.63c2.74-1.75,4.5-3.92,5.27-6.5h16.47c-1.03,4.8-3,9-5.92,12.6-2.92,3.6-6.62,6.39-11.13,8.36s-9.62,2.96-15.37,2.96h0Z"></path>
+      <path d="M451.13,115.95l-19.03-69.84h17.36l18.13,69.84h-16.47,0ZM458.34,115.95l-.13-14.66h14.27v14.66h-14.15,0ZM463.61,115.95l13.25-67.53h20.58l15.31,67.53h-14.15l-15.57-67.14h7.46l-13.76,67.14h-13.12ZM503.09,115.95v-14.66h14.27l-.13,14.66h-14.15,0ZM508.76,115.95l16.08-69.84h16.2l-16.85,69.84h-15.43Z"></path>
+      <path d="M567.53,117.75c-5.06,0-9.5-.9-13.31-2.7-3.81-1.8-6.78-4.37-8.88-7.72-2.11-3.34-3.15-7.37-3.15-12.09,0-5.14,1.26-9.34,3.79-12.6,2.53-3.26,6.09-5.7,10.67-7.33,4.58-1.63,9.97-2.44,16.14-2.44h16.2v10.67h-16.46c-4.11,0-7.27,1.01-9.45,3.02-2.19,2.02-3.28,4.61-3.28,7.78s1.09,5.74,3.28,7.72c2.19,1.97,5.34,2.96,9.45,2.96,2.49,0,4.78-.45,6.88-1.35,2.1-.9,3.86-2.44,5.27-4.63,1.42-2.19,2.21-5.16,2.38-8.94l4.37,5.02c-.43,4.89-1.61,9-3.54,12.34s-4.59,5.9-7.97,7.65c-3.39,1.75-7.53,2.63-12.41,2.63h0ZM590.04,115.95v-20.71h-2.96v-23.02c0-4.03-.99-7.03-2.96-9-1.97-1.97-5.02-2.96-9.13-2.96-2.14,0-4.72.04-7.72.13s-6.02.19-9.07.32c-3.04.13-5.77.28-8.16.45v-15.18c1.97-.17,4.2-.34,6.69-.51s5.04-.28,7.65-.32c2.61-.04,5.08-.07,7.39-.07,7.2,0,13.18.95,17.94,2.83,4.76,1.89,8.36,4.85,10.8,8.88,2.44,4.03,3.67,9.31,3.67,15.82v43.34h-14.16Z"></path>
+      <path d="M629.66,114.4l-22.64-68.3h18.01l21.48,68.3h-16.85ZM613.97,143.47v-15.31h13.12c2.49,0,4.57-.32,6.23-.97,1.67-.65,3.07-1.67,4.18-3.09,1.11-1.42,1.97-3.37,2.57-5.85l18.78-72.16h17.11l-20.71,76.01c-1.37,5.23-3.3,9.41-5.79,12.54-2.49,3.13-5.68,5.38-9.58,6.76-3.9,1.37-8.73,2.06-14.47,2.06h-11.45ZM635.71,114.4v-14.15h14.92v14.15h-14.92Z"></path>
+    </g></svg>
+    <p class="fl">Diagnóstico completo · Juliana Machado Fundão · 18 / 05 / 2026<br>25 análises · Documento de respaldo — uso interno, não distribuir.</p>
+  </div>
+</footer>
+
+</body>
+</html>

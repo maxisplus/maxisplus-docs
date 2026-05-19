@@ -1,12 +1,13 @@
 # Project Instructions: Maxis Docs
 
-This project is a static proxy architecture used to host documentation and proposals. It deploys static HTML files to a CDN via Surge.
+This project is a static proxy architecture used to host documentation and proposals. It deploys static HTML files to Cloudflare Pages via Wrangler.
 
 ## Architectural Mandates
 
 1.  **Deployment Workflow:**
-    -   The deployment command is: `surge . docs.maxis.plus`
-    -   If `surge` is not available in the environment, use: `npx surge . docs.maxis.plus`
+    -   The deployment command is: `npx wrangler pages deploy . --project-name=maxis-docs`
+    -   First-time setup requires authentication: `npx wrangler login`
+    -   First-time project creation (once only): `npx wrangler pages project create maxis-docs`
     -   **Pre-deployment Checklist:** Agents MUST NOT deploy until they have verified the following with the user:
         -   The file name is descriptive and appropriate.
         -   HTML file names MUST use kebab-case only (lowercase letters, numbers, and hyphens) and end in `.html` (e.g., `quarterly-report.html`).
@@ -21,10 +22,10 @@ This project is a static proxy architecture used to host documentation and propo
     -   **References:** Always use relative paths to reference assets from the HTML files.
 
 3.  **Source Control & Safety:**
-    -   **CNAME Protection:** Agents are FORBIDDEN from editing the `CNAME` file. This is a critical system file for the Surge deployment.
+    -   **`.cfignore` Protection:** Agents are FORBIDDEN from editing the `.cfignore` file. It controls which files are excluded from the Cloudflare Pages deploy (internal docs, dev tooling, etc.).
     -   **Project Folders:** Always ensure new documents are placed in the relevant project directory. Do not clutter the root directory.
 
 ## Deployment Command Summary
 ```bash
-npx surge . docs.maxis.plus
+npx wrangler pages deploy . --project-name=maxis-docs
 ```

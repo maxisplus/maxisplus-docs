@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico de Marca · Juliana Machado Fundão · Fleway</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --color-azure:#2563EB;
+    --navy-950:#0A1628;
+    --azure-300:#93B5FD;--azure-400:#608EFA;--azure-500:#3D72F5;--azure-600:#2563EB;
+    --ink-200:#C7D1E0;--ink-300:#9DABC2;--ink-400:#6F82A0;
+    --bg-base:var(--navy-950);--bg-surface:#0E1D33;--bg-elevated:#142844;
+    --bg-hover:rgba(255,255,255,0.04);
+    --border-subtle:rgba(255,255,255,0.06);--border-default:rgba(255,255,255,0.10);--border-strong:rgba(255,255,255,0.16);
+    --text-primary:#FFFFFF;--text-secondary:var(--ink-200);--text-tertiary:var(--ink-300);--text-muted:var(--ink-400);
+    --font-sans:"DM Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    --font-serif:"Source Serif 4","Iowan Old Style",Georgia,serif;
+    --font-mono:"DM Mono","SF Mono","Roboto Mono",monospace;
+    --container:1000px;--narrow:720px;
+    --radius-sm:4px;--radius-md:6px;--radius-lg:10px;--radius-xl:14px;--radius-full:9999px;
+    --shadow-lg:0 12px 24px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.30);
+    --ease-out:cubic-bezier(.16,1,.3,1);
+    --good:#34D9A7;--block:#F2B25A;--crit:#F0857F;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  body{font-family:var(--font-sans);font-size:1.0625rem;line-height:1.6;color:var(--text-secondary);background:var(--bg-base);
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-optical-sizing:auto;font-feature-settings:"ss01","ss02"}
+  body::before{content:"";position:fixed;inset:0;
+    background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at top,black 18%,transparent 60%);mask-image:radial-gradient(ellipse at top,black 18%,transparent 60%);
+    pointer-events:none;opacity:.5;z-index:0}
+  main,header,section,footer,nav{position:relative;z-index:1}
+  a{color:inherit;text-decoration:none}
+  strong{color:var(--text-primary);font-weight:600}
+  em{font-style:italic}
+
+  .nav{position:sticky;top:0;z-index:20;background:rgba(10,22,40,.72);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--border-subtle)}
+  .nav-in{max-width:var(--container);margin:0 auto;padding:13px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .nav-logo svg{height:21px;width:auto;display:block}
+  .nav-links{display:flex;gap:2px;flex-wrap:wrap}
+  .nav-links a{font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);padding:6px 10px;border-radius:var(--radius-sm);transition:.15s var(--ease-out)}
+  .nav-links a:hover{color:var(--text-primary);background:var(--bg-hover)}
+  .nav-meta{font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
+
+  .wrap{max-width:var(--container);margin:0 auto;padding:0 32px}
+  section{padding:84px 0;border-top:1px solid var(--border-subtle)}
+  section:first-of-type{border-top:0}
+  .narrow{max-width:var(--narrow)}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--azure-400);display:inline-block;margin-bottom:18px}
+  h1.display{font-family:var(--font-serif);font-weight:400;font-size:clamp(2.4rem,5.5vw,4rem);line-height:1.06;letter-spacing:-.03em;color:var(--text-primary)}
+  h2.h2{font-family:var(--font-sans);font-weight:600;font-size:clamp(1.55rem,3vw,2.1rem);line-height:1.18;letter-spacing:-.02em;color:var(--text-primary)}
+  h1.display em{font-style:italic;color:var(--azure-300)}
+  p{margin:0 0 1rem}p:last-child{margin-bottom:0}
+  .muted{color:var(--text-muted)}
+  .cite{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:var(--text-muted)}
+
+  .hero{padding:104px 0 80px;text-align:center;overflow:hidden}
+  .hero::after{content:"";position:absolute;top:-120px;left:50%;width:720px;height:720px;transform:translateX(-50%);background:radial-gradient(circle,rgba(37,99,235,.18) 0%,rgba(37,99,235,0) 60%);pointer-events:none;z-index:0}
+  .hero>*{position:relative;z-index:1}
+  .hero .sub{margin-top:20px;font-size:1.05rem;color:var(--text-tertiary)}
+  .hero .frame{margin:32px auto 0;max-width:560px;font-family:var(--font-serif);font-style:italic;font-size:1.3rem;line-height:1.4;color:var(--text-secondary)}
+  .hero .frame em{color:var(--azure-300)}
+
+  .badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-sans);font-size:12px;font-weight:500;padding:4px 12px;border-radius:var(--radius-full);border:1px solid transparent;white-space:nowrap}
+  .badge .dot{width:6px;height:6px;border-radius:var(--radius-full);background:currentColor}
+  .b-crit{background:rgba(239,68,68,.12);color:var(--crit);border-color:rgba(239,68,68,.30)}
+  .b-alert{background:rgba(245,158,11,.12);color:var(--block);border-color:rgba(245,158,11,.30)}
+  .b-ok{background:rgba(16,185,129,.12);color:var(--good);border-color:rgba(16,185,129,.30)}
+
+  /* Veredicto */
+  .pq{font-family:var(--font-serif);font-style:italic;font-size:clamp(1.3rem,2.5vw,1.7rem);line-height:1.3;letter-spacing:-.01em;color:var(--text-primary);border-left:2px solid var(--azure-500);padding-left:24px;margin:8px 0}
+  .pq em{color:var(--azure-300);font-style:italic}
+  .pq-attr{font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);margin-top:13px;padding-left:24px}
+  .lead{font-size:1.2rem;line-height:1.55;color:var(--text-secondary)}
+  .scoreboard{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:36px}
+  .metric{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-lg);padding:16px}
+  .metric .mv{font-family:var(--font-sans);font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1;color:var(--text-primary)}
+  .metric .mq{font-size:12.5px;line-height:1.4;color:var(--text-tertiary);margin-top:10px}
+  .metric .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-top:8px;display:inline-block}
+  .t-crit{color:var(--crit)}.t-alert{color:var(--block)}.t-ok{color:var(--good)}
+
+  /* Mapa */
+  .maptable{width:100%;border-collapse:separate;border-spacing:0;margin-top:34px;font-size:1rem}
+  .maptable th{font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:0 16px 14px;font-weight:500}
+  .maptable td{padding:16px;border-top:1px solid var(--border-subtle);vertical-align:top;color:var(--text-secondary);line-height:1.5}
+  .maptable tr:hover td{background:var(--bg-hover)}
+  .maptable .cat{color:var(--text-primary);font-weight:600;white-space:nowrap}
+  .maptable .tt{color:var(--text-primary);font-weight:500}
+  .pattern{margin-top:28px;padding:22px 24px;border:1px solid rgba(37,99,235,.30);background:rgba(61,114,245,.07);border-radius:var(--radius-lg)}
+  .pattern .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--azure-400);display:block;margin-bottom:8px}
+
+  /* Categoria */
+  .cat{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-xl);padding:34px;margin-bottom:22px}
+  .cat-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .cat-kicker{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+  .cat-title{font-family:var(--font-serif);font-style:italic;font-size:clamp(1.5rem,2.8vw,2rem);line-height:1.2;color:var(--text-primary);margin-bottom:18px}
+  .resumo{font-size:1.15rem;line-height:1.5;color:var(--text-primary);font-weight:500;border-bottom:1px solid var(--border-subtle);padding-bottom:22px;margin-bottom:24px}
+  .blk{margin-bottom:22px}
+  .blk:last-child{margin-bottom:0}
+  .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .lbl::before{content:"";width:8px;height:8px;border-radius:2px;display:inline-block}
+  .lbl.good{color:var(--good)}.lbl.good::before{background:var(--good)}
+  .lbl.block{color:var(--block)}.lbl.block::before{background:var(--block)}
+  .lbl.do{color:var(--azure-400)}.lbl.do::before{background:var(--azure-500)}
+  .lbl.voice{color:var(--text-muted)}.lbl.voice::before{background:var(--text-muted)}
+  .lbl.ask{color:var(--azure-300)}.lbl.ask::before{background:var(--azure-300)}
+  ul.pl{list-style:none;display:flex;flex-direction:column;gap:11px}
+  ul.pl li{position:relative;padding-left:20px;line-height:1.55;color:var(--text-secondary)}
+  ul.pl li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:var(--radius-full);background:var(--text-muted)}
+  ul.pl.good li::before{background:var(--good)}
+  ul.pl.block li::before{background:var(--block)}
+  .say{background:var(--bg-base);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:18px 22px}
+  .say q{font-family:var(--font-serif);font-style:italic;font-size:1.1rem;line-height:1.4;color:var(--text-primary);display:block;quotes:none}
+  .say q::before,.say q::after{content:""}
+  .say q em{color:var(--azure-300)}
+  .say .src{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-top:11px}
+  .moves{list-style:none;display:flex;flex-direction:column;gap:13px;counter-reset:m}
+  .moves li{display:flex;gap:14px;align-items:flex-start;line-height:1.55;color:var(--text-secondary)}
+  .moves li::before{counter-increment:m;content:counter(m);flex:0 0 24px;height:24px;border-radius:var(--radius-full);background:rgba(61,114,245,.12);border:1px solid rgba(37,99,235,.30);color:var(--azure-300);font-family:var(--font-mono);font-size:11px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .when{display:inline-block;font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--azure-300);background:rgba(61,114,245,.10);border:1px solid rgba(37,99,235,.25);border-radius:var(--radius-sm);padding:2px 7px;margin-right:8px}
+  .ask-box{border:1px dashed rgba(147,181,253,.35);background:rgba(61,114,245,.05);border-radius:var(--radius-lg);padding:18px 22px}
+  .ask-box ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .ask-box li{position:relative;padding-left:18px;color:var(--text-secondary);line-height:1.5}
+  .ask-box li::before{content:"?";position:absolute;left:0;top:0;color:var(--azure-300);font-family:var(--font-mono);font-weight:500}
+
+  .glossy{font-style:normal;color:var(--text-tertiary)}
+
+  .ptable{width:100%;border-collapse:separate;border-spacing:0;margin-top:34px}
+  .ptable th{font-family:var(--font-mono);font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:0 14px 14px;font-weight:500}
+  .ptable td{padding:15px 14px;border-top:1px solid var(--border-subtle);color:var(--text-secondary);vertical-align:top;line-height:1.5}
+  .ptable tr:hover td{background:var(--bg-hover)}
+  .ptable .rk{font-family:var(--font-mono);color:var(--azure-300);font-size:14px}
+  .ptable .ac{color:var(--text-primary)}
+  .u{font-family:var(--font-mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:var(--radius-sm);border:1px solid transparent;white-space:nowrap}
+  .u-pre{color:var(--crit);background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.28)}
+  .u-act{color:var(--block);background:rgba(245,158,11,.10);border-color:rgba(245,158,11,.28)}
+  .u-amp{color:var(--azure-300);background:rgba(61,114,245,.10);border-color:rgba(37,99,235,.28)}
+
+  .acts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+  .act{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-xl);padding:24px}
+  .act .mn{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+  .act .at{font-family:var(--font-serif);font-style:italic;font-size:1.35rem;color:var(--text-primary);margin-bottom:14px}
+  .act p{font-size:.98rem;color:var(--text-tertiary);line-height:1.6}
+
+  .role{margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .role .r{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-lg);padding:18px 20px}
+  .role .r .rk{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--azure-400);margin-bottom:8px}
+  .role .r p{font-size:13.5px;color:var(--text-tertiary);line-height:1.55}
+
+  footer{padding:64px 0 80px;border-top:1px solid var(--border-subtle);text-align:center}
+  footer svg{height:22px;width:auto;opacity:.85;margin-bottom:20px}
+  footer .fl{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--text-muted);line-height:1.9}
+
+  @media (max-width:860px){
+    .scoreboard{grid-template-columns:repeat(2,1fr)}
+    .acts,.role{grid-template-columns:1fr}
+    .nav-links{display:none}
+    .wrap{padding:0 20px}
+    .cat{padding:24px}
+    .maptable thead{display:none}
+    .maptable td{display:block;border-top:0;padding:3px 0}
+    .maptable tr{display:block;border-top:1px solid var(--border-subtle);padding:16px 0}
+  }
+  @media print{body{background:#fff;color:#1a1a1a}body::before,.nav,.hero::after{display:none}section,.cat{page-break-inside:avoid}.cat,.act,.metric{box-shadow:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="nav-logo" href="#topo" aria-label="Fleway">
+      <svg viewBox="0 0 779.88 165.53" role="img" aria-label="Fleway"><g fill="#FFFFFF">
+        <polygon points="240.21 22.06 155.69 31.97 173.07 68.66 240.21 22.06"></polygon>
+        <polygon points="173.07 68.66 155.69 105.87 219.58 116.39 173.07 68.66"></polygon>
+        <polygon points="155.69 31.97 103.91 68.66 155.69 105.87 173.07 68.66 155.69 31.97"></polygon>
+        <path d="M269.26,115.95V22.06h18.26v93.9h-18.26ZM284.96,37.49v-15.43h39.36v15.43h-39.36ZM284.96,76.85v-15.43l37.56-.13v15.43l-37.56.13h0Z"></path>
+        <path d="M335.11,115.95V22.06h17.88v93.9h-17.88Z"></path>
+        <path d="M398.27,118.4c-6,0-11.25-1.03-15.76-3.09-4.5-2.06-8.23-4.83-11.19-8.3-2.96-3.47-5.19-7.35-6.69-11.64-1.5-4.28-2.25-8.66-2.25-13.12v-2.44c0-4.63.75-9.11,2.25-13.44,1.5-4.33,3.73-8.19,6.69-11.57s6.62-6.09,11-8.11c4.37-2.02,9.43-3.02,15.18-3.02,7.55,0,13.87,1.65,18.97,4.95,5.1,3.3,8.94,7.64,11.51,12.99,2.57,5.36,3.86,11.13,3.86,17.3v6.43h-61.86v-10.93h50.68l-5.53,5.4c0-4.46-.65-8.27-1.93-11.45-1.28-3.17-3.23-5.62-5.85-7.33-2.62-1.72-5.9-2.57-9.84-2.57s-7.29.9-10.03,2.7-4.83,4.39-6.23,7.78c-1.42,3.39-2.12,7.44-2.12,12.15,0,4.37.68,8.25,2.06,11.64,1.37,3.39,3.47,6.04,6.3,7.97,2.83,1.93,6.43,2.9,10.8,2.9s7.93-.88,10.67-2.63c2.74-1.75,4.5-3.92,5.27-6.5h16.47c-1.03,4.8-3,9-5.92,12.6-2.92,3.6-6.62,6.39-11.13,8.36s-9.62,2.96-15.37,2.96h0Z"></path>
+        <path d="M451.13,115.95l-19.03-69.84h17.36l18.13,69.84h-16.47,0ZM458.34,115.95l-.13-14.66h14.27v14.66h-14.15,0ZM463.61,115.95l13.25-67.53h20.58l15.31,67.53h-14.15l-15.57-67.14h7.46l-13.76,67.14h-13.12ZM503.09,115.95v-14.66h14.27l-.13,14.66h-14.15,0ZM508.76,115.95l16.08-69.84h16.2l-16.85,69.84h-15.43Z"></path>
+        <path d="M567.53,117.75c-5.06,0-9.5-.9-13.31-2.7-3.81-1.8-6.78-4.37-8.88-7.72-2.11-3.34-3.15-7.37-3.15-12.09,0-5.14,1.26-9.34,3.79-12.6,2.53-3.26,6.09-5.7,10.67-7.33,4.58-1.63,9.97-2.44,16.14-2.44h16.2v10.67h-16.46c-4.11,0-7.27,1.01-9.45,3.02-2.19,2.02-3.28,4.61-3.28,7.78s1.09,5.74,3.28,7.72c2.19,1.97,5.34,2.96,9.45,2.96,2.49,0,4.78-.45,6.88-1.35,2.1-.9,3.86-2.44,5.27-4.63,1.42-2.19,2.21-5.16,2.38-8.94l4.37,5.02c-.43,4.89-1.61,9-3.54,12.34s-4.59,5.9-7.97,7.65c-3.39,1.75-7.53,2.63-12.41,2.63h0ZM590.04,115.95v-20.71h-2.96v-23.02c0-4.03-.99-7.03-2.96-9-1.97-1.97-5.02-2.96-9.13-2.96-2.14,0-4.72.04-7.72.13s-6.02.19-9.07.32c-3.04.13-5.77.28-8.16.45v-15.18c1.97-.17,4.2-.34,6.69-.51s5.04-.28,7.65-.32c2.61-.04,5.08-.07,7.39-.07,7.2,0,13.18.95,17.94,2.83,4.76,1.89,8.36,4.85,10.8,8.88,2.44,4.03,3.67,9.31,3.67,15.82v43.34h-14.16Z"></path>
+        <path d="M629.66,114.4l-22.64-68.3h18.01l21.48,68.3h-16.85ZM613.97,143.47v-15.31h13.12c2.49,0,4.57-.32,6.23-.97,1.67-.65,3.07-1.67,4.18-3.09,1.11-1.42,1.97-3.37,2.57-5.85l18.78-72.16h17.11l-20.71,76.01c-1.37,5.23-3.3,9.41-5.79,12.54-2.49,3.13-5.68,5.38-9.58,6.76-3.9,1.37-8.73,2.06-14.47,2.06h-11.45ZM635.71,114.4v-14.15h14.92v14.15h-14.92Z"></path>
+      </g></svg>
+    </a>
+    <div class="nav-links">
+      <a href="#veredicto">Veredicto</a><a href="#mapa">Mapa</a><a href="#categorias">Categorias</a><a href="#prioridades">Prioridades</a><a href="#roteiro">Roteiro</a>
+    </div>
+    <div class="nav-meta">Diagnóstico · Mai 2026</div>
+  </div>
+</nav>
+
+<main id="topo">
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Fleway · Diagnóstico de marca</span>
+      <h1 class="display">Diagnóstico de marca<br>Juliana Machado <em>Fundão</em></h1>
+      <p class="sub">Remoção de tatuagem a laser · 18 de maio de 2026</p>
+      <p class="frame">O problema não é o que você faz.<br>É o que ninguém <em>vê</em> você fazer.</p>
+    </div>
+  </header>
+
+  <section id="como-ler">
+    <div class="wrap narrow">
+      <span class="eyebrow">Como ler este documento</span>
+      <h2 class="h2">O que é isto — e o que pedimos de você hoje.</h2>
+      <p style="margin-top:18px">Este é o retrato do <strong>estado atual</strong> da sua marca, montado a partir da sua entrevista. Não é achismo: cada ponto vem de algo que <strong>você mesma disse</strong>. Toda categoria segue a mesma ordem — o que está forte, o que está travando, a sua fala que comprova, e o que fazer. Sem jargão: quando um termo do método aparece, ele vem explicado ali do lado.</p>
+      <div class="role">
+        <div class="r"><div class="rk">Confirme</div><p>O que está certo? Você se reconhece no que está escrito?</p></div>
+        <div class="r"><div class="rk">Corrija</div><p>O que ficou impreciso, exagerado ou fora de contexto?</p></div>
+        <div class="r"><div class="rk">Acrescente</div><p>O que falta — algo que muda o quadro e não perguntamos?</p></div>
+      </div>
+      <p style="margin-top:22px" class="muted">Esta conversa é gravada e vira o próximo insumo. Com o diagnóstico validado, seguimos para posicionamento, receita, canais e linha editorial — nessa ordem.</p>
+    </div>
+  </section>
+
+  <section id="veredicto">
+    <div class="wrap narrow">
+      <span class="eyebrow">Veredicto</span>
+      <h2 class="h2">O caso, em uma frase.</h2>
+      <p class="lead" style="margin-top:26px">Você não tem um problema de competência. Tem um problema de <strong>aparecer</strong>. O que sustenta sua marca — sua história, seu jeito de tratar, sua técnica — vive na conversa presencial e quase nada disso chega à internet.</p>
+      <div class="pq" style="margin-top:30px">"Às vezes eu até produzo alguma coisa, mas eu nunca acho que está bom e nunca posto. <em>E aí fica esquecido</em>."</div>
+      <div class="pq-attr">— Você, na entrevista</div>
+      <p style="margin-top:28px">Essa frase é o centro de tudo. O perfeccionismo segura a publicação, e sem publicação nada do que é bom vira marca. O espaço de "a especialista segura, técnica, que respeita a tatuagem" está vago no seu mercado — e você está parada na porta dele.</p>
+
+      <p class="muted" style="margin-top:40px;font-size:13px;font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase">Cinco medidas — o que cada número quer dizer</p>
+      <div class="scoreboard">
+        <div class="metric"><div class="mv">1 de 7</div><div class="mq">Provas de competência que aparecem na internet (de 7 possíveis)</div><span class="tag t-crit">Crítico</span></div>
+        <div class="metric"><div class="mv">31 / 70</div><div class="mq">O quanto sua marca cria comunidade no digital (história, ritual, símbolo)</div><span class="tag t-crit">Crítico</span></div>
+        <div class="metric"><div class="mv">1 / 10</div><div class="mq">O quanto sua oferta é apresentada com força (garantia, bônus, clareza)</div><span class="tag t-crit">Crítico</span></div>
+        <div class="metric"><div class="mv">5 / 10</div><div class="mq">Consistência visual do seu feed — sem padrão fixo hoje</div><span class="tag t-alert">Alerta</span></div>
+        <div class="metric"><div class="mv">forte</div><div class="mq">Sua personalidade de marca é coerente — esse é um ativo, não um problema</div><span class="tag t-ok">Saudável</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mapa">
+    <div class="wrap">
+      <span class="eyebrow">Visão geral</span>
+      <h2 class="h2">Oito frentes, o mesmo padrão.</h2>
+      <table class="maptable">
+        <thead><tr><th>Frente</th><th>Estado</th><th>Em uma linha</th></tr></thead>
+        <tbody>
+          <tr><td class="cat">1 · Essência</td><td><span class="badge b-alert"><span class="dot"></span>Alerta</span></td><td>Sua história e sua causa são fortes — mas nenhuma virou frase clara nem chegou ao público.</td></tr>
+          <tr><td class="cat">2 · Identidade</td><td><span class="badge b-alert"><span class="dot"></span>Alerta</span></td><td>Quem você é está nítido e coerente; falta escolher a frase que te resume e plantá-la.</td></tr>
+          <tr><td class="cat">5 · Oferta</td><td><span class="badge b-crit"><span class="dot"></span>Crítico</span></td><td>Seu método é diferenciado, mas não tem nome e o cliente não vê o valor no preço.</td></tr>
+          <tr><td class="cat">6 · Cliente</td><td><span class="badge b-ok"><span class="dot"></span>Forte</span></td><td>Você entende seu cliente fundo. O problema é que isso não sai da conversa 1 a 1.</td></tr>
+          <tr><td class="cat">4 · Posicionamento</td><td><span class="badge b-alert"><span class="dot"></span>Alerta</span></td><td>Você sabe contra o que luta e o que recusa — mas mantém tudo isso privado.</td></tr>
+          <tr><td class="cat">3 · Comunidade</td><td><span class="badge b-crit"><span class="dot"></span>Crítico</span></td><td>Rituais e crença existem no atendimento e somem na internet; sem fãs, sem público fiel.</td></tr>
+          <tr><td class="cat">7 · Tom de voz</td><td><span class="badge b-crit"><span class="dot"></span>Crítico</span></td><td>Firme e segura no consultório; insegura e calada no feed. A autoridade real é escondida.</td></tr>
+          <tr><td class="cat">8 · Visual</td><td><span class="badge b-alert"><span class="dot"></span>Alerta</span></td><td>As cores estão certas para o seu preço; falta um padrão e os pontos de contato estão parados.</td></tr>
+        </tbody>
+      </table>
+      <div class="pattern">
+        <span class="k">O padrão</span>
+        Sete das oito frentes dizem a mesma coisa: <strong>o ativo existe, só não está publicado</strong>. Não é marca fraca. É marca que ninguém vê.
+      </div>
+    </div>
+  </section>
+
+  <section id="categorias">
+    <div class="wrap">
+      <span class="eyebrow">Análise por frente</span>
+      <h2 class="h2">Uma por vez — forte, travando, e o que fazer.</h2>
+
+      <!-- 1 ESSÊNCIA -->
+      <article class="cat" id="essencia" style="margin-top:34px">
+        <div class="cat-head"><span class="cat-kicker">Frente 1 · Essência</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="cat-title">A matéria-prima está toda aqui — falta lapidar.</div>
+        <p class="resumo">Sua história de vida e o motivo de você fazer isso são, sozinhos, melhores que o posicionamento da maioria do setor. Só que tudo isso está na sua cabeça, não no seu perfil.</p>
+
+        <div class="blk"><div class="lbl good">O que está forte</div>
+          <ul class="pl good">
+            <li>Sua trajetória — de veterinária a especialista em laser — já conta uma história de reinvenção. Ela combina com a promessa que você faz ao cliente: reverter o que parecia irreversível.</li>
+            <li>Você admite suas falhas abertamente (ansiedade, dificuldade de cobrar). Isso, bem usado, aumenta a confiança — não diminui.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que está travando</div>
+          <ul class="pl block">
+            <li>Quase não há <em class="glossy">prova pública de competência</em> — depoimento, caso documentado, antes/depois com data. Hoje só existe um post fixado contando sua história.</li>
+            <li>O caso clínico que convence sozinho não está em lugar nenhum onde um cliente novo possa ver.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl voice">Nas suas palavras</div>
+          <div class="say"><q>"Dez sessões para a remoção de uma sobrancelha e não obtinha resultado… com duas sessões comigo… saiu <em>todo</em> o pigmento."</q><div class="src">Entrevista · S1 c10</div></div>
+        </div>
+        <div class="blk"><div class="lbl do">O que fazer</div>
+          <ul class="moves">
+            <li><span class="when">7 dias</span>Transformar o caso "10 sessões sem resultado → 2 comigo" num registro autorizado: consentimento, foto antes/depois e datas. Sua primeira prova pública.</li>
+            <li><span class="when">14 dias</span>Contar a virada do curso ruim ("cheguei a machucar o cliente, precisei estudar mais") como post de origem fixado — o erro vira credibilidade.</li>
+            <li><span class="when">30 dias</span>Fechar a sua causa numa única frase de bandeira, partindo de "mudar o que era imutável".</li>
+          </ul>
+        </div>
+        <div class="ask-box"><div class="lbl ask">Confirme com você</div>
+          <ul>
+            <li>O caso "10 → 2" pode virar conteúdo público, com autorização da cliente? Há outros nesse nível?</li>
+            <li>"Uma pessoa com capacidade de mudar o que era imutável" te representa como bandeira — ou soa grande demais?</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 2 IDENTIDADE -->
+      <article class="cat" id="identidade">
+        <div class="cat-head"><span class="cat-kicker">Frente 2 · Identidade</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="cat-title">Você sabe quem é. Só não plantou a bandeira.</div>
+        <p class="resumo">A melhor notícia estrutural do diagnóstico: sua personalidade de marca é coerente e não se contradiz. O problema não é quem você é — é que o espaço no mercado está vago e ninguém ocupou, nem você.</p>
+
+        <div class="blk"><div class="lbl good">O que está forte</div>
+          <ul class="pl good">
+            <li>Duas faces que combinam bem: a especialista estudiosa e técnica, e a profissional que não segue receita de bolo (80% do corpo tatuada, paleta preto e vermelho). Uma reforça a outra.</li>
+            <li>Você tem princípio firme: recusa o discurso comercial fácil de "demonizar a tatuagem". Isso é raro e é seu.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que está travando</div>
+          <ul class="pl block">
+            <li>A frase que te resume tem <strong>três versões concorrentes</strong> e nenhuma escolhida. Sem decidir uma, o público nunca fixa o que você é.</li>
+            <li>Ninguém ocupa esse espaço no seu mercado — e mesmo assim ele segue vazio porque você não cravou.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl voice">Nas suas palavras</div>
+          <div class="say"><q>"A galera da remoção é tipo tudo como eu: é muito técnico, mas na hora de postar <em>não entende</em> de postagem."</q><div class="src">Entrevista · S1 c12</div></div>
+        </div>
+        <div class="blk"><div class="lbl do">O que fazer</div>
+          <ul class="moves">
+            <li><span class="when">7 dias</span>Escolher UMA frase-resumo e aposentar as outras duas (e o nome de CNPJ em inglês abandonado). Recomendada: "capacidade de mudar o que era imutável".</li>
+            <li><span class="when">10 dias</span>Perguntar a 5 pessoas diferentes (sócia, cliente que indica, amiga, mãe, um estranho) o que você faz — e ver se as respostas batem.</li>
+            <li><span class="when">21 dias</span>Definir a palavra que você sempre usa ("possibilidade", "mudança") e a que você nunca usa ("mágica", "milagre").</li>
+          </ul>
+        </div>
+        <div class="ask-box"><div class="lbl ask">Confirme com você</div>
+          <ul>
+            <li>Das três frases, "capacidade de mudar o que era imutável" é a que você assume publicamente?</li>
+            <li>O que muda no seu dia a dia se você descartar formalmente as outras duas?</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 4 POSICIONAMENTO -->
+      <article class="cat" id="posicionamento">
+        <div class="cat-head"><span class="cat-kicker">Frente 4 · Posicionamento</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="cat-title">Você tem o inimigo certo — mas o sussurra.</div>
+        <p class="resumo">Você tem uma munição de posicionamento que quase ninguém no setor tem: sabe exatamente contra o que luta. E nunca apontou essa arma para fora.</p>
+
+        <div class="blk"><div class="lbl good">O que está forte</div>
+          <ul class="pl good">
+            <li>Seu "inimigo" é específico, não genérico: laser sem ANVISA e gente sem conhecimento básico, que deixa o cliente com queloide, cicatriz, mancha. Isso é uma categoria de conteúdo inteira.</li>
+            <li>Você também tem um valor que te diferencia: não menosprezar a tatuagem de quem te procura.</li>
+            <li>Você tem uma lista clara do que recusa por princípio (cerca de 9 itens).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que está travando</div>
+          <ul class="pl block">
+            <li>Tudo isso é 100% privado. A lista de "nãos" só aparece na triagem do orçamento — zero dela é pública.</li>
+            <li>Não há nada visual fixo que faça as pessoas associarem na hora a você. Hoje você grava ora numa sala, ora noutra, sem regra.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl voice">Nas suas palavras</div>
+          <div class="say"><q>Clientes que vieram de outros equipamentos "com queloides, com cicatrizes hipertróficas, com acromias na pele" — o inimigo é nítido, e está calado.</q><div class="src">Entrevista · S1 c2 / c25</div></div>
+        </div>
+        <div class="blk"><div class="lbl do">O que fazer</div>
+          <ul class="moves">
+            <li><span class="when">14 dias</span>Transformar "laser sem ANVISA que queima a pele" numa série de conteúdo educativo recorrente — atacando o problema e o sistema, nunca pessoas (respeita sua aversão à polêmica).</li>
+            <li><span class="when">21 dias</span>Publicar 3 dos seus "nãos" como manifesto: "não sou a opção barata"; "segurança não é negociável"; "não menosprezo a tatuagem".</li>
+            <li><span class="when">30 dias</span>Escolher a sala verde de Vila Velha como cenário fixo e gravar 100% do conteúdo de marca nela.</li>
+          </ul>
+        </div>
+        <div class="ask-box"><div class="lbl ask">Confirme com você</div>
+          <ul>
+            <li>Atacar "laser sem ANVISA" como problema — sem citar pessoas — é confortável para você?</li>
+            <li>Quais dos seus "nãos" você toparia tornar públicos hoje? Algum precisa ficar privado?</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 5 OFERTA -->
+      <article class="cat" id="oferta">
+        <div class="cat-head"><span class="cat-kicker">Frente 5 · Oferta</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="cat-title">Entrega premium, embalagem ausente.</div>
+        <p class="resumo">É aqui que você perde dinheiro de forma mais direta. O que você entrega é diferenciado de verdade — mas ninguém percebe isso antes de pagar, e o preço não comunica o valor.</p>
+
+        <div class="blk"><div class="lbl good">O que está forte</div>
+          <ul class="pl good">
+            <li>Seu método é real e diferente: anamnese, termo, teste, remoção individualizada, reparo da pele entre sessões, fotobiomodulação — mais a técnica de preservar os pelos na micropigmentação.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que está travando</div>
+          <ul class="pl block">
+            <li>Esse método não tem nome e não está escrito em lugar nenhum. O cliente não vê tudo que está incluso — então o preço parece caro "sem motivo".</li>
+            <li>Sua oferta não tem garantia, bônus claro nem nada que reduza o medo do cliente. E sua honestidade ("não posso garantir 100%") hoje joga contra, porque não há nada que a equilibre.</li>
+            <li>A estética "crua, feita por você mesma" contradiz o preço premium (R$ 1.500 a 4.000 numa tatuagem grande).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl voice">Nas suas palavras</div>
+          <div class="say"><q>"Eu consigo tirar os pelos do caminho e eu removo deixando <em>tudo pretinho</em>." — uma técnica única, sem nome e invisível no preço.</q><div class="src">Entrevista · S1 c24</div></div>
+        </div>
+        <div class="blk"><div class="lbl do">O que fazer</div>
+          <ul class="moves">
+            <li><span class="when">14 dias</span>Dar um nome ao seu método e listar, item a item, tudo que já está incluso e o cliente não enxerga (reparo da pele, fotobiomodulação, preservação de pelos).</li>
+            <li><span class="when">21 dias</span>Criar uma garantia condicional segura e honesta (ex.: reparo de pele gratuito se houver dano atribuível à técnica) — a honestidade passa a jogar a favor.</li>
+            <li><span class="when">30 dias</span>Reescrever a mensagem de venda colocando o cliente como protagonista ("livre do que não te representa mais") e você como a especialista que conduz.</li>
+          </ul>
+        </div>
+        <div class="ask-box"><div class="lbl ask">Confirme com você</div>
+          <ul>
+            <li>O método pode se chamar "Remoção, Arte e Inovação" — ou você tem um nome melhor em mente?</li>
+            <li>Uma garantia condicional de reparo de pele é clinicamente segura para você oferecer?</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 6 CLIENTE -->
+      <article class="cat" id="cliente">
+        <div class="cat-head"><span class="cat-kicker">Frente 6 · Cliente</span><span class="badge b-ok"><span class="dot"></span>Forte</span></div>
+        <div class="cat-title">Você conhece seu cliente — só não comunica isso.</div>
+        <p class="resumo">Este é o seu ponto mais forte, e merece ser dito com clareza: você entende seu cliente num nível que a maioria dos especialistas não alcança. O problema é só um: isso morre na conversa 1 a 1.</p>
+
+        <div class="blk"><div class="lbl good">O que está forte</div>
+          <ul class="pl good">
+            <li>Você entende três camadas do cliente, não só uma: o que ele quer remover, a dor de se ver no espelho, e quem ele quer voltar a ser.</li>
+            <li>Você sabe exatamente a crença que trava a venda — o cliente acha que "some magicamente"; quando você explica o frosting <em class="glossy">(a reação branca esperada na pele logo após a sessão)</em>, ele entende e fecha.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que está travando</div>
+          <ul class="pl block">
+            <li>Esse argumento que converte presencialmente nunca virou conteúdo. As respostas para as 3 maiores dúvidas (demora, dor, preço) só existem na sua boca.</li>
+            <li>Você tem histórias de virada prontas — e nenhuma virou post.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl voice">Nas suas palavras</div>
+          <div class="say"><q>"A única alternativa que eu encontrei hoje foi o texto. Eu cheguei a fazer uma vez um PDF e <em>ninguém abria</em>."</q><div class="src">Entrevista · S1 c22</div></div>
+        </div>
+        <div class="blk"><div class="lbl do">O que fazer</div>
+          <ul class="moves">
+            <li><span class="when">7 dias</span>Gravar um vídeo curto explicando o frosting — exatamente como você explica pessoalmente, sem reescrever. É o argumento que já comprova conversão.</li>
+            <li><span class="when">21 dias</span>Criar 3 conteúdos fixos, um para cada dúvida: expectativa/frosting, dor/duração real, preço/segurança.</li>
+            <li><span class="when">30 dias</span>Publicar a série de antes/depois e acompanhamentos — sua prova mais forte está presa no direct.</li>
+          </ul>
+        </div>
+        <div class="ask-box"><div class="lbl ask">Confirme com você</div>
+          <ul>
+            <li>O argumento do frosting pode ser gravado exatamente como você o explica no consultório?</li>
+            <li>As três camadas de problema descritas batem com o que você ouve dos clientes na prática?</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 3 COMUNIDADE -->
+      <article class="cat" id="comunidade">
+        <div class="cat-head"><span class="cat-kicker">Frente 3 · Comunidade</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="cat-title">Uma tribo sem templo, sem rito, sem livro.</div>
+        <p class="resumo">Marcas que criam comunidade têm uma história de origem, uma crença declarada, rituais e um líder reconhecido. Você tem todos esses elementos — mas só no presencial. No digital, somem.</p>
+
+        <div class="blk"><div class="lbl good">O que está forte</div>
+          <ul class="pl good">
+            <li>Você já é líder de fato: outros profissionais te procuram, você forma e orienta gente. Você é referência deles.</li>
+            <li>Seus rituais de atendimento são consistentes (anamnese, teste, fotobiomodulação no fim).</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que está travando</div>
+          <ul class="pl block">
+            <li>A liderança é ativamente escondida por insegurança — você minimiza a sua autoridade em vez de mostrá-la.</li>
+            <li>Quase todo o público é seguidor casual; existe uma única fã que divulga, e por acaso. Não há nada que faça alguém "subir de nível" com você.</li>
+            <li>Há um público profissional (alunos, gente que aluga equipamento) que ninguém transformou em um degrau de oferta.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl voice">Nas suas palavras</div>
+          <div class="say"><q>"Eu sou uma das que ajuda… eles me procuram, eu já meio que sou <em>referência</em> deles."</q><div class="src">Entrevista · S1 c6</div></div>
+        </div>
+        <div class="blk"><div class="lbl do">O que fazer</div>
+          <ul class="moves">
+            <li><span class="when">21 dias</span>Transformar "a possibilidade de mudar de ideia" numa frase-credo de uma linha e reativar a marca registrada como assinatura.</li>
+            <li><span class="when">30 dias</span>Tornar a fotobiomodulação do fim da sessão um momento visível de conteúdo recorrente — um rito que vira marca.</li>
+            <li><span class="when">60 dias</span>Estruturar a frente B2B (rede de profissionais/alunos) como o degrau mais alto da sua oferta — onde você já é referência.</li>
+          </ul>
+        </div>
+        <div class="ask-box"><div class="lbl ask">Confirme com você</div>
+          <ul>
+            <li>Faz sentido formalizar a rede de alunos/profissionais como o topo da sua oferta?</li>
+            <li>Você se vê assumindo publicamente o papel de referência desses profissionais?</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 7 TOM DE VOZ -->
+      <article class="cat" id="tom">
+        <div class="cat-head"><span class="cat-kicker">Frente 7 · Tom de voz</span><span class="badge b-crit"><span class="dot"></span>Crítico</span></div>
+        <div class="cat-title">Voz firme no consultório, silêncio no feed.</div>
+        <p class="resumo">A descoberta mais reveladora: não é um problema de voz, é de transmissão. A voz de autoridade já existe — ela só não chega ao digital.</p>
+
+        <div class="blk"><div class="lbl good">O que está forte</div>
+          <ul class="pl good">
+            <li>Quando o assunto é a sua técnica, você é categórica e segura: "removi tudo em uma sessão só", "não gasto um minuto". Sem hesitação.</li>
+            <li>Presencialmente sua voz é firme, calorosa e didática — o ativo está intacto.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que está travando</div>
+          <ul class="pl block">
+            <li>Fora da técnica (marca, conteúdo, digital) a insegurança domina: "estou completamente perdida ainda".</li>
+            <li>A autoridade real — formar profissionais, já ter palestrado — é escondida de propósito, em vez de anunciada antes de você falar.</li>
+            <li>O perfeccionismo fecha o canal: produz e não posta.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl voice">Nas suas palavras</div>
+          <div class="say"><q>"Eu nunca acho que está bom e nunca posto. <em>E aí fica esquecido.</em>"</q><div class="src">Entrevista · S1 c30</div></div>
+        </div>
+        <div class="blk"><div class="lbl do">O que fazer</div>
+          <ul class="moves">
+            <li><span class="when">14 dias</span>Criar um checklist objetivo de "pronto para postar" que substitua o filtro emocional "não está bom" — com uma cadência mínima fixa na segunda-feira, dia que você já reserva.</li>
+            <li><span class="when">21 dias</span>Adotar "Tire o que está te incomodando que não te representa mais" como frase-bandeira oficial — você já a diz a todo cliente.</li>
+            <li><span class="when">30 dias</span>Abrir os conteúdos com a sua credencial real ("sou procurada por outros profissionais nos casos difíceis"), sem pedir desculpa por ela.</li>
+          </ul>
+        </div>
+        <div class="ask-box"><div class="lbl ask">Confirme com você</div>
+          <ul>
+            <li>Um checklist objetivo realmente substituiria o "nunca acho que está bom"? O que faria você confiar nele?</li>
+            <li>Você se sente confortável abrindo conteúdos com a credencial real, sem minimizá-la?</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 8 VISUAL -->
+      <article class="cat" id="visual">
+        <div class="cat-head"><span class="cat-kicker">Frente 8 · Visual</span><span class="badge b-alert"><span class="dot"></span>Alerta</span></div>
+        <div class="cat-title">A cor está certa. A casa, sem padrão.</div>
+        <p class="resumo">Boa surpresa: sua paleta é forte e combina com o preço premium. O que falta é regra de aplicação — hoje cada peça é decidida na hora.</p>
+
+        <div class="blk"><div class="lbl good">O que está forte</div>
+          <ul class="pl good">
+            <li>Preto e branco como base (a metáfora luz e sombra do laser) e o vermelho como sua assinatura — já reconhecido por quem te conhece.</li>
+            <li>A baixa saturação combina com um trabalho caro e sofisticado. O ativo de cor existe e está correto.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl block">O que está travando</div>
+          <ul class="pl block">
+            <li>Não há padrão no feed: dois cenários antagônicos, sem regra; ângulo de câmera no improviso ("a gente embola ali na hora").</li>
+            <li>Pontos de contato parados: cartão produzido e nunca entregue por vergonha da execução, sem placa, Google parado.</li>
+          </ul>
+        </div>
+        <div class="blk"><div class="lbl voice">Nas suas palavras</div>
+          <div class="say"><q>"Não teve roteiro… a gente <em>embola</em> ali na hora." — execução visual sem sistema.</q><div class="src">Entrevista · S1 c32</div></div>
+        </div>
+        <div class="blk"><div class="lbl do">O que fazer</div>
+          <ul class="moves">
+            <li><span class="when">14 dias</span>Fechar um guia de cores simples: preto e branco base, vermelho como acento (até ~10%, com regra de uso), rosa proibido — com os códigos exatos.</li>
+            <li><span class="when">21 dias</span>Criar um modelo fixo de capa de Reels/thumbnail aplicando essas cores — acaba a decisão por post que hoje trava a publicação.</li>
+            <li><span class="when">30 dias</span>Reativar o básico de baixo custo: refazer o cartão numa gráfica confiável e ativar o Google (canal de aquisição hoje cego).</li>
+          </ul>
+        </div>
+        <div class="ask-box"><div class="lbl ask">Confirme com você</div>
+          <ul>
+            <li>Preto e branco base, vermelho acento, sem rosa: confirma como sistema oficial?</li>
+            <li>A sala verde de Vila Velha funciona como cenário único, ou há alguma restrição prática?</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="prioridades">
+    <div class="wrap">
+      <span class="eyebrow">Por onde começar</span>
+      <h2 class="h2">Dez movimentos, em ordem.</h2>
+      <table class="ptable">
+        <thead><tr><th>#</th><th>O que fazer</th><th>Frente</th><th>Momento</th></tr></thead>
+        <tbody>
+          <tr><td class="rk">01</td><td class="ac">Checklist objetivo de "pronto para postar" — destrava o gargalo central: não publicar por perfeccionismo</td><td>Tom de voz</td><td><span class="u u-pre">Primeiro</span></td></tr>
+          <tr><td class="rk">02</td><td class="ac">Escolher UMA frase-resumo e aposentar as concorrentes</td><td>Identidade</td><td><span class="u u-pre">Primeiro</span></td></tr>
+          <tr><td class="rk">03</td><td class="ac">Cristalizar a frase-bandeira: "Tire o que está te incomodando que não te representa mais"</td><td>Tom de voz</td><td><span class="u u-pre">Primeiro</span></td></tr>
+          <tr><td class="rk">04</td><td class="ac">Registrar o caso "10 sessões → 2 comigo" — sua primeira prova pública</td><td>Essência</td><td><span class="u u-act">Ativação</span></td></tr>
+          <tr><td class="rk">05</td><td class="ac">Vídeo-âncora do frosting ("não some magicamente")</td><td>Cliente</td><td><span class="u u-act">Ativação</span></td></tr>
+          <tr><td class="rk">06</td><td class="ac">Dar nome ao método e listar tudo que já está incluso e é invisível no preço</td><td>Oferta</td><td><span class="u u-act">Ativação</span></td></tr>
+          <tr><td class="rk">07</td><td class="ac">Guia de cores + modelo fixo de capas</td><td>Visual</td><td><span class="u u-act">Ativação</span></td></tr>
+          <tr><td class="rk">08</td><td class="ac">3 conteúdos fixos (um por dúvida) + 3 "nãos" públicos</td><td>Posic. / Cliente</td><td><span class="u u-act">Ativação</span></td></tr>
+          <tr><td class="rk">09</td><td class="ac">Garantia condicional segura e honesta</td><td>Oferta</td><td><span class="u u-amp">Depois</span></td></tr>
+          <tr><td class="rk">10</td><td class="ac">Estruturar a frente B2B (rede de profissionais) como degrau de topo</td><td>Comunidade</td><td><span class="u u-amp">Depois</span></td></tr>
+        </tbody>
+      </table>
+      <div class="pattern" style="margin-top:26px">
+        <span class="k">Por que esta ordem</span>
+        Os três primeiros vêm antes de tudo: sem destravar a publicação, fixar a mensagem e a frase, todo o resto continua sendo produzido e não postado — exatamente o padrão que você mesma descreveu.
+      </div>
+    </div>
+  </section>
+
+  <section id="roteiro">
+    <div class="wrap">
+      <span class="eyebrow">Os próximos 90 dias</span>
+      <h2 class="h2">Três meses, três atos.</h2>
+      <div class="acts">
+        <div class="act"><div class="mn">Mês 1</div><div class="at">Decidir</div><p>Codificar o que hoje é difuso: a frase-resumo única, a frase-bandeira, o guia de cores e o checklist de publicação. Não exige volume — exige decisão. E produzir as duas primeiras provas.</p></div>
+        <div class="act"><div class="mn">Mês 2</div><div class="at">Publicar</div><p>Postar com frequência fixa na segunda-feira: os 3 conteúdos de dúvida, os 3 "nãos", a série de antes/depois (hoje presa no direct). Fixar o cenário e aplicar o modelo de capa. Reativar cartão e Google.</p></div>
+        <div class="act"><div class="mn">Mês 3</div><div class="at">Converter</div><p>Empacotar e nomear o método, lançar a garantia, reescrever a venda com o cliente como protagonista e estruturar a frente B2B — o movimento que monetiza a autoridade que você já tem e esconde.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fechamento">
+    <div class="wrap narrow">
+      <span class="eyebrow">Próximo passo</span>
+      <h2 class="h2">Esta é uma versão para você validar.</h2>
+      <p style="margin-top:18px">O que está aqui é o estado atual lido a partir da sua entrevista — não a palavra final. Onde algo soou impreciso, exagerado ou incompleto, é exatamente isso que queremos ouvir hoje. Sua correção e o que faltar entram como insumo e refinam o diagnóstico. Apontar uma lacuna é parte do método, não falha.</p>
+      <p>Com este diagnóstico validado, seguimos em sequência — <strong>posicionamento, receita, canais e linha editorial</strong> — cada um construído sobre o anterior. É assim que tudo fica conectado, da entrevista ao resultado final.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <svg viewBox="0 0 779.88 165.53" role="img" aria-label="Fleway"><g fill="#FFFFFF">
+      <polygon points="240.21 22.06 155.69 31.97 173.07 68.66 240.21 22.06"></polygon>
+      <polygon points="173.07 68.66 155.69 105.87 219.58 116.39 173.07 68.66"></polygon>
+      <polygon points="155.69 31.97 103.91 68.66 155.69 105.87 173.07 68.66 155.69 31.97"></polygon>
+      <path d="M269.26,115.95V22.06h18.26v93.9h-18.26ZM284.96,37.49v-15.43h39.36v15.43h-39.36ZM284.96,76.85v-15.43l37.56-.13v15.43l-37.56.13h0Z"></path>
+      <path d="M335.11,115.95V22.06h17.88v93.9h-17.88Z"></path>
+      <path d="M398.27,118.4c-6,0-11.25-1.03-15.76-3.09-4.5-2.06-8.23-4.83-11.19-8.3-2.96-3.47-5.19-7.35-6.69-11.64-1.5-4.28-2.25-8.66-2.25-13.12v-2.44c0-4.63.75-9.11,2.25-13.44,1.5-4.33,3.73-8.19,6.69-11.57s6.62-6.09,11-8.11c4.37-2.02,9.43-3.02,15.18-3.02,7.55,0,13.87,1.65,18.97,4.95,5.1,3.3,8.94,7.64,11.51,12.99,2.57,5.36,3.86,11.13,3.86,17.3v6.43h-61.86v-10.93h50.68l-5.53,5.4c0-4.46-.65-8.27-1.93-11.45-1.28-3.17-3.23-5.62-5.85-7.33-2.62-1.72-5.9-2.57-9.84-2.57s-7.29.9-10.03,2.7-4.83,4.39-6.23,7.78c-1.42,3.39-2.12,7.44-2.12,12.15,0,4.37.68,8.25,2.06,11.64,1.37,3.39,3.47,6.04,6.3,7.97,2.83,1.93,6.43,2.9,10.8,2.9s7.93-.88,10.67-2.63c2.74-1.75,4.5-3.92,5.27-6.5h16.47c-1.03,4.8-3,9-5.92,12.6-2.92,3.6-6.62,6.39-11.13,8.36s-9.62,2.96-15.37,2.96h0Z"></path>
+      <path d="M451.13,115.95l-19.03-69.84h17.36l18.13,69.84h-16.47,0ZM458.34,115.95l-.13-14.66h14.27v14.66h-14.15,0ZM463.61,115.95l13.25-67.53h20.58l15.31,67.53h-14.15l-15.57-67.14h7.46l-13.76,67.14h-13.12ZM503.09,115.95v-14.66h14.27l-.13,14.66h-14.15,0ZM508.76,115.95l16.08-69.84h16.2l-16.85,69.84h-15.43Z"></path>
+      <path d="M567.53,117.75c-5.06,0-9.5-.9-13.31-2.7-3.81-1.8-6.78-4.37-8.88-7.72-2.11-3.34-3.15-7.37-3.15-12.09,0-5.14,1.26-9.34,3.79-12.6,2.53-3.26,6.09-5.7,10.67-7.33,4.58-1.63,9.97-2.44,16.14-2.44h16.2v10.67h-16.46c-4.11,0-7.27,1.01-9.45,3.02-2.19,2.02-3.28,4.61-3.28,7.78s1.09,5.74,3.28,7.72c2.19,1.97,5.34,2.96,9.45,2.96,2.49,0,4.78-.45,6.88-1.35,2.1-.9,3.86-2.44,5.27-4.63,1.42-2.19,2.21-5.16,2.38-8.94l4.37,5.02c-.43,4.89-1.61,9-3.54,12.34s-4.59,5.9-7.97,7.65c-3.39,1.75-7.53,2.63-12.41,2.63h0ZM590.04,115.95v-20.71h-2.96v-23.02c0-4.03-.99-7.03-2.96-9-1.97-1.97-5.02-2.96-9.13-2.96-2.14,0-4.72.04-7.72.13s-6.02.19-9.07.32c-3.04.13-5.77.28-8.16.45v-15.18c1.97-.17,4.2-.34,6.69-.51s5.04-.28,7.65-.32c2.61-.04,5.08-.07,7.39-.07,7.2,0,13.18.95,17.94,2.83,4.76,1.89,8.36,4.85,10.8,8.88,2.44,4.03,3.67,9.31,3.67,15.82v43.34h-14.16Z"></path>
+      <path d="M629.66,114.4l-22.64-68.3h18.01l21.48,68.3h-16.85ZM613.97,143.47v-15.31h13.12c2.49,0,4.57-.32,6.23-.97,1.67-.65,3.07-1.67,4.18-3.09,1.11-1.42,1.97-3.37,2.57-5.85l18.78-72.16h17.11l-20.71,76.01c-1.37,5.23-3.3,9.41-5.79,12.54-2.49,3.13-5.68,5.38-9.58,6.76-3.9,1.37-8.73,2.06-14.47,2.06h-11.45ZM635.71,114.4v-14.15h14.92v14.15h-14.92Z"></path>
+    </g></svg>
+    <p class="fl">Diagnóstico de marca · Juliana Machado Fundão · 18 / 05 / 2026<br>Documento de validação — uso interno, não distribuir.</p>
+  </div>
+</footer>
+
+</body>
+</html>

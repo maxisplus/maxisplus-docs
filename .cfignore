@@ -1,0 +1,9 @@
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+CLOUDFLARE_MIGRATION.md
+CNAME
+dev.mjs
+.claude/
+.git/
+*.DS_Store
