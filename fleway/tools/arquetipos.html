@@ -1,0 +1,2264 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Teste Arquetípico | Fleway</title>
+        <style>
+            :root {
+                --navy-950: #081526;
+                --navy-900: #0c1c30;
+                --navy-800: #102843;
+                --blue-700: #1f4785;
+                --blue-500: #62a6fb;
+                --blue-300: #94c5fd;
+                --ice-50: #f2f7fc;
+                --paper: #ffffff;
+                --ink: #0f2035;
+                --muted: #66758a;
+                --line: #dbe7f3;
+                --danger: #b82126;
+                --shadow: 0 28px 90px rgba(8, 21, 38, 0.22);
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            [hidden] {
+                display: none !important;
+            }
+
+            html {
+                min-height: 100%;
+            }
+
+            body {
+                min-height: 100vh;
+                margin: 0;
+                position: relative;
+                isolation: isolate;
+                background-color: var(--navy-950);
+                color: var(--ink);
+                font-family:
+                    Inter,
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    sans-serif;
+            }
+
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background:
+                    linear-gradient(
+                        160deg,
+                        var(--navy-950) 0 54%,
+                        #edf4fb 54% 100%
+                    ),
+                    linear-gradient(
+                        135deg,
+                        rgba(98, 166, 251, 0.14) 0 1px,
+                        transparent 1px 36%
+                    ),
+                    linear-gradient(
+                        117deg,
+                        transparent 0 58%,
+                        rgba(98, 166, 251, 0.16) 58% 58.3%,
+                        transparent 58.3%
+                    ),
+                    linear-gradient(
+                        153deg,
+                        transparent 0 70%,
+                        rgba(148, 197, 253, 0.12) 70% 70.2%,
+                        transparent 70.2%
+                    );
+                pointer-events: none;
+                z-index: -1;
+            }
+
+            button,
+            input,
+            select {
+                font: inherit;
+            }
+
+            button,
+            select,
+            input {
+                outline-color: var(--blue-500);
+            }
+
+            .app {
+                width: min(100% - 22px, 1180px);
+                min-height: 100vh;
+                margin: 0 auto;
+                padding: 18px 0 24px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .brand-bar {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                min-height: 52px;
+            }
+
+            .brand-logo {
+                width: 136px;
+                max-width: 52vw;
+                height: auto;
+                display: block;
+            }
+
+            .reset-button {
+                width: auto;
+                align-self: center;
+                min-height: 42px;
+                border: 1px solid rgba(242, 247, 252, 0.18);
+                border-radius: 999px;
+                background: rgba(242, 247, 252, 0.08);
+                color: var(--ice-50);
+                padding: 0 14px;
+                cursor: pointer;
+                white-space: nowrap;
+                transition:
+                    background 160ms ease,
+                    border-color 160ms ease,
+                    transform 160ms ease;
+            }
+
+            .reset-button:hover,
+            .reset-button:focus-visible {
+                background: rgba(242, 247, 252, 0.14);
+                border-color: rgba(148, 197, 253, 0.58);
+            }
+
+            .experience {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 24px;
+                align-items: start;
+                margin-top: 28px;
+            }
+
+            .brand-copy {
+                color: var(--ice-50);
+                padding-top: 0;
+            }
+
+            .brand-kicker,
+            .eyebrow {
+                margin: 0 0 12px;
+                color: var(--blue-300);
+                font-size: 0.78rem;
+                font-weight: 800;
+                letter-spacing: 0;
+                text-transform: uppercase;
+            }
+
+            .brand-copy h1 {
+                margin: 0;
+                color: var(--paper);
+                font-size: clamp(2.12rem, 10vw, 4.5rem);
+                line-height: 0.96;
+                max-width: 12ch;
+            }
+
+            .brand-copy p {
+                max-width: 100%;
+                margin: 24px 0 0;
+                color: rgba(242, 247, 252, 0.76);
+                font-size: 1.02rem;
+                line-height: 1.65;
+            }
+
+            .brand-rule {
+                width: 96px;
+                height: 4px;
+                margin: 30px 0 0;
+                border-radius: 999px;
+                background: var(--blue-500);
+            }
+
+            .brand-facts {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+                max-width: 460px;
+                margin-top: 28px;
+            }
+
+            .fact {
+                border: 1px solid rgba(242, 247, 252, 0.15);
+                border-radius: 8px;
+                padding: 14px;
+                background: rgba(242, 247, 252, 0.06);
+            }
+
+            .fact strong {
+                display: block;
+                color: var(--paper);
+                font-size: 1.14rem;
+                line-height: 1;
+            }
+
+            .fact span {
+                display: block;
+                margin-top: 6px;
+                color: rgba(242, 247, 252, 0.66);
+                font-size: 0.82rem;
+                line-height: 1.25;
+            }
+
+            .flow-panel {
+                background: rgba(255, 255, 255, 0.98);
+                border: 1px solid rgba(220, 231, 243, 0.9);
+                border-radius: 18px;
+                box-shadow: var(--shadow);
+                overflow: hidden;
+            }
+
+            .panel-topline {
+                height: 5px;
+                background: linear-gradient(
+                    90deg,
+                    var(--blue-700),
+                    var(--blue-500),
+                    var(--blue-300)
+                );
+            }
+
+            .panel-content {
+                padding: 24px 18px;
+            }
+
+            .flow-meta {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                color: var(--muted);
+                font-size: 0.92rem;
+                margin-bottom: 18px;
+            }
+
+            .save-status {
+                color: var(--blue-700);
+                text-align: left;
+            }
+
+            .progress-track {
+                height: 8px;
+                border-radius: 999px;
+                background: #e7eff8;
+                overflow: hidden;
+                margin-bottom: 28px;
+            }
+
+            .progress-fill {
+                display: block;
+                width: 0%;
+                height: 100%;
+                border-radius: inherit;
+                background: var(--blue-500);
+                transition: width 220ms ease;
+            }
+
+            .stepper {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 8px;
+                margin-bottom: 30px;
+            }
+
+            .step {
+                min-height: 44px;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                padding: 9px 10px;
+                color: var(--muted);
+                background: #f7fbff;
+            }
+
+            .step strong {
+                display: block;
+                color: inherit;
+                font-size: 0.8rem;
+            }
+
+            .step span {
+                display: block;
+                margin-top: 2px;
+                font-size: 0.76rem;
+            }
+
+            .step.is-active {
+                border-color: rgba(31, 71, 133, 0.52);
+                background: #eaf4ff;
+                color: var(--blue-700);
+            }
+
+            .step.is-complete {
+                border-color: rgba(98, 166, 251, 0.42);
+                color: var(--navy-800);
+            }
+
+            .view h2 {
+                margin: 0;
+                color: var(--navy-950);
+                font-size: clamp(1.25rem, 4.8vw, 1.7rem);
+                line-height: 1.16;
+                font-weight: 800;
+                max-width: 16ch;
+            }
+
+            .lead {
+                margin: 18px 0 0;
+                color: var(--muted);
+                font-size: 1rem;
+                line-height: 1.62;
+            }
+
+            .notice {
+                margin: 26px 0;
+                border-left: 4px solid var(--danger);
+                padding: 16px 18px;
+                background: #fff6f6;
+            }
+
+            .notice strong {
+                display: block;
+                margin-bottom: 4px;
+                color: var(--danger);
+                font-size: 0.95rem;
+                text-transform: uppercase;
+            }
+
+            .notice p {
+                margin: 0;
+                color: #4f1820;
+                line-height: 1.5;
+            }
+
+            .instruction-list {
+                display: grid;
+                gap: 12px;
+                margin: 26px 0 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            .instruction-list li {
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                padding: 14px 16px;
+                background: #f9fcff;
+                color: var(--ink);
+                line-height: 1.48;
+            }
+
+            .instruction-list strong {
+                color: var(--blue-700);
+            }
+
+            .actions {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+                margin-top: 30px;
+            }
+
+            .action-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .primary-button,
+            .secondary-button {
+                min-height: 46px;
+                border-radius: 8px;
+                padding: 0 20px;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid transparent;
+                transition:
+                    background 160ms ease,
+                    border-color 160ms ease,
+                    color 160ms ease,
+                    transform 160ms ease;
+                white-space: nowrap;
+            }
+
+            .primary-button,
+            .secondary-button {
+                width: 100%;
+            }
+
+            .primary-button {
+                background: var(--blue-700);
+                color: var(--paper);
+                font-weight: 750;
+            }
+
+            .primary-button:hover,
+            .primary-button:focus-visible {
+                background: #193c72;
+            }
+
+            .secondary-button {
+                background: var(--paper);
+                color: var(--navy-950);
+                border-color: var(--line);
+            }
+
+            .secondary-button:hover,
+            .secondary-button:focus-visible {
+                border-color: var(--blue-500);
+                color: var(--blue-700);
+            }
+
+            .primary-button:active,
+            .secondary-button:active,
+            .reset-button:active,
+            .option-button:active {
+                transform: translateY(1px);
+            }
+
+            .form-grid {
+                display: grid;
+                gap: 18px;
+                margin-top: 26px;
+            }
+
+            fieldset {
+                margin: 0;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                padding: 18px;
+                background: #fbfdff;
+            }
+
+            legend {
+                padding: 0 8px;
+                color: var(--navy-950);
+                font-weight: 800;
+            }
+
+            .field-hint {
+                margin: 0 0 12px;
+                color: var(--muted);
+                font-size: 0.9rem;
+            }
+
+            .choice-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .choice-card {
+                min-height: 46px;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: var(--paper);
+                padding: 10px 12px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: var(--ink);
+                cursor: pointer;
+            }
+
+            .choice-card:has(input:checked) {
+                border-color: var(--blue-700);
+                background: #eaf4ff;
+                box-shadow: inset 0 0 0 1px var(--blue-700);
+            }
+
+            .choice-card input {
+                width: 17px;
+                height: 17px;
+                accent-color: var(--blue-700);
+                flex: 0 0 auto;
+            }
+
+            .field-row {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 16px;
+                align-items: start;
+            }
+
+            .field-row label {
+                color: var(--navy-950);
+                font-weight: 800;
+            }
+
+            .text-input,
+            .select-input {
+                width: 100%;
+                min-height: 46px;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: var(--paper);
+                color: var(--ink);
+                padding: 0 13px;
+            }
+
+            .text-input:focus,
+            .select-input:focus {
+                border-color: var(--blue-500);
+                box-shadow: 0 0 0 3px rgba(98, 166, 251, 0.18);
+            }
+
+            .other-field {
+                margin-top: 10px;
+            }
+
+            .question {
+                min-height: 0;
+                margin: 20px 0 24px;
+                color: var(--ink);
+                font-size: 28px !important;
+                line-height: 1.1;
+                font-weight: 750;
+                max-width: full;
+            }
+
+            .response-scale {
+                display: grid;
+                gap: 10px;
+                margin-bottom: 24px;
+            }
+
+            .option-button {
+                width: 100%;
+                min-height: 58px;
+                border: 1px solid var(--line);
+                border-radius: 8px;
+                background: #f8fbff;
+                color: var(--ink);
+                padding: 12px 16px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 14px;
+                text-align: left;
+                line-height: 1.22;
+                font-weight: 720;
+                transition:
+                    border-color 160ms ease,
+                    background 160ms ease,
+                    box-shadow 160ms ease,
+                    transform 160ms ease;
+            }
+
+            .option-button::after {
+                content: attr(data-score);
+                width: 30px;
+                height: 30px;
+                border-radius: 999px;
+                background: #e6f0fb;
+                color: var(--blue-700);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.86rem;
+                flex: 0 0 auto;
+            }
+
+            .option-button:hover,
+            .option-button:focus-visible {
+                border-color: var(--blue-500);
+                background: #eef6ff;
+            }
+
+            .option-button.is-selected {
+                border-color: var(--blue-700);
+                background: #e7f1ff;
+                box-shadow: inset 0 0 0 1px var(--blue-700);
+            }
+
+            .option-button:disabled {
+                cursor: wait;
+                opacity: 0.92;
+            }
+
+            .microcopy {
+                margin: 0;
+                color: var(--muted);
+                font-size: 0.92rem;
+                text-align: left;
+            }
+
+            .result-copy {
+                margin: 16px 0 0;
+                color: var(--muted);
+                line-height: 1.58;
+            }
+
+            .download-actions {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-top: 26px;
+                margin-bottom: 28px;
+            }
+
+            .sync-status {
+                margin: 0;
+                color: var(--muted);
+                line-height: 1.5;
+            }
+
+            .response-list {
+                max-height: 330px;
+                overflow: auto;
+                border-top: 1px solid var(--line);
+                padding-top: 18px;
+            }
+
+            .response-list h3 {
+                margin: 0 0 14px;
+                font-size: 1rem;
+            }
+
+            .response-list ol {
+                margin: 0;
+                padding-left: 22px;
+            }
+
+            .response-list li {
+                margin-bottom: 14px;
+                line-height: 1.45;
+            }
+
+            .response-answer {
+                color: var(--blue-700);
+                font-weight: 800;
+            }
+
+            .footer-note {
+                margin: auto 0 0;
+                padding-top: 34px;
+                color: #6b7890;
+                text-align: center;
+                font-size: 0.92rem;
+            }
+
+            @media (min-width: 560px) {
+                .brand-bar {
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                .reset-button {
+                    width: auto;
+                    min-height: 38px;
+                    padding: 0 12px;
+                }
+
+                .brand-facts {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+
+                .choice-grid {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+
+                .stepper {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+
+                .download-actions {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+            }
+
+            @media (min-width: 760px) {
+                .app {
+                    width: min(1180px, calc(100% - 36px));
+                    padding-top: 26px;
+                    padding-bottom: 34px;
+                }
+
+                .brand-logo {
+                    width: 154px;
+                    max-width: 48vw;
+                }
+
+                .experience {
+                    grid-template-columns: minmax(260px, 0.78fr) minmax(
+                            0,
+                            1.22fr
+                        );
+                    gap: 34px;
+                    margin-top: 64px;
+                }
+
+                .brand-copy {
+                    padding-top: 22px;
+                }
+
+                .brand-copy h1 {
+                    max-width: 10ch;
+                }
+
+                .brand-copy p {
+                    max-width: 420px;
+                }
+
+                .view h2 {
+                    font-size: clamp(1.65rem, 3vw, 2.3rem);
+                    line-height: 1.1;
+                    max-width: none;
+                }
+
+                .question {
+                    margin: 24px 0 24px;
+                    font-size: clamp(1rem, 3vw, 2rem);
+                    line-height: 1.28;
+                    max-width: none;
+                }
+
+                .panel-content {
+                    padding: 34px;
+                }
+
+                .flow-meta {
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                .save-status {
+                    text-align: right;
+                }
+
+                .actions {
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+
+                .field-row {
+                    grid-template-columns: minmax(180px, 0.45fr) minmax(0, 1fr);
+                    align-items: center;
+                }
+
+                .microcopy {
+                    text-align: right;
+                }
+
+                .primary-button,
+                .secondary-button {
+                    width: auto;
+                }
+
+                .download-actions {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+            }
+
+            @media (max-width: 759px) {
+                body.is-flow-active .brand-copy {
+                    display: none;
+                }
+
+                body.is-flow-active .experience {
+                    margin-top: 18px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main class="app">
+            <header class="brand-bar">
+                <img
+                    class="brand-logo"
+                    src="../report-assets/logo.png"
+                    alt="Fleway"
+                />
+                <button class="reset-button" type="button" id="resetTopButton">
+                    Reiniciar
+                </button>
+            </header>
+
+            <section class="experience">
+                <aside class="brand-copy" aria-label="Teste arquetípico Fleway">
+                    <p class="brand-kicker">Teste arquetípico</p>
+                    <h1>Todo voo deixa rastros.</h1>
+                    <div class="brand-rule" aria-hidden="true"></div>
+                    <p>
+                        Responda a partir de como você tem pensado, sentido e
+                        agido nos últimos meses. Não existem respostas certas ou
+                        erradas.
+                    </p>
+                    <div class="brand-facts" aria-label="Informações do teste">
+                        <div class="fact">
+                            <strong>72</strong>
+                            <span>afirmações</span>
+                        </div>
+                        <div class="fact">
+                            <strong>5</strong>
+                            <span>níveis de resposta</span>
+                        </div>
+                        <div class="fact">
+                            <strong>15-20</strong>
+                            <span>minutos em média</span>
+                        </div>
+                    </div>
+                </aside>
+
+                <section class="flow-panel" aria-live="polite">
+                    <div class="panel-topline" aria-hidden="true"></div>
+                    <div class="panel-content">
+                        <div class="flow-meta">
+                            <span id="stageLabel">Introdução</span>
+                            <span class="save-status" id="saveStatus"
+                                >Pronto</span
+                            >
+                        </div>
+
+                        <div class="progress-track" aria-hidden="true">
+                            <span
+                                class="progress-fill"
+                                id="progressFill"
+                            ></span>
+                        </div>
+
+                        <div class="stepper" aria-label="Etapas">
+                            <div class="step" id="introStep">
+                                <strong>1. Introdução</strong>
+                                <span>Orientações</span>
+                            </div>
+                            <div class="step" id="preStep">
+                                <strong>2. Pré-perguntas</strong>
+                                <span>Perfil inicial</span>
+                            </div>
+                            <div class="step" id="quizStep">
+                                <strong>3. Teste</strong>
+                                <span>72 respostas</span>
+                            </div>
+                        </div>
+
+                        <section class="view" id="introView">
+                            <p class="eyebrow">Leia com atenção</p>
+                            <h2>Antes de começar</h2>
+                            <p class="lead">
+                                Este teste ajuda a identificar temas
+                                arquetípicos que influenciam sua forma de
+                                interpretar situações e agir no mundo. Os doze
+                                arquétipos têm valor próprio; nenhum é melhor ou
+                                pior que outro.
+                            </p>
+
+                            <div class="notice">
+                                <strong>Responda com honestidade</strong>
+                                <p>
+                                    Os resultados dependem da precisão das
+                                    respostas. Use sua experiência recente, não
+                                    uma versão idealizada de quem você gostaria
+                                    de ser.
+                                </p>
+                            </div>
+
+                            <ul class="instruction-list">
+                                <li>
+                                    <strong>Use a escala inteira.</strong>
+                                    Marque neutro apenas quando essa for
+                                    realmente a melhor resposta.
+                                </li>
+                                <li>
+                                    <strong>Pense nos últimos meses.</strong>
+                                    Responda pelo que tem sido verdadeiro para
+                                    você, especialmente nos momentos em que você
+                                    se sente mais você.
+                                </li>
+                                <li>
+                                    <strong>Confie na primeira reação.</strong>
+                                    Vá no ritmo que for confortável; em geral, a
+                                    primeira percepção é a mais útil.
+                                </li>
+                                <li>
+                                    <strong>Você poderá voltar.</strong> Nesta
+                                    versão, o botão voltar permite revisar
+                                    respostas antes de finalizar.
+                                </li>
+                            </ul>
+
+                            <div class="actions">
+                                <span class="microcopy"
+                                    >As respostas ficam salvas neste
+                                    navegador.</span
+                                >
+                                <button
+                                    class="primary-button"
+                                    type="button"
+                                    id="startPreQuestionsButton"
+                                >
+                                    Começar
+                                </button>
+                            </div>
+                        </section>
+
+                        <section class="view" id="preQuestionView" hidden>
+                            <p class="eyebrow">Pré-perguntas</p>
+                            <h2>Algumas informações antes do teste</h2>
+                            <p class="lead">
+                                Essas respostas ajudam a contextualizar o
+                                resultado e serão salvas junto com o teste.
+                            </p>
+
+                            <form class="form-grid" id="preQuestionForm">
+                                <fieldset>
+                                    <legend>1. Identidade de gênero</legend>
+                                    <div class="choice-grid">
+                                        <label class="choice-card">
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Mulher"
+                                                required
+                                            />
+                                            <span>Mulher</span>
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Homem"
+                                            />
+                                            <span>Homem</span>
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Pessoa trans"
+                                            />
+                                            <span>Pessoa trans</span>
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Outro"
+                                                id="genderOtherOption"
+                                            />
+                                            <span>Outro</span>
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="radio"
+                                                name="gender"
+                                                value="Prefiro não responder"
+                                            />
+                                            <span>Prefiro não responder</span>
+                                        </label>
+                                    </div>
+                                    <input
+                                        class="text-input other-field"
+                                        type="text"
+                                        name="genderOther"
+                                        id="genderOtherInput"
+                                        placeholder="Especifique, se quiser"
+                                        disabled
+                                    />
+                                </fieldset>
+
+                                <div class="field-row">
+                                    <label for="ageInput">2. Idade</label>
+                                    <input
+                                        class="text-input"
+                                        type="number"
+                                        name="age"
+                                        id="ageInput"
+                                        min="10"
+                                        max="120"
+                                        inputmode="numeric"
+                                        placeholder="Ex.: 34"
+                                        required
+                                    />
+                                </div>
+
+                                <fieldset>
+                                    <legend>
+                                        3. Identificação racial/étnica
+                                    </legend>
+                                    <p class="field-hint">
+                                        Marque todas as opções que fizerem
+                                        sentido para você.
+                                    </p>
+                                    <div class="choice-grid">
+                                        <label class="choice-card">
+                                            <input
+                                                type="checkbox"
+                                                name="raceEthnicity"
+                                                value="Indígena ou nativo(a) do Alasca"
+                                            />
+                                            <span
+                                                >Indígena ou nativo(a) do
+                                                Alasca</span
+                                            >
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="checkbox"
+                                                name="raceEthnicity"
+                                                value="Asiático(a)"
+                                            />
+                                            <span>Asiático(a)</span>
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="checkbox"
+                                                name="raceEthnicity"
+                                                value="Negro(a) ou afrodescendente"
+                                            />
+                                            <span
+                                                >Negro(a) ou
+                                                afrodescendente</span
+                                            >
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="checkbox"
+                                                name="raceEthnicity"
+                                                value="Hispânico(a) ou latino(a)"
+                                            />
+                                            <span
+                                                >Hispânico(a) ou latino(a)</span
+                                            >
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="checkbox"
+                                                name="raceEthnicity"
+                                                value="Nativo(a) havaiano(a) ou de outra ilha do Pacífico"
+                                            />
+                                            <span
+                                                >Nativo(a) havaiano(a) ou de
+                                                outra ilha do Pacífico</span
+                                            >
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="checkbox"
+                                                name="raceEthnicity"
+                                                value="Branco(a)"
+                                            />
+                                            <span>Branco(a)</span>
+                                        </label>
+                                        <label class="choice-card">
+                                            <input
+                                                type="checkbox"
+                                                name="raceEthnicity"
+                                                value="Prefiro não responder"
+                                            />
+                                            <span>Prefiro não responder</span>
+                                        </label>
+                                    </div>
+                                </fieldset>
+
+                                <div class="field-row">
+                                    <label for="residenceSelect"
+                                        >4. País de residência</label
+                                    >
+                                    <select
+                                        class="select-input"
+                                        name="residence"
+                                        id="residenceSelect"
+                                        required
+                                    >
+                                        <option value="">Selecionar</option>
+                                        <option>Brasil</option>
+                                        <option>Estados Unidos</option>
+                                        <option>Portugal</option>
+                                        <option>Argentina</option>
+                                        <option>Chile</option>
+                                        <option>Colômbia</option>
+                                        <option>México</option>
+                                        <option>Outro</option>
+                                        <option>Prefiro não responder</option>
+                                    </select>
+                                </div>
+
+                                <div class="field-row">
+                                    <label for="educationSelect"
+                                        >5. Maior nível de escolaridade
+                                        concluído</label
+                                    >
+                                    <select
+                                        class="select-input"
+                                        name="education"
+                                        id="educationSelect"
+                                        required
+                                    >
+                                        <option value="">Selecionar</option>
+                                        <option>Parte do ensino médio</option>
+                                        <option>Ensino médio completo</option>
+                                        <option>
+                                            Curso técnico ou profissionalizante
+                                        </option>
+                                        <option>
+                                            Parte da faculdade, sem diploma
+                                        </option>
+                                        <option>
+                                            Graduação curta ou tecnólogo
+                                        </option>
+                                        <option>Graduação completa</option>
+                                        <option>
+                                            Pós-graduação, mestrado, doutorado
+                                            ou formação profissional
+                                        </option>
+                                        <option>Prefiro não responder</option>
+                                    </select>
+                                </div>
+
+                                <div class="field-row">
+                                    <label for="workSelect"
+                                        >6. Área de atuação</label
+                                    >
+                                    <select
+                                        class="select-input"
+                                        name="fieldOfWork"
+                                        id="workSelect"
+                                        required
+                                    >
+                                        <option value="">Selecionar</option>
+                                        <option>
+                                            Aconselhamento, psicologia ou
+                                            terapia
+                                        </option>
+                                        <option>Educação</option>
+                                        <option>
+                                            Negócios ou área corporativa
+                                        </option>
+                                        <option>Gestão ou liderança</option>
+                                        <option>Pesquisa</option>
+                                        <option>Estudante</option>
+                                        <option>Escrita ou produção</option>
+                                        <option>Outro</option>
+                                        <option>Prefiro não responder</option>
+                                    </select>
+                                </div>
+
+                                <div class="field-row">
+                                    <label for="stressSelect"
+                                        >7. Nível de estresse nos últimos
+                                        meses</label
+                                    >
+                                    <select
+                                        class="select-input"
+                                        name="stressLevel"
+                                        id="stressSelect"
+                                        required
+                                    >
+                                        <option value="">Selecionar</option>
+                                        <option>Muito alto</option>
+                                        <option>Alto</option>
+                                        <option>Moderado</option>
+                                        <option>Baixo</option>
+                                        <option>Muito baixo</option>
+                                        <option>Prefiro não responder</option>
+                                    </select>
+                                </div>
+
+                                <div class="actions">
+                                    <button
+                                        class="secondary-button"
+                                        type="button"
+                                        id="backToIntroButton"
+                                    >
+                                        Voltar
+                                    </button>
+                                    <button
+                                        class="primary-button"
+                                        type="submit"
+                                    >
+                                        Continuar para o teste
+                                    </button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section class="view" id="quizView" hidden>
+                            <p class="eyebrow">Teste arquetípico</p>
+                            <p>Responda com o que mais combina com você.</p>
+                            <p class="question" id="questionText"></p>
+
+                            <div class="response-scale" id="options"></div>
+
+                            <div class="actions">
+                                <button
+                                    class="secondary-button"
+                                    type="button"
+                                    id="backButton"
+                                >
+                                    Voltar
+                                </button>
+                                <p class="microcopy" id="answeredCount">
+                                    0 de 72 respondidas
+                                </p>
+                            </div>
+                        </section>
+
+                        <section class="view" id="reviewView" hidden>
+                            <p class="eyebrow">Revisão final</p>
+                            <h2>Revise suas respostas antes do envio.</h2>
+                            <p class="result-copy" id="reviewCopy">
+                                Confira o resumo abaixo. Quando estiver pronto,
+                                continue para a confirmação final.
+                            </p>
+
+                            <div class="response-list">
+                                <h3>Resumo das respostas</h3>
+                                <ol id="responseSummary"></ol>
+                            </div>
+
+                            <div class="download-actions">
+                                <button
+                                    class="primary-button"
+                                    type="button"
+                                    id="sendAnswersButton"
+                                >
+                                    Enviar respostas para a equipe Fleway
+                                </button>
+                            </div>
+
+                            <p
+                                class="sync-status"
+                                id="sendStatus"
+                                aria-live="polite"
+                            >
+                                Ao continuar, você verá a confirmação final.
+                            </p>
+                        </section>
+
+                        <section class="view" id="successView" hidden>
+                            <p class="eyebrow">Teste concluído</p>
+                            <h2>Obrigado por responder.</h2>
+                            <p class="result-copy" id="successCopy">
+                                A equipe Fleway vai usar suas respostas para
+                                gerar seu mapa arquetípico com base na
+                                metodologia do PMAI, um indicador inspirado na
+                                tradição junguiana que observa 12 padrões
+                                arquetípicos.
+                            </p>
+                            <p class="result-copy">
+                                Agora seguimos com a leitura das suas tendências
+                                centrais para transformar esse retrato em
+                                direção prática.
+                            </p>
+                        </section>
+                    </div>
+                </section>
+            </section>
+
+            <footer class="footer-note">Brandbook v1.0 - 2026</footer>
+        </main>
+
+        <script>
+            const STORAGE_KEY = "fleway_archetype_quiz_v2";
+            const STORAGE_API_KEY =
+                "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+            const API_URL = "https://api.fleway.com";
+            const BUCKET = "archetype_responses";
+
+            const answerOptions = [
+                { value: 1, label: "Discordo totalmente" },
+                { value: 2, label: "Discordo" },
+                { value: 3, label: "Neutro" },
+                { value: 4, label: "Concordo" },
+                { value: 5, label: "Concordo totalmente" },
+            ];
+
+            const phaseOrder = ["intro", "pre", "quiz", "review", "success"];
+
+            const preQuestionLabels = {
+                gender: "Identidade de gênero",
+                genderOther: "Identidade de gênero - outro",
+                age: "Idade",
+                raceEthnicity: "Identificação racial/étnica",
+                residence: "País de residência",
+                education: "Maior nível de escolaridade concluído",
+                fieldOfWork: "Área de atuação",
+                stressLevel: "Nível de estresse nos últimos meses",
+            };
+
+            const questions = [
+                {
+                    id: 1,
+                    text: "Sinto realização quando ajudo ou me dedico a outras pessoas.",
+                },
+                {
+                    id: 2,
+                    text: "Ter vínculos próximos e intimidade é uma prioridade para mim.",
+                },
+                {
+                    id: 3,
+                    text: "Quando começo a entender um assunto, fico com ainda mais vontade de aprender.",
+                },
+                {
+                    id: 4,
+                    text: "Estou disposto(a) a assumir riscos pessoais para defender aquilo em que acredito.",
+                },
+                {
+                    id: 5,
+                    text: "Gosto de aprender pelo simples prazer de aprender.",
+                },
+                {
+                    id: 6,
+                    text: "Mesmo com medo, faço o que precisa ser feito.",
+                },
+                {
+                    id: 7,
+                    text: "Costumo colocar as necessidades dos outros antes das minhas.",
+                },
+                {
+                    id: 8,
+                    text: "Aproveito mais a vida quando estou criando algo.",
+                },
+                {
+                    id: 9,
+                    text: "Resolver problemas antigos exige soluções radicalmente novas.",
+                },
+                {
+                    id: 10,
+                    text: "Crescer como pessoa é mais importante para mim do que quase qualquer outra coisa.",
+                },
+                {
+                    id: 11,
+                    text: "Gosto de desafios que realmente me fazem pensar.",
+                },
+                {
+                    id: 12,
+                    text: "Continuo buscando até encontrar algo que me traga realização.",
+                },
+                {
+                    id: 13,
+                    text: "Uso o humor para comunicar verdades difíceis.",
+                },
+                {
+                    id: 14,
+                    text: "Para mim, é essencial viver de forma autêntica.",
+                },
+                {
+                    id: 15,
+                    text: "Fico frustrado(a) quando preciso ficar de lado e deixar outra pessoa liderar.",
+                },
+                {
+                    id: 16,
+                    text: "De modo geral, confio na vida.",
+                },
+                {
+                    id: 17,
+                    text: "É natural para mim viver momentos que parecem mágicos.",
+                },
+                {
+                    id: 18,
+                    text: "Assumo o comando quando sinto que as coisas estão saindo do controle.",
+                },
+                {
+                    id: 19,
+                    text: "Gosto de fazer as pessoas rirem.",
+                },
+                {
+                    id: 20,
+                    text: "Sou uma pessoa generosa.",
+                },
+                {
+                    id: 21,
+                    text: "Não costumo seguir padrões só porque todo mundo segue.",
+                },
+                {
+                    id: 22,
+                    text: "Prefiro estar no comando.",
+                },
+                {
+                    id: 23,
+                    text: "A vida pode ser séria, mas isso não significa que não dá para rir dela.",
+                },
+                {
+                    id: 24,
+                    text: "Consigo enxergar humor em quase qualquer situação.",
+                },
+                {
+                    id: 25,
+                    text: "Me sinto cheio(a) de energia quando imagino criar algo que ainda não existe.",
+                },
+                {
+                    id: 26,
+                    text: "Tenho uma boa imaginação.",
+                },
+                {
+                    id: 27,
+                    text: "Sou otimista em relação à vida.",
+                },
+                {
+                    id: 28,
+                    text: "Mesmo quando não faço questão de liderar, muitas vezes sou a melhor pessoa para conduzir a situação.",
+                },
+                {
+                    id: 29,
+                    text: "Sou mais realista do que otimista.",
+                },
+                {
+                    id: 30,
+                    text: "As pessoas me veem como alguém criativo.",
+                },
+                {
+                    id: 31,
+                    text: "Minha presença frequentemente impulsiona mudanças.",
+                },
+                {
+                    id: 32,
+                    text: "Tenho orgulho de enxergar a vida como ela é, sem ilusões.",
+                },
+                {
+                    id: 33,
+                    text: "Eu me preocupo com os outros, não só comigo.",
+                },
+                {
+                    id: 34,
+                    text: "Busco aprender coisas novas mesmo quando elas não têm utilidade imediata.",
+                },
+                {
+                    id: 35,
+                    text: "Aprendi que é importante não esperar demais das coisas.",
+                },
+                {
+                    id: 36,
+                    text: "Faço brincadeiras com frequência.",
+                },
+                {
+                    id: 37,
+                    text: "Procuro manter minhas expectativas dentro da realidade.",
+                },
+                {
+                    id: 38,
+                    text: "Alguém precisa assumir a liderança, e pode muito bem ser eu.",
+                },
+                {
+                    id: 39,
+                    text: "Quando cuido das minhas próprias questões, fico mais capaz de ajudar outras pessoas a se curarem.",
+                },
+                {
+                    id: 40,
+                    text: "Acredito que todas as pessoas e todas as coisas do mundo estão interligadas.",
+                },
+                {
+                    id: 41,
+                    text: "Sinto-me mais completo(a) quando estou amando ou vivendo um relacionamento.",
+                },
+                {
+                    id: 42,
+                    text: "Fico desconfiado(a) quando ouço: sempre foi feito assim.",
+                },
+                {
+                    id: 43,
+                    text: "Não tenho medo de me posicionar.",
+                },
+                {
+                    id: 44,
+                    text: "O humor me ajuda a entender melhor a vida.",
+                },
+                {
+                    id: 45,
+                    text: "O mundo é um lugar seguro.",
+                },
+                {
+                    id: 46,
+                    text: "Tenho mais facilidade em fazer pelos outros do que por mim.",
+                },
+                {
+                    id: 47,
+                    text: "No longo prazo, acredito que tudo acaba se resolvendo.",
+                },
+                {
+                    id: 48,
+                    text: "Gosto de fazer favores aos outros, mesmo sem receber nada em troca.",
+                },
+                {
+                    id: 49,
+                    text: "Eu me sinto seguro(a).",
+                },
+                {
+                    id: 50,
+                    text: "Tenho poucas ilusões sobre a realidade da vida.",
+                },
+                {
+                    id: 51,
+                    text: "Prefiro estar no controle.",
+                },
+                {
+                    id: 52,
+                    text: "Encontrar um propósito que dê sentido à minha vida é extremamente importante para mim.",
+                },
+                {
+                    id: 53,
+                    text: "Estou explorando novas possibilidades.",
+                },
+                {
+                    id: 54,
+                    text: "Sinto realização por meio dos meus relacionamentos.",
+                },
+                {
+                    id: 55,
+                    text: "Sou naturalmente curioso(a) e gosto de entender o porquê e o como das coisas.",
+                },
+                {
+                    id: 56,
+                    text: "Quando quero algo, persisto até conseguir.",
+                },
+                {
+                    id: 57,
+                    text: "Construir vínculos fortes com outras pessoas é uma parte central da vida.",
+                },
+                {
+                    id: 58,
+                    text: "As pessoas devem encarar os fatos, por mais difíceis que sejam.",
+                },
+                {
+                    id: 59,
+                    text: "Eu enfrento pessoas ofensivas ou que passam dos limites.",
+                },
+                {
+                    id: 60,
+                    text: "Adoro aqueles momentos em que finalmente entendo algo que antes não entendia.",
+                },
+                {
+                    id: 61,
+                    text: "A inspiração vem com facilidade para mim.",
+                },
+                {
+                    id: 62,
+                    text: "Eu me divirto imaginando novas possibilidades.",
+                },
+                {
+                    id: 63,
+                    text: "Sou uma pessoa romântica.",
+                },
+                {
+                    id: 64,
+                    text: "Ajudo as pessoas a perceberem seu potencial porque consigo enxergá-lo nelas.",
+                },
+                {
+                    id: 65,
+                    text: "Recuso fazer algo só porque todo mundo está fazendo.",
+                },
+                {
+                    id: 66,
+                    text: "Sinto-me confortável sendo firme e direto(a).",
+                },
+                {
+                    id: 67,
+                    text: "Relações pessoais profundas são mais importantes do que qualquer outra coisa.",
+                },
+                {
+                    id: 68,
+                    text: "Questiono as regras quando algo importante precisa ser feito.",
+                },
+                {
+                    id: 69,
+                    text: "Estou buscando formas de me desenvolver e melhorar como pessoa.",
+                },
+                {
+                    id: 70,
+                    text: "Confio que vou ter o que preciso.",
+                },
+                {
+                    id: 71,
+                    text: "Geralmente fico satisfeito(a) com as coisas como estão.",
+                },
+                {
+                    id: 72,
+                    text: "Faço diferença tanto pelo que sou quanto pelo que faço.",
+                },
+            ];
+
+            const introView = document.querySelector("#introView");
+            const preQuestionView = document.querySelector("#preQuestionView");
+            const quizView = document.querySelector("#quizView");
+            const reviewView = document.querySelector("#reviewView");
+            const successView = document.querySelector("#successView");
+            const stageLabel = document.querySelector("#stageLabel");
+            const saveStatus = document.querySelector("#saveStatus");
+            const progressFill = document.querySelector("#progressFill");
+            const stepper = document.querySelector(".stepper");
+            const introStep = document.querySelector("#introStep");
+            const preStep = document.querySelector("#preStep");
+            const quizStep = document.querySelector("#quizStep");
+            const preQuestionForm = document.querySelector("#preQuestionForm");
+            const genderOtherOption =
+                document.querySelector("#genderOtherOption");
+            const genderOtherInput =
+                document.querySelector("#genderOtherInput");
+            const questionText = document.querySelector("#questionText");
+            const options = document.querySelector("#options");
+            const backButton = document.querySelector("#backButton");
+            const answeredCount = document.querySelector("#answeredCount");
+            const resetTopButton = document.querySelector("#resetTopButton");
+            const startPreQuestionsButton = document.querySelector(
+                "#startPreQuestionsButton",
+            );
+            const backToIntroButton =
+                document.querySelector("#backToIntroButton");
+            const sendAnswersButton =
+                document.querySelector("#sendAnswersButton");
+            const sendStatus = document.querySelector("#sendStatus");
+            const responseSummary = document.querySelector("#responseSummary");
+            const reviewCopy = document.querySelector("#reviewCopy");
+            const successCopy = document.querySelector("#successCopy");
+
+            const createSessionId = () => {
+                if (
+                    window.crypto &&
+                    typeof window.crypto.randomUUID === "function"
+                ) {
+                    return window.crypto.randomUUID();
+                }
+
+                return `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+            };
+
+            const createEmptyPreQuestions = () => ({
+                gender: "",
+                genderOther: "",
+                age: "",
+                raceEthnicity: [],
+                residence: "",
+                education: "",
+                fieldOfWork: "",
+                stressLevel: "",
+            });
+
+            const createEmptyState = () => ({
+                sessionId: createSessionId(),
+                startedAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                phase: "intro",
+                currentIndex: 0,
+                completed: false,
+                preQuestions: createEmptyPreQuestions(),
+                answers: Array.from({ length: questions.length }, () => null),
+            });
+
+            const isValidPhase = (phase) => phaseOrder.includes(phase);
+
+            const loadState = () => {
+                try {
+                    const stored = window.localStorage.getItem(STORAGE_KEY);
+                    if (!stored) {
+                        return createEmptyState();
+                    }
+
+                    const parsed = JSON.parse(stored);
+                    const answers = Array.from(
+                        { length: questions.length },
+                        (_, index) => parsed.answers?.[index] || null,
+                    );
+                    const currentIndex = Number.isInteger(parsed.currentIndex)
+                        ? Math.min(
+                              Math.max(parsed.currentIndex, 0),
+                              questions.length - 1,
+                          )
+                        : 0;
+                    const completed = Boolean(
+                        parsed.completed && answers.every(Boolean),
+                    );
+
+                    return {
+                        ...createEmptyState(),
+                        ...parsed,
+                        phase: completed
+                            ? parsed.phase === "success"
+                                ? "success"
+                                : "review"
+                            : isValidPhase(parsed.phase)
+                              ? parsed.phase
+                              : "intro",
+                        preQuestions: {
+                            ...createEmptyPreQuestions(),
+                            ...(parsed.preQuestions || {}),
+                            raceEthnicity: Array.isArray(
+                                parsed.preQuestions?.raceEthnicity,
+                            )
+                                ? parsed.preQuestions.raceEthnicity
+                                : [],
+                        },
+                        answers,
+                        currentIndex,
+                        completed,
+                    };
+                } catch (error) {
+                    console.warn(
+                        "Não foi possível carregar as respostas salvas.",
+                        error,
+                    );
+                    return createEmptyState();
+                }
+            };
+
+            let state = loadState();
+            let answerAdvanceTimeout = null;
+
+            const getAnsweredTotal = () => state.answers.filter(Boolean).length;
+
+            const clearAnswerAdvanceTimeout = () => {
+                if (answerAdvanceTimeout !== null) {
+                    window.clearTimeout(answerAdvanceTimeout);
+                    answerAdvanceTimeout = null;
+                }
+            };
+
+            const saveState = () => {
+                state.updatedAt = new Date().toISOString();
+
+                try {
+                    window.localStorage.setItem(
+                        STORAGE_KEY,
+                        JSON.stringify(state),
+                    );
+                    saveStatus.textContent = "Salvo";
+                } catch (error) {
+                    console.warn(
+                        "Não foi possível salvar as respostas.",
+                        error,
+                    );
+                    saveStatus.textContent = "Não foi possível salvar";
+                }
+            };
+
+            const readPreQuestionForm = () => {
+                const data = new FormData(preQuestionForm);
+
+                return {
+                    gender: data.get("gender") || "",
+                    genderOther: data.get("genderOther") || "",
+                    age: data.get("age") || "",
+                    raceEthnicity: data.getAll("raceEthnicity"),
+                    residence: data.get("residence") || "",
+                    education: data.get("education") || "",
+                    fieldOfWork: data.get("fieldOfWork") || "",
+                    stressLevel: data.get("stressLevel") || "",
+                };
+            };
+
+            const fillPreQuestionForm = () => {
+                preQuestionForm.reset();
+
+                Object.entries(state.preQuestions).forEach(([key, value]) => {
+                    if (Array.isArray(value)) {
+                        value.forEach((item) => {
+                            const input = preQuestionForm.querySelector(
+                                `[name="${key}"][value="${escapeSelector(item)}"]`,
+                            );
+                            if (input) {
+                                input.checked = true;
+                            }
+                        });
+                        return;
+                    }
+
+                    const exactInput = preQuestionForm.querySelector(
+                        `[name="${key}"][value="${escapeSelector(value)}"]`,
+                    );
+                    const field = preQuestionForm.elements[key];
+
+                    if (exactInput) {
+                        exactInput.checked = true;
+                    } else if (field) {
+                        field.value = value;
+                    }
+                });
+
+                updateGenderOtherState();
+                updatePreQuestionValidationState();
+            };
+
+            const updateGenderOtherState = () => {
+                const enabled = genderOtherOption.checked;
+                genderOtherInput.disabled = !enabled;
+                genderOtherInput.required = enabled;
+
+                if (!enabled) {
+                    genderOtherInput.value = "";
+                    genderOtherInput.setCustomValidity("");
+                }
+            };
+
+            const updatePreQuestionValidationState = () => {
+                const genderRadios = Array.from(
+                    preQuestionForm.querySelectorAll('input[name="gender"]'),
+                );
+                const raceCheckboxes = Array.from(
+                    preQuestionForm.querySelectorAll(
+                        'input[name="raceEthnicity"]',
+                    ),
+                );
+                const hasGenderSelection = genderRadios.some(
+                    (input) => input.checked,
+                );
+                const hasRaceSelection = raceCheckboxes.some(
+                    (input) => input.checked,
+                );
+
+                genderRadios.forEach((input) => input.setCustomValidity(""));
+                raceCheckboxes.forEach((input) => input.setCustomValidity(""));
+
+                if (!hasGenderSelection && genderRadios[0]) {
+                    genderRadios[0].setCustomValidity("Selecione uma opção.");
+                }
+
+                if (!hasRaceSelection && raceCheckboxes[0]) {
+                    raceCheckboxes[0].setCustomValidity(
+                        "Selecione ao menos uma opção.",
+                    );
+                }
+
+                if (
+                    genderOtherOption.checked &&
+                    !genderOtherInput.value.trim()
+                ) {
+                    genderOtherInput.setCustomValidity(
+                        "Especifique a identidade de gênero.",
+                    );
+                } else {
+                    genderOtherInput.setCustomValidity("");
+                }
+            };
+
+            const scrollToTop = () => {
+                window.requestAnimationFrame(() => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth",
+                    });
+                });
+            };
+
+            const getPreQuestionRows = () =>
+                Object.entries(state.preQuestions).map(([key, value]) => ({
+                    field: key,
+                    label: preQuestionLabels[key] || key,
+                    value: Array.isArray(value) ? value.join(", ") : value,
+                }));
+
+            const getPayload = () => ({
+                sessionId: state.sessionId,
+                startedAt: state.startedAt,
+                updatedAt: state.updatedAt,
+                preQuestions: getPreQuestionRows(),
+                totalQuestions: questions.length,
+                answers: questions.map((question, index) => ({
+                    id: question.id,
+                    question: question.text,
+                    answerValue: state.answers[index]?.value || "",
+                    answerLabel: state.answers[index]?.label || "",
+                    answeredAt: state.answers[index]?.answeredAt || "",
+                })),
+            });
+
+            const getCustomerSlug = () =>
+                new URLSearchParams(window.location.search).get("customer") ||
+                "unknown";
+
+            const buildCsv = () => {
+                const payload = getPayload();
+                const escape = (v) =>
+                    `"${String(v ?? "").replace(/"/g, '""')}"`;
+
+                const preHeaders = payload.preQuestions.map((q) => q.label);
+                const answerHeaders = payload.answers.map(
+                    (a) => `Q${a.id}: ${a.question}`,
+                );
+                const headers = [
+                    "session_id",
+                    "started_at",
+                    "updated_at",
+                    "customer",
+                    ...preHeaders,
+                    ...answerHeaders,
+                ];
+
+                const preValues = payload.preQuestions.map((q) => q.value);
+                const answerValues = payload.answers.map((a) => a.answerLabel);
+                const values = [
+                    payload.sessionId,
+                    payload.startedAt,
+                    payload.updatedAt,
+                    getCustomerSlug(),
+                    ...preValues,
+                    ...answerValues,
+                ];
+
+                return [headers, values]
+                    .map((row) => row.map(escape).join(","))
+                    .join("\n");
+            };
+
+            const escapeHtml = (value) =>
+                String(value)
+                    .replaceAll("&", "&amp;")
+                    .replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;")
+                    .replaceAll('"', "&quot;")
+                    .replaceAll("'", "&#039;");
+
+            const escapeSelector = (value) => {
+                if (window.CSS && typeof window.CSS.escape === "function") {
+                    return window.CSS.escape(value);
+                }
+
+                return String(value)
+                    .replaceAll("\\", "\\\\")
+                    .replaceAll('"', '\\"');
+            };
+
+            const sendAnswersToFleway = async () => {
+                const customerSlug = getCustomerSlug();
+                const csvText = buildCsv();
+                const url = `${API_URL}/storage/${BUCKET}/${customerSlug}/arquetipos.csv`;
+
+                sendAnswersButton.disabled = true;
+                if (sendStatus) sendStatus.textContent = "Enviando respostas…";
+
+                try {
+                    const response = await fetch(url, {
+                        method: "PUT",
+                        headers: {
+                            "X-Storage-Api-Key": STORAGE_API_KEY,
+                            "Content-Type": "text/csv",
+                        },
+                        body: csvText,
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+
+                    state.completed = true;
+                    state.phase = "success";
+                    saveState();
+                    render();
+                    scrollToTop();
+                } catch (error) {
+                    console.error("Upload failed:", error);
+                    if (sendStatus) {
+                        sendStatus.textContent =
+                            "Erro ao enviar as respostas. Verifique sua conexão e tente novamente.";
+                    }
+                    sendAnswersButton.disabled = false;
+                }
+            };
+
+            const renderOptions = () => {
+                const currentAnswer = state.answers[state.currentIndex];
+                const isLocked = answerAdvanceTimeout !== null;
+                options.innerHTML = answerOptions
+                    .map((option) => {
+                        const selected = currentAnswer?.value === option.value;
+                        return `
+              <button
+                class="option-button${selected ? " is-selected" : ""}"
+                type="button"
+                data-value="${option.value}"
+                data-score="${option.value}"
+                ${isLocked ? "disabled" : ""}
+                aria-pressed="${selected ? "true" : "false"}"
+              >
+                ${escapeHtml(option.label)}
+              </button>
+            `;
+                    })
+                    .join("");
+            };
+
+            const updateStepper = () => {
+                const introComplete =
+                    phaseOrder.indexOf(state.phase) > 0 || state.completed;
+                const preComplete =
+                    phaseOrder.indexOf(state.phase) > 1 || state.completed;
+                const quizActive =
+                    state.phase === "quiz" ||
+                    state.phase === "review" ||
+                    state.phase === "success";
+
+                introStep.className = `step${state.phase === "intro" ? " is-active" : ""}${introComplete ? " is-complete" : ""}`;
+                preStep.className = `step${state.phase === "pre" ? " is-active" : ""}${preComplete ? " is-complete" : ""}`;
+                quizStep.className = `step${quizActive ? " is-active" : ""}${state.completed ? " is-complete" : ""}`;
+            };
+
+            const updateProgress = () => {
+                const answeredTotal = getAnsweredTotal();
+                let progress = 5;
+
+                if (state.phase === "pre") {
+                    progress = 18;
+                }
+
+                if (state.phase === "quiz") {
+                    progress =
+                        25 +
+                        Math.round((answeredTotal / questions.length) * 70);
+                }
+
+                if (state.phase === "review" || state.phase === "success") {
+                    progress = 100;
+                }
+
+                progressFill.style.width = `${progress}%`;
+            };
+
+            const setViewVisibility = () => {
+                introView.hidden = state.phase !== "intro";
+                preQuestionView.hidden = state.phase !== "pre";
+                quizView.hidden = state.phase !== "quiz";
+                reviewView.hidden = state.phase !== "review";
+                successView.hidden = state.phase !== "success";
+                stepper.hidden =
+                    state.phase === "review" || state.phase === "success";
+            };
+
+            const renderIntro = () => {
+                stageLabel.textContent = "Introdução";
+            };
+
+            const renderPreQuestions = () => {
+                stageLabel.textContent = "Pré-perguntas";
+                fillPreQuestionForm();
+            };
+
+            const renderQuiz = () => {
+                const question = questions[state.currentIndex];
+                const answeredTotal = getAnsweredTotal();
+
+                stageLabel.textContent = `Pergunta ${state.currentIndex + 1} de ${questions.length}`;
+                questionText.textContent = question.text;
+                answeredCount.textContent = `${answeredTotal} de ${questions.length} respondidas`;
+                renderOptions();
+            };
+
+            const renderReview = () => {
+                const payload = getPayload();
+
+                stageLabel.textContent = "Revisão final";
+                if (reviewCopy) {
+                    reviewCopy.textContent = `Confira o resumo abaixo. Quando estiver pronto, continue para a confirmação final.`;
+                }
+                if (sendStatus) {
+                    sendStatus.textContent =
+                        "Ao continuar, você verá a confirmação final.";
+                }
+                responseSummary.innerHTML = payload.answers
+                    .map(
+                        (answer) => `
+              <li>
+                ${escapeHtml(answer.question)}
+                <br />
+                <span class="response-answer">${escapeHtml(answer.answerLabel)}</span>
+              </li>
+            `,
+                    )
+                    .join("");
+            };
+
+            const renderSuccess = () => {
+                stageLabel.textContent = "Concluído";
+                if (successCopy) {
+                    successCopy.textContent = `A equipe Fleway vai usar suas respostas para gerar seu mapa arquetípico com base na metodologia do PMAI, um indicador inspirado na tradição junguiana que observa 12 padrões arquetípicos.`;
+                }
+            };
+
+            const render = () => {
+                document.body.classList.toggle(
+                    "is-flow-active",
+                    state.phase !== "intro",
+                );
+                setViewVisibility();
+                updateStepper();
+                updateProgress();
+
+                if (state.phase === "intro") {
+                    renderIntro();
+                }
+
+                if (state.phase === "pre") {
+                    renderPreQuestions();
+                }
+
+                if (state.phase === "quiz") {
+                    renderQuiz();
+                }
+
+                if (state.phase === "review") {
+                    renderReview();
+                }
+
+                if (state.phase === "success") {
+                    renderSuccess();
+                }
+            };
+
+            const goToPhase = (phase) => {
+                if (!isValidPhase(phase)) {
+                    return;
+                }
+
+                clearAnswerAdvanceTimeout();
+                state.phase = phase;
+                saveState();
+                render();
+                scrollToTop();
+            };
+
+            const answerQuestion = (value) => {
+                if (answerAdvanceTimeout !== null) {
+                    return;
+                }
+
+                const option = answerOptions.find(
+                    (item) => item.value === value,
+                );
+                if (!option) {
+                    return;
+                }
+
+                state.answers[state.currentIndex] = {
+                    value: option.value,
+                    label: option.label,
+                    answeredAt: new Date().toISOString(),
+                };
+                saveState();
+                clearAnswerAdvanceTimeout();
+                answerAdvanceTimeout = window.setTimeout(() => {
+                    answerAdvanceTimeout = null;
+
+                    if (state.currentIndex === questions.length - 1) {
+                        state.completed = true;
+                        state.phase = "review";
+                        saveState();
+                        render();
+                        scrollToTop();
+                        return;
+                    }
+
+                    state.currentIndex += 1;
+                    state.phase = "quiz";
+                    saveState();
+                    render();
+                    scrollToTop();
+                }, 180);
+
+                render();
+            };
+
+            const resetQuiz = () => {
+                const confirmReset = window.confirm(
+                    "Reiniciar o teste e apagar os dados salvos neste navegador?",
+                );
+                if (!confirmReset) {
+                    return;
+                }
+
+                state = createEmptyState();
+                window.localStorage.removeItem(STORAGE_KEY);
+                saveStatus.textContent = "Pronto";
+                clearAnswerAdvanceTimeout();
+                render();
+                scrollToTop();
+            };
+
+            startPreQuestionsButton.addEventListener("click", () => {
+                goToPhase("pre");
+            });
+
+            backToIntroButton.addEventListener("click", () => {
+                state.preQuestions = readPreQuestionForm();
+                goToPhase("intro");
+            });
+
+            preQuestionForm.addEventListener("input", () => {
+                updateGenderOtherState();
+                updatePreQuestionValidationState();
+                state.preQuestions = readPreQuestionForm();
+                saveState();
+            });
+
+            preQuestionForm.addEventListener("change", () => {
+                updateGenderOtherState();
+                updatePreQuestionValidationState();
+                state.preQuestions = readPreQuestionForm();
+                saveState();
+            });
+
+            preQuestionForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                updateGenderOtherState();
+                updatePreQuestionValidationState();
+
+                if (!preQuestionForm.reportValidity()) {
+                    return;
+                }
+
+                state.preQuestions = readPreQuestionForm();
+                state.phase = "quiz";
+                state.completed = false;
+                saveState();
+                render();
+                scrollToTop();
+            });
+
+            options.addEventListener("click", (event) => {
+                const button = event.target.closest("[data-value]");
+                if (!button) {
+                    return;
+                }
+
+                answerQuestion(Number(button.dataset.value));
+            });
+
+            backButton.addEventListener("click", () => {
+                if (state.currentIndex === 0) {
+                    clearAnswerAdvanceTimeout();
+                    state.phase = "pre";
+                    saveState();
+                    render();
+                    scrollToTop();
+                    return;
+                }
+
+                clearAnswerAdvanceTimeout();
+                state.currentIndex -= 1;
+                state.completed = false;
+                state.phase = "quiz";
+                saveState();
+                render();
+                scrollToTop();
+            });
+
+            resetTopButton.addEventListener("click", resetQuiz);
+            sendAnswersButton.addEventListener("click", sendAnswersToFleway);
+
+            render();
+        </script>
+    </body>
+</html>
