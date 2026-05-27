@@ -38,7 +38,11 @@ function printMenu(groups) {
   for (const folder of folders) {
     console.log(`\n  \x1b[1m\x1b[36m${folder}/\x1b[0m`);
     for (const file of groups[folder]) {
-      const label = file.split("/").pop().replace(".html", "");
+      const parts = file.split("/");
+      const label = parts
+        .slice(1)
+        .map((p, i, arr) => (i === arr.length - 1 ? p.replace(".html", "") : p))
+        .join(" / ");
       console.log(`  \x1b[90m[${i}]\x1b[0m ${label}`);
       entries.push(file);
       i++;
