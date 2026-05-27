@@ -1,462 +1,631 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maxis Docs</title>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Maxis Docs</title>
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
 
-:root {
-  --bg: #08080a;
-  --surface: #111114;
-  --surface-2: #16161b;
-  --border: #1c1c24;
-  --border-bright: #2a2a36;
-  --text: #e2e2e6;
-  --muted: #56566a;
-  --accent: #b2ff59;
-  --accent-fg: #061200;
-  --accent-dim: rgba(178, 255, 89, 0.08);
-  --danger: #ff5c5c;
-  --font-mono: 'Courier New', Courier, monospace;
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-}
+            :root {
+                --bg: #08080a;
+                --surface: #111114;
+                --surface-2: #16161b;
+                --border: #1c1c24;
+                --border-bright: #2a2a36;
+                --text: #e2e2e6;
+                --muted: #56566a;
+                --accent: #b2ff59;
+                --accent-fg: #061200;
+                --accent-dim: rgba(178, 255, 89, 0.08);
+                --danger: #ff5c5c;
+                --font-mono: "Courier New", Courier, monospace;
+                --font-sans:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+                    sans-serif;
+            }
 
-html, body {
-  min-height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-}
+            html,
+            body {
+                min-height: 100%;
+                background: var(--bg);
+                color: var(--text);
+                font-family: var(--font-sans);
+                -webkit-font-smoothing: antialiased;
+            }
 
-/* ── GATE ── */
-#gate {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  transition: opacity 0.35s ease;
-}
+            /* ── GATE ── */
+            #gate {
+                position: fixed;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 100;
+                transition: opacity 0.35s ease;
+            }
 
-#gate::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, #1c1c26 1px, transparent 1px);
-  background-size: 26px 26px;
-  opacity: 0.55;
-}
+            #gate::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image: radial-gradient(
+                    circle,
+                    #1c1c26 1px,
+                    transparent 1px
+                );
+                background-size: 26px 26px;
+                opacity: 0.55;
+            }
 
-#gate::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 65% 65% at 50% 50%, transparent 30%, var(--bg) 100%);
-}
+            #gate::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 65% 65% at 50% 50%,
+                    transparent 30%,
+                    var(--bg) 100%
+                );
+            }
 
-.gate-card {
-  position: relative;
-  z-index: 1;
-  width: 360px;
-  padding: 52px 44px 44px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
+            .gate-card {
+                position: relative;
+                z-index: 1;
+                width: 360px;
+                padding: 52px 44px 44px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
 
-@keyframes rise {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+            @keyframes rise {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
 
-.gate-agency {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
+            .gate-agency {
+                font-family: var(--font-mono);
+                font-size: 10px;
+                letter-spacing: 0.28em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-bottom: 6px;
+            }
 
-.gate-title {
-  font-family: var(--font-mono);
-  font-size: 30px;
-  letter-spacing: 0.05em;
-  font-weight: bold;
-  color: var(--text);
-  margin-bottom: 42px;
-  line-height: 1;
-}
+            .gate-title {
+                font-family: var(--font-mono);
+                font-size: 30px;
+                letter-spacing: 0.05em;
+                font-weight: bold;
+                color: var(--text);
+                margin-bottom: 42px;
+                line-height: 1;
+            }
 
-.gate-title span { color: var(--accent); }
+            .gate-title span {
+                color: var(--accent);
+            }
 
-.field-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-  display: block;
-  margin-bottom: 12px;
-}
+            .field-label {
+                font-family: var(--font-mono);
+                font-size: 10px;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+                color: var(--muted);
+                display: block;
+                margin-bottom: 12px;
+            }
 
-.field-input {
-  width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--border-bright);
-  color: var(--text);
-  font-family: var(--font-mono);
-  font-size: 18px;
-  padding: 10px 0 12px;
-  outline: none;
-  letter-spacing: 0.16em;
-  transition: border-color 0.2s;
-  caret-color: var(--accent);
-}
+            .field-input {
+                width: 100%;
+                background: transparent;
+                border: none;
+                border-bottom: 1px solid var(--border-bright);
+                color: var(--text);
+                font-family: var(--font-mono);
+                font-size: 18px;
+                padding: 10px 0 12px;
+                outline: none;
+                letter-spacing: 0.16em;
+                transition: border-color 0.2s;
+                caret-color: var(--accent);
+            }
 
-.field-input:focus { border-bottom-color: var(--accent); }
+            .field-input:focus {
+                border-bottom-color: var(--accent);
+            }
 
-.field-input::placeholder {
-  color: var(--muted);
-  opacity: 0.45;
-  letter-spacing: 0.06em;
-}
+            .field-input::placeholder {
+                color: var(--muted);
+                opacity: 0.45;
+                letter-spacing: 0.06em;
+            }
 
-.error-msg {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--danger);
-  height: 18px;
-  margin-top: 14px;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
+            .error-msg {
+                font-family: var(--font-mono);
+                font-size: 10px;
+                letter-spacing: 0.1em;
+                color: var(--danger);
+                height: 18px;
+                margin-top: 14px;
+                opacity: 0;
+                transition: opacity 0.2s;
+            }
 
-.error-msg.visible { opacity: 1; }
+            .error-msg.visible {
+                opacity: 1;
+            }
 
-.gate-btn {
-  width: 100%;
-  margin-top: 30px;
-  padding: 15px;
-  background: var(--accent);
-  color: var(--accent-fg);
-  border: none;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-weight: bold;
-  cursor: pointer;
-  transition: opacity 0.15s, background 0.15s;
-}
+            .gate-btn {
+                width: 100%;
+                margin-top: 30px;
+                padding: 15px;
+                background: var(--accent);
+                color: var(--accent-fg);
+                border: none;
+                font-family: var(--font-mono);
+                font-size: 11px;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+                font-weight: bold;
+                cursor: pointer;
+                transition:
+                    opacity 0.15s,
+                    background 0.15s;
+            }
 
-.gate-btn:hover  { opacity: 0.88; }
-.gate-btn:active { opacity: 0.72; }
+            .gate-btn:hover {
+                opacity: 0.88;
+            }
+            .gate-btn:active {
+                opacity: 0.72;
+            }
 
-/* ── DASHBOARD ── */
-#dashboard {
-  min-height: 100vh;
-  animation: fade-in 0.4s ease both;
-}
+            /* ── DASHBOARD ── */
+            #dashboard {
+                min-height: 100vh;
+                animation: fade-in 0.4s ease both;
+            }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
+            @keyframes fade-in {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
 
-.dash-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 26px 52px;
-  border-bottom: 1px solid var(--border);
-}
+            .dash-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 26px 52px;
+                border-bottom: 1px solid var(--border);
+            }
 
-.dash-logo {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
+            .dash-logo {
+                font-family: var(--font-mono);
+                font-size: 12px;
+                letter-spacing: 0.24em;
+                text-transform: uppercase;
+                color: var(--muted);
+            }
 
-.dash-logo strong {
-  color: var(--text);
-  font-weight: bold;
-}
+            .dash-logo strong {
+                color: var(--text);
+                font-weight: bold;
+            }
 
-.dash-badge {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  color: var(--accent);
-  border: 1px solid rgba(178, 255, 89, 0.25);
-  padding: 5px 12px;
-  text-transform: uppercase;
-}
+            .dash-badge {
+                font-family: var(--font-mono);
+                font-size: 10px;
+                letter-spacing: 0.16em;
+                color: var(--accent);
+                border: 1px solid rgba(178, 255, 89, 0.25);
+                padding: 5px 12px;
+                text-transform: uppercase;
+            }
 
-.dash-body {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 72px 52px 96px;
-}
+            .dash-body {
+                max-width: 860px;
+                margin: 0 auto;
+                padding: 72px 52px 96px;
+            }
 
-.dash-intro {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 52px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+            .dash-intro {
+                font-family: var(--font-mono);
+                font-size: 10px;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-bottom: 52px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
 
-.dash-section { margin-bottom: 56px; }
+            .dash-section {
+                margin-bottom: 56px;
+            }
 
-.section-header {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  margin-bottom: 6px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
+            .section-header {
+                display: flex;
+                align-items: baseline;
+                gap: 14px;
+                margin-bottom: 6px;
+                padding-bottom: 16px;
+                border-bottom: 1px solid var(--border);
+            }
 
-.section-name {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text);
-  font-weight: bold;
-}
+            .section-name {
+                font-family: var(--font-mono);
+                font-size: 12px;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--text);
+                font-weight: bold;
+            }
 
-.section-count {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-}
+            .section-count {
+                font-family: var(--font-mono);
+                font-size: 10px;
+                color: var(--muted);
+                letter-spacing: 0.1em;
+            }
 
-.doc-list { list-style: none; }
+            .doc-list {
+                list-style: none;
+            }
 
-.doc-item { border-bottom: 1px solid var(--border); }
+            .doc-item {
+                border-bottom: 1px solid var(--border);
+            }
 
-.doc-item a {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 12px 16px 0;
-  text-decoration: none;
-  color: var(--text);
-  font-size: 14px;
-  transition: color 0.15s, padding-left 0.15s;
-}
+            .doc-item a {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 16px 12px 16px 0;
+                text-decoration: none;
+                color: var(--text);
+                font-size: 14px;
+                transition:
+                    color 0.15s,
+                    padding-left 0.15s;
+            }
 
-.doc-item a:hover {
-  color: var(--accent);
-  padding-left: 8px;
-}
+            .doc-item a:hover {
+                color: var(--accent);
+                padding-left: 8px;
+            }
 
-.doc-item a:hover .doc-arrow {
-  transform: translateX(5px);
-  color: var(--accent);
-}
+            .doc-item a:hover .doc-arrow {
+                transform: translateX(5px);
+                color: var(--accent);
+            }
 
-.doc-item a:hover .doc-path { color: rgba(178, 255, 89, 0.45); }
+            .doc-item a:hover .doc-path {
+                color: rgba(178, 255, 89, 0.45);
+            }
 
-.doc-name { flex: 1; }
+            .doc-name {
+                flex: 1;
+            }
 
-.doc-path {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  transition: color 0.15s;
-  flex-shrink: 0;
-}
+            .doc-path {
+                font-family: var(--font-mono);
+                font-size: 10px;
+                color: var(--muted);
+                letter-spacing: 0.08em;
+                transition: color 0.15s;
+                flex-shrink: 0;
+            }
 
-.doc-arrow {
-  font-size: 13px;
-  color: var(--muted);
-  transition: transform 0.15s, color 0.15s;
-  flex-shrink: 0;
-}
-</style>
-</head>
-<body>
+            .doc-arrow {
+                font-size: 13px;
+                color: var(--muted);
+                transition:
+                    transform 0.15s,
+                    color 0.15s;
+                flex-shrink: 0;
+            }
 
-<!-- ── GATE ── -->
-<div id="gate">
-  <div class="gate-card">
-    <p class="gate-agency">Maxis Agency</p>
-    <h1 class="gate-title">DOCS<span>.</span></h1>
-    <label class="field-label" for="pwd">Access Password</label>
-    <input class="field-input" type="password" id="pwd" placeholder="••••••••" autocomplete="current-password">
-    <p class="error-msg" id="err" role="alert">Incorrect password — try again.</p>
-    <button class="gate-btn" id="submit-btn">Enter →</button>
-  </div>
-</div>
+            .sub-section {
+                margin-top: 4px;
+            }
 
-<!-- ── DASHBOARD ── -->
-<div id="dashboard" hidden>
-  <header class="dash-header">
-    <div class="dash-logo"><strong>MAXIS</strong> &nbsp;·&nbsp; DOCS</div>
-    <div class="dash-badge">● Authenticated</div>
-  </header>
+            .sub-section-name {
+                font-family: var(--font-mono);
+                font-size: 9px;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+                color: var(--muted);
+                padding: 16px 0 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
 
-  <main class="dash-body">
-    <div class="dash-intro">
-      <span>Document Portal</span>
-      <span id="doc-date"></span>
-    </div>
+            .sub-section-name::before {
+                content: "";
+                display: inline-block;
+                width: 2px;
+                height: 9px;
+                background: var(--accent);
+                opacity: 0.45;
+                flex-shrink: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ── GATE ── -->
+        <div id="gate">
+            <div class="gate-card">
+                <p class="gate-agency">Maxis Agency</p>
+                <h1 class="gate-title">DOCS<span>.</span></h1>
+                <label class="field-label" for="pwd">Access Password</label>
+                <input
+                    class="field-input"
+                    type="password"
+                    id="pwd"
+                    placeholder="••••••••"
+                    autocomplete="current-password"
+                />
+                <p class="error-msg" id="err" role="alert">
+                    Incorrect password — try again.
+                </p>
+                <button class="gate-btn" id="submit-btn">Enter →</button>
+            </div>
+        </div>
 
-    <!-- Fleway -->
-    <section class="dash-section">
-      <div class="section-header">
-        <span class="section-name">Fleway</span>
-        <span class="section-count">8 documents</span>
-      </div>
-      <ul class="doc-list">
-        <li class="doc-item">
-          <a href="fleway/proposta-2026.html" target="_blank" rel="noopener">
-            <span class="doc-name">Proposta 2026</span>
-            <span class="doc-path">proposta-2026</span>
-            <span class="doc-arrow">→</span>
-          </a>
-        </li>
-        <li class="doc-item">
-          <a href="fleway/davi/mapa-arquetipico.html" target="_blank" rel="noopener">
-            <span class="doc-name">Davi · Mapa Arquetípico</span>
-            <span class="doc-path">davi / mapa-arquetipico</span>
-            <span class="doc-arrow">→</span>
-          </a>
-        </li>
-        <li class="doc-item">
-          <a href="fleway/davi/posicionamento-estrategico-v1.html" target="_blank" rel="noopener">
-            <span class="doc-name">Davi · Posicionamento Estratégico v1</span>
-            <span class="doc-path">davi / posicionamento-estrategico-v1</span>
-            <span class="doc-arrow">→</span>
-          </a>
-        </li>
-        <li class="doc-item">
-          <a href="fleway/davi/posicionamento-estrategico.html" target="_blank" rel="noopener">
-            <span class="doc-name">Davi · Posicionamento Estratégico</span>
-            <span class="doc-path">davi / posicionamento-estrategico</span>
-            <span class="doc-arrow">→</span>
-          </a>
-        </li>
-        <li class="doc-item">
-          <a href="fleway/juliana/diagnostico-completo.html" target="_blank" rel="noopener">
-            <span class="doc-name">Juliana · Diagnóstico Completo</span>
-            <span class="doc-path">juliana / diagnostico-completo</span>
-            <span class="doc-arrow">→</span>
-          </a>
-        </li>
-        <li class="doc-item">
-          <a href="fleway/juliana/diagnostico.html" target="_blank" rel="noopener">
-            <span class="doc-name">Juliana · Diagnóstico</span>
-            <span class="doc-path">juliana / diagnostico</span>
-            <span class="doc-arrow">→</span>
-          </a>
-        </li>
-        <li class="doc-item">
-          <a href="fleway/juliana/mapa-arquetipico.html" target="_blank" rel="noopener">
-            <span class="doc-name">Juliana · Mapa Arquetípico</span>
-            <span class="doc-path">juliana / mapa-arquetipico</span>
-            <span class="doc-arrow">→</span>
-          </a>
-        </li>
-        <li class="doc-item">
-          <a href="fleway/tools/arquetipos.html" target="_blank" rel="noopener">
-            <span class="doc-name">Ferramentas · Arquétipos</span>
-            <span class="doc-path">tools / arquetipos</span>
-            <span class="doc-arrow">→</span>
-          </a>
-        </li>
-      </ul>
-    </section>
+        <!-- ── DASHBOARD ── -->
+        <div id="dashboard" hidden>
+            <header class="dash-header">
+                <div class="dash-logo">
+                    <strong>MAXIS</strong> &nbsp;·&nbsp; DOCS
+                </div>
+                <div class="dash-badge">● Authenticated</div>
+            </header>
 
-    <!-- Clop -->
-    <section class="dash-section">
-      <div class="section-header">
-        <span class="section-name">Clop</span>
-        <span class="section-count">1 document</span>
-      </div>
-      <ul class="doc-list">
-        <li class="doc-item">
-          <a href="clop/clop_cronograma_mvp.html" target="_blank" rel="noopener">
-            <span class="doc-name">Cronograma MVP</span>
-            <span class="doc-path">clop / cronograma-mvp</span>
-            <span class="doc-arrow">→</span>
-          </a>
-        </li>
-      </ul>
-    </section>
+            <main class="dash-body">
+                <div class="dash-intro">
+                    <span>Document Portal</span>
+                    <span id="doc-date"></span>
+                </div>
 
-  </main>
-</div>
+                <!-- Fleway -->
+                <section class="dash-section">
+                    <div class="section-header">
+                        <span class="section-name">Fleway</span>
+                        <span class="section-count">9 documents</span>
+                    </div>
 
-<script>
-  const PASS = 'maxis2026';
-  const SESSION_KEY = 'maxis_auth';
+                    <!-- Proposta -->
+                    <ul class="doc-list">
+                        <li class="doc-item">
+                            <a
+                                href="fleway/proposta-2026.html"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <span class="doc-name">Proposta 2026</span>
+                                <span class="doc-path">proposta-2026</span>
+                                <span class="doc-arrow">→</span>
+                            </a>
+                        </li>
+                    </ul>
 
-  const gate      = document.getElementById('gate');
-  const dashboard = document.getElementById('dashboard');
-  const pwdInput  = document.getElementById('pwd');
-  const errMsg    = document.getElementById('err');
-  const submitBtn = document.getElementById('submit-btn');
+                    <!-- Davi -->
+                    <div class="sub-section">
+                        <div class="sub-section-name">Davi</div>
+                        <ul class="doc-list">
+                            <li class="doc-item">
+                                <a
+                                    href="fleway/davi/mapa-arquetipico.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    <span class="doc-name">Mapa Arquetípico</span>
+                                    <span class="doc-path">davi / mapa-arquetipico</span>
+                                    <span class="doc-arrow">→</span>
+                                </a>
+                            </li>
+                            <li class="doc-item">
+                                <a
+                                    href="fleway/davi/posicionamento-estrategico-v1.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    <span class="doc-name">Posicionamento Estratégico v1</span>
+                                    <span class="doc-path">davi / posicionamento-estrategico-v1</span>
+                                    <span class="doc-arrow">→</span>
+                                </a>
+                            </li>
+                            <li class="doc-item">
+                                <a
+                                    href="fleway/davi/posicionamento-estrategico.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    <span class="doc-name">Posicionamento Estratégico</span>
+                                    <span class="doc-path">davi / posicionamento-estrategico</span>
+                                    <span class="doc-arrow">→</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-  document.getElementById('doc-date').textContent =
-    new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+                    <!-- Juliana -->
+                    <div class="sub-section">
+                        <div class="sub-section-name">Juliana</div>
+                        <ul class="doc-list">
+                            <li class="doc-item">
+                                <a
+                                    href="fleway/juliana/diagnostico-completo.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    <span class="doc-name">Diagnóstico Completo</span>
+                                    <span class="doc-path">juliana / diagnostico-completo</span>
+                                    <span class="doc-arrow">→</span>
+                                </a>
+                            </li>
+                            <li class="doc-item">
+                                <a
+                                    href="fleway/juliana/diagnostico.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    <span class="doc-name">Diagnóstico</span>
+                                    <span class="doc-path">juliana / diagnostico</span>
+                                    <span class="doc-arrow">→</span>
+                                </a>
+                            </li>
+                            <li class="doc-item">
+                                <a
+                                    href="fleway/juliana/mapa-arquetipico.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    <span class="doc-name">Mapa Arquetípico</span>
+                                    <span class="doc-path">juliana / mapa-arquetipico</span>
+                                    <span class="doc-arrow">→</span>
+                                </a>
+                            </li>
+                            <li class="doc-item">
+                                <a
+                                    href="fleway/juliana/posicionamento-estrategico.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    <span class="doc-name">Posicionamento Estratégico</span>
+                                    <span class="doc-path">juliana / posicionamento-estrategico</span>
+                                    <span class="doc-arrow">→</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-  function unlock() {
-    gate.style.opacity = '0';
-    gate.style.pointerEvents = 'none';
-    setTimeout(() => { gate.hidden = true; }, 350);
-    dashboard.hidden = false;
-    sessionStorage.setItem(SESSION_KEY, '1');
-  }
+                    <!-- Ferramentas -->
+                    <div class="sub-section">
+                        <div class="sub-section-name">Ferramentas</div>
+                        <ul class="doc-list">
+                            <li class="doc-item">
+                                <a
+                                    href="fleway/tools/arquetipos.html"
+                                    target="_blank"
+                                    rel="noopener"
+                                >
+                                    <span class="doc-name">Arquétipos</span>
+                                    <span class="doc-path">tools / arquetipos</span>
+                                    <span class="doc-arrow">→</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
 
-  if (sessionStorage.getItem(SESSION_KEY) === '1') {
-    gate.hidden = true;
-    dashboard.hidden = false;
-  }
+                <!-- Clop -->
+                <section class="dash-section">
+                    <div class="section-header">
+                        <span class="section-name">Clop</span>
+                        <span class="section-count">1 document</span>
+                    </div>
+                    <ul class="doc-list">
+                        <li class="doc-item">
+                            <a
+                                href="clop/clop_cronograma_mvp.html"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <span class="doc-name">Cronograma MVP</span>
+                                <span class="doc-path"
+                                    >clop / cronograma-mvp</span
+                                >
+                                <span class="doc-arrow">→</span>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </main>
+        </div>
 
-  function attempt() {
-    if (pwdInput.value === PASS) {
-      unlock();
-    } else {
-      errMsg.classList.add('visible');
-      pwdInput.value = '';
-      pwdInput.focus();
-      document.querySelector('.gate-card').animate([
-        { transform: 'translateX(0)' },
-        { transform: 'translateX(-9px)' },
-        { transform: 'translateX(9px)' },
-        { transform: 'translateX(-6px)' },
-        { transform: 'translateX(6px)' },
-        { transform: 'translateX(0)' },
-      ], { duration: 380, easing: 'ease-out' });
-    }
-  }
+        <script>
+            const PASS = "maxis2026";
+            const SESSION_KEY = "maxis_auth";
 
-  submitBtn.addEventListener('click', attempt);
-  pwdInput.addEventListener('keydown', e => {
-    errMsg.classList.remove('visible');
-    if (e.key === 'Enter') attempt();
-  });
-</script>
+            const gate = document.getElementById("gate");
+            const dashboard = document.getElementById("dashboard");
+            const pwdInput = document.getElementById("pwd");
+            const errMsg = document.getElementById("err");
+            const submitBtn = document.getElementById("submit-btn");
 
-</body>
+            document.getElementById("doc-date").textContent =
+                new Date().toLocaleDateString("pt-BR", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                });
+
+            function unlock() {
+                gate.style.opacity = "0";
+                gate.style.pointerEvents = "none";
+                setTimeout(() => {
+                    gate.hidden = true;
+                }, 350);
+                dashboard.hidden = false;
+                sessionStorage.setItem(SESSION_KEY, "1");
+            }
+
+            if (sessionStorage.getItem(SESSION_KEY) === "1") {
+                gate.hidden = true;
+                dashboard.hidden = false;
+            }
+
+            function attempt() {
+                if (pwdInput.value === PASS) {
+                    unlock();
+                } else {
+                    errMsg.classList.add("visible");
+                    pwdInput.value = "";
+                    pwdInput.focus();
+                    document
+                        .querySelector(".gate-card")
+                        .animate(
+                            [
+                                { transform: "translateX(0)" },
+                                { transform: "translateX(-9px)" },
+                                { transform: "translateX(9px)" },
+                                { transform: "translateX(-6px)" },
+                                { transform: "translateX(6px)" },
+                                { transform: "translateX(0)" },
+                            ],
+                            { duration: 380, easing: "ease-out" },
+                        );
+                }
+            }
+
+            submitBtn.addEventListener("click", attempt);
+            pwdInput.addEventListener("keydown", (e) => {
+                errMsg.classList.remove("visible");
+                if (e.key === "Enter") attempt();
+            });
+        </script>
+    </body>
 </html>
